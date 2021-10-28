@@ -8,11 +8,20 @@
 		<button mat-raised-button style="margin: 5px">Button 3</button>
 	</div>
 </mat-toolbar>
-<app-leaflet-map></app-leaflet-map>
-<mat-card class="statcard">
-	<mat-card-title>Torch Stats</mat-card-title>
-	<mat-card-content>
-		<p>distance covered: 12km</p>
-		<p>firing time: 12d 4h</p>
-	</mat-card-content>
-</mat-card>
+<div id="MapAndButtons">
+	<app-leaflet-map></app-leaflet-map>
+	<mat-drawer #drawer class="example-sidenav" mode="side">
+		<mat-card class="statcard">
+			<mat-card-title>Torch Stats</mat-card-title>
+			<mat-card-content>
+				<p>distance covered: 12km</p>
+				<p>firing time: 12d 4h</p>
+			</mat-card-content>
+		</mat-card>
+	</mat-drawer>
+	<div id="togglebutton">
+		<button type="button" mat-raised-button (click)="drawer.toggle()">side-stats</button>
+	</div>
+</div>
+
+

@@ -8,6 +8,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
 @NgModule({
 	declarations: [AppComponent, LeafletMapComponent],
 	imports: [
@@ -17,6 +18,7 @@ import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
 		BrowserAnimationsModule,
 		MatButtonModule,
 		MatCardModule,
+		MatSidenavModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
