@@ -10,8 +10,9 @@ import { MatCardModule } from '@angular/material/card';
 import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
+import { SliderComponent } from './slider/slider.component';
 @NgModule({
-	declarations: [AppComponent, LeafletMapComponent],
+	declarations: [AppComponent, LeafletMapComponent, SliderComponent],
 	imports: [
 		MatToolbarModule,
 		BrowserModule,
