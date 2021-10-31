@@ -1,6 +1,5 @@
 <mat-toolbar id="toolbar">
 	<h1 id="title">Lume Web App 🔥</h1>
-	>
 	<span class="spacer"></span>
 	<div id="buttons">
 		<button mat-raised-button style="margin: 5px">Button 1</button>
@@ -8,9 +7,8 @@
 		<button mat-raised-button style="margin: 5px">Button 3</button>
 	</div>
 </mat-toolbar>
-<div id="MapAndButtons">
-	<app-leaflet-map></app-leaflet-map>
-	<mat-drawer #drawer class="example-sidenav" mode="side">
+<mat-drawer-container class="container" autosize id="bottom">
+	<mat-drawer #drawer class="example-sidenav" mode="side" position="end" id="sidenav">
 		<mat-card class="statcard">
 			<mat-card-title>Torch Stats</mat-card-title>
 			<mat-card-content>
@@ -19,9 +17,17 @@
 			</mat-card-content>
 		</mat-card>
 	</mat-drawer>
-	<div id="togglebutton">
-		<button type="button" mat-raised-button (click)="drawer.toggle()">side-stats</button>
+	<div id="temp">
+		<div id="map">
+			<app-leaflet-map></app-leaflet-map>
+		</div>
+		<div id="togglebutton">
+			<button type="button" mat-raised-button (click)="drawer.toggle()">
+				side-stats
+			</button>
+		</div>
+		<div>
+			<mat-slider aria-label="unit(s)" id = "slider"></mat-slider>
+		</div>
 	</div>
-</div>
-
-
+</mat-drawer-container>

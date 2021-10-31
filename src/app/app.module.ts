@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSliderModule } from '@angular/material/slider';
 @NgModule({
 	declarations: [AppComponent, LeafletMapComponent],
 	imports: [
@@ -19,6 +20,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 		MatButtonModule,
 		MatCardModule,
 		MatSidenavModule,
+		MatSliderModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
