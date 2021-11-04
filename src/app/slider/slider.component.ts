@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SliderComponent implements OnInit {
 	formatLabel(value: number) {
-		const startDate: Date = new Date(2021, 9, 12, 13, 40, 20, 11);
+		const startDate: Date = new Date(1609502400000);
 		const temp: number = startDate.getTime();
 		startDate.setTime(startDate.getTime() + value * 86400000);
 		const temp2: string = startDate.toDateString();
