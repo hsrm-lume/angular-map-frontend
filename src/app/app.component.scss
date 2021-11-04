@@ -1,19 +1,21 @@
-#toolbar {
-	background-color: rgb(66, 18, 18);
-	display: flex;
+#togglebutton {
+	position: absolute;
+	top: 4%;
+	right: 2%;
 }
-#title {
-	color: white;
-	font-size: 40px;
+#map {
+	height: 100%;
+	width: 100%;
 }
-.spacer {
-	flex: 1 auto;
+#temp {
+	width: 100%;
+	height: 100%;
 }
-.statcard {
-	width: 200px;
-	height: 550px;
-	float: right;
+#sidenav {
+	width: auto;
+	height: auto;
 	background-color: rgb(53, 54, 54);
-	color: white;
-	text-align: center;
+}
+#bottom {
+	height: 92%;
 }
