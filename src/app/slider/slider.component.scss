@@ -1,25 +1,24 @@
-#slidercard {
-	position: absolute;
-	bottom: 10%;
-	right: 35%;
-	width: 30%;
-	align-self: center;
-	height: auto;
-	background-color: white;
-}
-#slider {
-	width: 100%;
-	text-align: center;
-}
 ::ng-deep .mat-slider-wrapper {
 	.mat-slider-thumb-container {
 		.mat-slider-thumb-label {
-			width: 70px !important;
-			height: 70px !important;
-			top: -88px !important;
-			right: -35px !important;
+			padding: 10px !important;
+			right: -24px !important;
+			top: -58px !important;
 			background-color: rgb(53, 54, 54) !important;
 			text-align: center !important;
 		}
+	}
+}
+
+mat-card {
+	padding-top: 0;
+	padding-bottom: 0;
+	display: grid;
+	grid-template-columns: min-content auto min-content;
+	grid-gap: 1em;
+	line-height: 100%;
+	align-items: center;
+	mat-slider {
+		width: 100%;
 	}
 }

@@ -1,21 +1,24 @@
-#togglebutton {
+#grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: min-content auto;
+	height: 100%;
+}
+
+mat-drawer-container {
+	position: relative;
+}
+.floatAbove {
 	position: absolute;
-	top: 4%;
-	right: 2%;
+	z-index: 100000;
 }
-#map {
-	height: 100%;
-	width: 100%;
+#statsButton {
+	top: 1em;
+	right: 1em;
 }
-#temp {
-	width: 100%;
-	height: 100%;
-}
-#sidenav {
-	width: auto;
-	height: auto;
-	background-color: rgb(53, 54, 54);
-}
-#bottom {
-	height: 92%;
+
+#timeSlider {
+	bottom: 1em;
+	left: 1em;
+	width: calc(100% - 2em);
 }

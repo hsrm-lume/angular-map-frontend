@@ -1,19 +1,19 @@
-<app-toolbar></app-toolbar>
-<mat-drawer-container class="container" autosize id="bottom">
-	<mat-drawer #drawer class="example-sidenav" mode="side" position="end" id="sidenav">
-		<app-stats></app-stats>	
-	</mat-drawer>
-	<div id="temp">
-		<div id="map">
-			<app-leaflet-map></app-leaflet-map>
-		</div>
-		<div id="togglebutton">
-			<button type="button" mat-raised-button (click)="drawer.toggle()">
-				Stats
-			</button>
-		</div>
-		<div>
-			<app-slider></app-slider>
-		</div>
-	</div>
-</mat-drawer-container>
+<div id="grid">
+	<app-toolbar></app-toolbar>
+	<mat-drawer-container>
+		<mat-drawer #drawer mode="side" position="end">
+			<!-- <app-stats></app-stats> -->
+		</mat-drawer>
+		<app-leaflet-map></app-leaflet-map>
+		<button
+			type="button"
+			class="floatAbove"
+			id="statsButton"
+			mat-raised-button
+			(click)="drawer.toggle()"
+		>
+			Stats
+		</button>
+		<app-slider class="floatAbove" id="timeSlider"></app-slider>
+	</mat-drawer-container>
+</div>
