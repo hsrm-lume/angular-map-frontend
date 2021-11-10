@@ -8,9 +8,33 @@
 		<mgl-feature
 			*ngFor="let f of features; index as i"
 			[id]="i"
+			[properties]="f.properties"
 			[geometry]="f.geometry"
 		></mgl-feature>
 	</mgl-geojson-source>
-	<!-- <mgl-layer id="linetree" type="line" source="tree"> </mgl-layer> -->
-	<mgl-layer id="heatmap" type="heatmap" source="tree"> </mgl-layer>
+	<mgl-layer
+		*ngIf="kind == 'line'"
+		id="linetree"
+		type="line"
+		source="tree"
+		[filter]="filters"
+		[paint]="linesPaint"
+	>
+	</mgl-layer>
+	<mgl-layer
+		*ngIf="kind == 'heatmap'"
+		id="heatmap"
+		type="heatmap"
+		source="tree"
+		[filter]="filters"
+	>
+	</mgl-layer>
+	<mgl-layer
+		*ngIf="kind == 'point'"
+		id="pts"
+		type="circle"
+		source="tree"
+		[filter]="filters"
+	>
+	</mgl-layer>
 </mgl-map>

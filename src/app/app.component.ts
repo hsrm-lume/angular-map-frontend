@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DateRange } from './map/neo4j-connector';
 
 @Component({
 	selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 	title = 'angular-frontend';
+
+	selectedTstamp = new Date().getTime();
+	get filter(): DateRange {
+		return {
+			from: new Date('2021-01-01'),
+			to: new Date(this.selectedTstamp),
+		};
+	}
 }

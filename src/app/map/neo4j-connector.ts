@@ -5,6 +5,11 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { AgedLine, AgedPoint } from './AgedLine';
 
+export interface DateRange {
+	from: Date;
+	to: Date;
+}
+
 export default class Neo4jConnector {
 	driver: neo4j.Driver;
 	constructor() {
@@ -18,10 +23,23 @@ export default class Neo4jConnector {
 		this.driver.close();
 	}
 
-	geoJSON(): Observable<Feature> {
+	geoJSON(
+		filter: DateRange = {
+			from: new Date('2000-01-01'),
+			to: new Date('2999-12-31'),
+		}
+	): Observable<Feature> {
 		const rxSession = this.driver.rxSession();
 		return rxSession
-			.run('MATCH (a:User)-[:LIGHTS]->(b:User) RETURN a,b')
+			.run(
+				`MATCH (a:User)-[:LIGHTS]->(b:User) 
+				WHERE $d1 <= a.litTime <= $d2
+				RETURN a,b`,
+				{
+					d1: filter.from.getTime(),
+					d2: filter.to.getTime(),
+				}
+			)
 			.records()
 			.pipe(
 				map((record) => [record.get('a'), record.get('b')]),
@@ -33,13 +51,12 @@ export default class Neo4jConnector {
 									pt.properties.lng,
 									pt.properties.lat
 								),
-								pt.properties.age
+								new Date(pt.properties.litTime)
 							)
 					)
 				),
-				map(([a, b]) => {
-					return new AgedLine(a, b).toGeoJsonFeature();
-				}), //record.get('rel')),
+				map(([a, b]) => new AgedLine(a, b)),
+				map((l) => l.toGeoJsonFeature()),
 				tap(() => rxSession.close())
 			);
 	}

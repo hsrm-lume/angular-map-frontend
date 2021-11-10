@@ -1,8 +1,8 @@
-import { Feature, LineString, Position } from 'geojson';
+import { Feature, LineString, Point, Position } from 'geojson';
 import { LngLat } from 'maplibre-gl';
 
 export class AgedPoint {
-	constructor(public loc: LngLat, public age: Date = new Date()) {}
+	constructor(public loc: LngLat, public age: Date) {}
 }
 
 export class AgedLine {
@@ -14,7 +14,7 @@ export class AgedLine {
 		];
 	}
 	toGeoJsonFeature(): Feature<LineString> {
-		let f: Feature<LineString> = {
+		return {
 			type: 'Feature',
 			geometry: {
 				type: 'LineString',
@@ -24,7 +24,6 @@ export class AgedLine {
 				time: this.to.age.getTime(),
 			},
 		};
-		return f;
 	}
 }
 
