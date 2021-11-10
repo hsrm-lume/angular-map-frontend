@@ -44,6 +44,7 @@ $angular-frontend-theme: mat.define-light-theme(
 html,
 body {
 	height: 100%;
+	overflow-x: hidden;
 }
 body {
 	margin: 0;
