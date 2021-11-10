@@ -2,7 +2,7 @@
 	<app-toolbar></app-toolbar>
 	<mat-drawer-container>
 		<mat-drawer #drawer mode="side" position="end">
-			<!-- <app-stats></app-stats> -->
+			<app-stats></app-stats>
 		</mat-drawer>
 		<app-leaflet-map></app-leaflet-map>
 		<button
@@ -14,6 +14,10 @@
 		>
 			Stats
 		</button>
-		<app-slider class="floatAbove" id="timeSlider"></app-slider>
+		<app-slider
+			class="floatAbove"
+			class="{{ isVertical ? 'vert' : 'hor' }}"
+			id="timeSlider"
+		></app-slider>
 	</mat-drawer-container>
 </div>

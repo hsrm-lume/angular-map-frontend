@@ -1,5 +1,8 @@
-<mat-card>
-	{{ startString() }}
+<mat-card class="{{ isVertical ? 'vert' : 'hor' }}">
+	<div class="dates">
+		{{ startString() }}
+	</div>
+
 	<mat-slider
 		thumbLabel
 		[displayWith]="formatLabel"
@@ -8,6 +11,9 @@
 		min="{{ dateFrom.getTime() }}"
 		max="{{ dateTo.getTime() }}"
 		aria-label="units"
+		vertical="{{ isVertical }}"
 	></mat-slider>
-	{{ endString() }}
+	<div class="dates">
+		{{ endString() }}
+	</div>
 </mat-card>
