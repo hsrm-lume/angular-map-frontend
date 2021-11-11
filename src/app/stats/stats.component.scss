@@ -1,11 +1,19 @@
-.statcard {
-	width: 300px;
-	height: 96%;
+.hor {
+	width: auto;
+	height: auto;
 	background-color: rgb(53, 54, 54);
 	color: white;
 	text-align: center;
 	font-size: 30px;
+	.mat-card-content {
+		font-size: 20px;
+	}
 }
-.mat-card-content {
-	font-size: 20px;
+.vert {
+	width: 100%;
+	background-color: rgb(53, 54, 54);
+	color: white;
+	text-align: center;
+	.mat-card-content {
+	}
 }

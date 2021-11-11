@@ -4,7 +4,15 @@
 	grid-template-rows: min-content auto;
 	height: 100%;
 }
-
+.horStats {
+	height: 100%;
+	background-color: rgb(53, 54, 54);
+}
+.vertStats {
+	width: 80%;
+	height: 100%;
+	background-color: rgb(53, 54, 54);
+}
 mat-drawer-container {
 	position: relative;
 }
@@ -12,18 +20,23 @@ mat-drawer-container {
 	position: absolute;
 	z-index: 100000;
 }
-#statsButton {
+.horBut {
 	top: 1em;
 	right: 1em;
 }
-
+.vertBut {
+	top: 1em;
+	right: 1em;
+	font-size: 2.1em;
+	padding: 0.8em;
+}
 .hor {
 	bottom: 1em;
 	right: 1em;
 	width: calc(100% - 2em);
 }
 .vert {
-	bottom: 1em;
-	right: 1em;
-	height: 92%;
+	bottom: 2em;
+	right: 2em;
+	height: 90%;
 }

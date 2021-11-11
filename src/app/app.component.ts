@@ -16,7 +16,7 @@ export class AppComponent {
 		this.innerHeight = window.innerHeight;
 	}
 	get isVertical(): boolean {
-		return this.innerWidth < 1000;
+		return this.innerWidth < 1100;
 	}
 	ngOnInit(): void {
 		this.onResize(null);

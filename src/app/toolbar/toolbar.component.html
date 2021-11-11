@@ -1,5 +1,5 @@
-<mat-toolbar id="toolbar">
-	<h1 id="title">Lume Web App 🔥</h1>
+<mat-toolbar id="toolbar" class="{{ isVertical ? 'vert' : 'hor' }}">
+	<h1 id="title">{{ title() }}</h1>
 	<span class="spacer"></span>
 	<div id="buttons">
 		<button

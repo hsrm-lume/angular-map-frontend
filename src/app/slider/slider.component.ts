@@ -18,7 +18,7 @@ export class SliderComponent implements OnInit {
 		this.innerHeight = window.innerHeight;
 	}
 	get isVertical(): boolean {
-		return this.innerWidth < 1000;
+		return this.innerWidth < 1100;
 	}
 	formatLabel(value: number) {
 		return new Date(value).toLocaleDateString().replace(/\.(?=\w+$)/, '. ');

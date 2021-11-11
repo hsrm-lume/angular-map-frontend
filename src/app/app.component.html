@@ -1,14 +1,19 @@
 <div id="grid">
 	<app-toolbar></app-toolbar>
 	<mat-drawer-container>
-		<mat-drawer #drawer mode="side" position="end">
+		<mat-drawer
+			class="{{ isVertical ? 'vertStats' : 'horStats' }}"
+			#drawer
+			mode="side"
+			position="end"
+		>
 			<app-stats></app-stats>
 		</mat-drawer>
 		<app-leaflet-map></app-leaflet-map>
 		<button
 			type="button"
 			class="floatAbove"
-			id="statsButton"
+			class="{{ isVertical ? 'vertBut' : 'horBut' }}"
 			mat-raised-button
 			(click)="drawer.toggle()"
 		>
