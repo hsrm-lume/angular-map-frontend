@@ -4,9 +4,11 @@
 		thumbLabel
 		[displayWith]="formatLabel"
 		tickInterval="{{ 7 * 24 }}"
-		step="{{ 60 * 60 * 1000 }}"
-		min="{{ dateFrom.getTime() }}"
-		max="{{ dateTo.getTime() }}"
+		[step]="stepRange"
+		min="{{ range.from.getTime() }}"
+		max="{{ range.to.getTime() }}"
+		value="{{ date }}"
+		(input)="change($event)"
 		aria-label="units"
 	></mat-slider>
 	{{ endString() }}

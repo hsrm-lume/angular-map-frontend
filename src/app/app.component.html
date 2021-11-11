@@ -2,9 +2,13 @@
 	<app-toolbar></app-toolbar>
 	<mat-drawer-container>
 		<mat-drawer #drawer mode="side" position="end">
-			<!-- <app-stats></app-stats> -->
+			<app-stats></app-stats>
 		</mat-drawer>
-		<app-leaflet-map></app-leaflet-map>
+		<app-map
+			[kind]="'heatmap'"
+			[mode]="'light'"
+			[filter]="filter"
+		></app-map>
 		<button
 			type="button"
 			class="floatAbove"
@@ -14,6 +18,10 @@
 		>
 			Stats
 		</button>
-		<app-slider class="floatAbove" id="timeSlider"></app-slider>
+		<app-slider
+			class="floatAbove"
+			id="timeSlider"
+			[(date)]="selectedTstamp"
+		></app-slider>
 	</mat-drawer-container>
 </div>

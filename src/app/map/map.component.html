@@ -1,0 +1,40 @@
+<mgl-map
+	id="map"
+	[style]="getStyleUrl()"
+	[zoom]="[11]"
+	[center]="[8.45, 50.08]"
+>
+	<mgl-geojson-source id="tree">
+		<mgl-feature
+			*ngFor="let f of features; index as i"
+			[id]="i"
+			[properties]="f.properties"
+			[geometry]="f.geometry"
+		></mgl-feature>
+	</mgl-geojson-source>
+	<mgl-layer
+		*ngIf="kind == 'line'"
+		id="linetree"
+		type="line"
+		source="tree"
+		[filter]="filters"
+		[paint]="linesPaint"
+	>
+	</mgl-layer>
+	<mgl-layer
+		*ngIf="kind == 'heatmap'"
+		id="heatmap"
+		type="heatmap"
+		source="tree"
+		[filter]="filters"
+	>
+	</mgl-layer>
+	<mgl-layer
+		*ngIf="kind == 'point'"
+		id="pts"
+		type="circle"
+		source="tree"
+		[filter]="filters"
+	>
+	</mgl-layer>
+</mgl-map>

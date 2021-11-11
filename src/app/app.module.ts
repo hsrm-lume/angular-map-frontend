@@ -7,8 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MapComponent } from './map/map.component';
+import { NgxMapLibreGLModule } from 'ngx-maplibre-gl';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
 import { SliderComponent } from './slider/slider.component';
@@ -16,7 +16,13 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { StatsComponent } from './stats/stats.component';
 
 @NgModule({
-	declarations: [AppComponent, LeafletMapComponent, SliderComponent, ToolbarComponent, StatsComponent],
+	declarations: [
+		AppComponent,
+		MapComponent,
+		SliderComponent,
+		ToolbarComponent,
+		StatsComponent,
+	],
 	imports: [
 		MatToolbarModule,
 		BrowserModule,
@@ -24,7 +30,7 @@ import { StatsComponent } from './stats/stats.component';
 		BrowserAnimationsModule,
 		MatButtonModule,
 		MatCardModule,
-		LeafletModule,
+		NgxMapLibreGLModule,
 		MatSidenavModule,
 		MatSliderModule,
 	],
