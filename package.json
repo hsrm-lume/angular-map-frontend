@@ -20,7 +20,6 @@
 		"@angular/platform-browser": "~13.0.0",
 		"@angular/platform-browser-dynamic": "~13.0.0",
 		"@angular/router": "~13.0.0",
-		"@types/geojson": "^7946.0.8",
 		"maplibre-gl": "^1.15.2",
 		"neo4j-driver": "^4.4.0",
 		"ngx-maplibre-gl": "^12.0.0",
@@ -29,6 +28,7 @@
 		"zone.js": "~0.11.4"
 	},
 	"devDependencies": {
+		"@types/geojson": "^7946.0.8",
 		"@angular-devkit/build-angular": "~13.0.1",
 		"@angular/cli": "~13.0.1",
 		"@angular/compiler-cli": "~13.0.0",
