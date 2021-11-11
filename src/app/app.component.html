@@ -9,7 +9,11 @@
 		>
 			<app-stats></app-stats>
 		</mat-drawer>
-		<app-leaflet-map></app-leaflet-map>
+		<app-map
+			[kind]="'heatmap'"
+			[mode]="'light'"
+			[filter]="filter"
+		></app-map>
 		<button
 			type="button"
 			class="floatAbove"
@@ -23,6 +27,7 @@
 			class="floatAbove"
 			class="{{ isVertical ? 'vert' : 'hor' }}"
 			id="timeSlider"
+			[(date)]="selectedTstamp"
 		></app-slider>
 	</mat-drawer-container>
 </div>

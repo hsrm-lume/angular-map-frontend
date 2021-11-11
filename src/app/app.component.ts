@@ -1,4 +1,5 @@
 import { HostListener, Component } from '@angular/core';
+import { DateRange } from './map/neo4j-connector';
 
 @Component({
 	selector: 'app-root',
@@ -17,6 +18,13 @@ export class AppComponent {
 	}
 	get isVertical(): boolean {
 		return this.innerWidth < 1100;
+	}
+	selectedTstamp = new Date().getTime();
+	get filter(): DateRange {
+		return {
+			from: new Date('2021-01-01'),
+			to: new Date(this.selectedTstamp),
+		};
 	}
 	ngOnInit(): void {
 		this.onResize(null);

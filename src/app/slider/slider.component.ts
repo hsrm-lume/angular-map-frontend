@@ -1,4 +1,17 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import {
+	HostListener,
+	Component,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+} from '@angular/core';
+import { DateRange } from '../map/neo4j-connector';
+
+const day = 60 * 60 * 24;
+const week = day * 7;
+const month = day * 30;
+const year = day * 365;
 
 @Component({
 	selector: 'app-slider',
@@ -11,6 +24,27 @@ export class SliderComponent implements OnInit {
 	dateTo = new Date('2021-12-31');
 	innerWidth = 0;
 	innerHeight = 0;
+	@Input()
+	range: DateRange = {
+		from: new Date('2021-01-01'),
+		to: new Date('2021-12-31'),
+	};
+
+	@Output()
+	dateChange = new EventEmitter();
+
+	@Input()
+	date?: number;
+
+	get stepRange(): number {
+		// const d = this.range.to.getTime() - this.range.from.getTime();
+		return 60 * 60 * 1000 * 24;
+	}
+
+	// redirect slider change to parent
+	change(event: any) {
+		this.dateChange.emit(event.value);
+	}
 
 	@HostListener('window:resize', ['$event'])
 	onResize(_: any) {
@@ -25,10 +59,10 @@ export class SliderComponent implements OnInit {
 	}
 
 	startString(): string {
-		return this.dateFrom.toLocaleDateString();
+		return this.range.from.toLocaleDateString();
 	}
 	endString(): string {
-		return this.dateTo.toLocaleDateString();
+		return this.range.to.toLocaleDateString();
 	}
 
 	ngOnInit(): void {
