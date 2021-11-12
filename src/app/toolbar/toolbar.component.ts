@@ -15,7 +15,7 @@ export class ToolbarComponent {
 	themeChange = new EventEmitter();
 
 	t(t: any): void {
-		this.themeChange.emit(t.value ? 'dark' : 'light');
+		this.themeChange.emit(t ? 'dark' : 'light');
 	}
 
 	@Input()
@@ -25,7 +25,6 @@ export class ToolbarComponent {
 	mapModeChange = new EventEmitter();
 
 	m(m: any): void {
-		console.log(m.value);
 		this.mapModeChange.emit(m.value);
 	}
 }

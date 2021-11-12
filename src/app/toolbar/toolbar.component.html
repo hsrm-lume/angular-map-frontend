@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
 	<h1 id="title">LUME - MapView</h1>
 	<span class="spacer"></span>
-	<mat-button-toggle-group [ngModel]="mapMode" (ngModelChange)="m($event)">
+	<mat-button-toggle-group [value]="mapMode" (change)="m($event)">
 		<mat-button-toggle value="point">Points</mat-button-toggle>
 		<mat-button-toggle value="line">Lines</mat-button-toggle>
 		<mat-button-toggle value="heatmap">Heatmap</mat-button-toggle>

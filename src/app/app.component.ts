@@ -8,7 +8,7 @@ import { DateRange } from './map/neo4j-connector';
 })
 export class AppComponent {
 	mapMode: MapMode = 'heatmap';
-	theme: Theme = 'dark';
+	theme: Theme = 'light';
 
 	selectedTstamp = new Date().getTime();
 	get filter(): DateRange {
