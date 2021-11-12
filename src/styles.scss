@@ -278,3 +278,9 @@ body {
 	margin: 0;
 	font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+mat-drawer {
+	background-color: #eee !important;
+}
+.dark mat-drawer {
+	background-color: #242424 !important;
+}

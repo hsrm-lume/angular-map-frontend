@@ -1,5 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
+interface Stat {
+	kind: 'stat';
+	label: string;
+	value: number | string;
+	unit?: string;
+}
+interface Separator {
+	kind: 'separator';
+	label: string;
+}
+
 @Component({
 	selector: 'app-stats',
 	templateUrl: './stats.component.html',
@@ -7,19 +18,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatsComponent implements OnInit {
 	constructor() {}
-	burningTime() {
-		const startDate: Date = new Date(2021, 1, 1, 12, 0, 0, 0);
-		const now: Date = new Date();
-		const burnTime: number =
-			(now.getTime() - startDate.getTime()) / 86400000;
-		return Math.round(burnTime * 1000) / 1000;
-	}
-	exchanges() {
-		return Math.floor(Math.random() * 101);
-	}
-	firingTime =
-		'The fire has been burning for ' + this.burningTime() + ' days';
-	fireExchanges =
-		'The fire has been passed on ' + this.exchanges() + ' times';
+
+	stats: (Stat | Separator)[] = [
+		{
+			kind: 'stat',
+			label: 'Total active flames',
+			value: 2946,
+		},
+		{
+			kind: 'stat',
+			label: 'Total distance fire has traveled',
+			value: 73841,
+			unit: 'km',
+		},
+		{
+			kind: 'separator',
+			label: 'personal',
+		},
+		{
+			kind: 'stat',
+			label: 'Your fire got passed on',
+			value: 182,
+			unit: ' times',
+		},
+		{
+			kind: 'stat',
+			label: 'Your directly passed your flame',
+			value: 23,
+			unit: ' times',
+		},
+	];
+
 	ngOnInit(): void {}
 }

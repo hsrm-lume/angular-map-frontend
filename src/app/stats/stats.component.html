@@ -1,7 +1,14 @@
-<mat-card class="statcard">
-	<mat-card-title>Torch Stats</mat-card-title>
-	<mat-card-content>
-		<p>{{ fireExchanges }}</p>
-		<p>{{ firingTime }}</p>
-	</mat-card-content>
-</mat-card>
+<h2>Statistics</h2>
+<ng-container *ngFor="let s of stats">
+	<mat-card *ngIf="s.kind == 'stat'">
+		<mat-card-content>{{ s.label }}:</mat-card-content>
+		<mat-card-title>
+			{{ s.value }}<span *ngIf="s.unit" class="unit">{{ s.unit }}</span>
+		</mat-card-title>
+	</mat-card>
+	<div *ngIf="s.kind == 'separator'" class="separator">
+		<hr />
+		<h3>{{ s.label }}</h3>
+		<hr />
+	</div>
+</ng-container>
