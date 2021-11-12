@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { DateRange } from './map/neo4j-connector';
 
 @Component({
 	selector: 'app-root',

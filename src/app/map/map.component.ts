@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import Neo4jConnector, { DateRange } from './neo4j-connector';
+import Neo4jConnector from './neo4j-connector';
 import { Feature } from 'geojson';
 import { LinePaint } from 'maplibre-gl';
 

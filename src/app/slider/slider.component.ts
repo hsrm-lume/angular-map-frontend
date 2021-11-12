@@ -1,10 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DateRange } from '../map/neo4j-connector';
-
-const day = 60 * 60 * 24;
-const week = day * 7;
-const month = day * 30;
-const year = day * 365;
 
 @Component({
 	selector: 'app-slider',
