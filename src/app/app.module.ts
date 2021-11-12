@@ -14,6 +14,10 @@ import { MatSliderModule } from '@angular/material/slider';
 import { SliderComponent } from './slider/slider.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { StatsComponent } from './stats/stats.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [
@@ -24,6 +28,11 @@ import { StatsComponent } from './stats/stats.component';
 		StatsComponent,
 	],
 	imports: [
+		FormsModule,
+		ReactiveFormsModule,
+		MatButtonToggleModule,
+		MatSlideToggleModule,
+		MatIconModule,
 		MatToolbarModule,
 		BrowserModule,
 		AppRoutingModule,

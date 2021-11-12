@@ -1,5 +1,5 @@
 <div id="grid">
-	<app-toolbar></app-toolbar>
+	<app-toolbar [(theme)]="theme" [(mapMode)]="mapMode"></app-toolbar>
 	<mat-drawer-container>
 		<mat-drawer #drawer mode="side" position="end">
 			<app-stats></app-stats>
