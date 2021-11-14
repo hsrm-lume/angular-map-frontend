@@ -26,9 +26,9 @@ export class ToolbarComponent {
 	}
 	title(): string {
 		if (this.isVertical) {
-			return 'Lume Mobile App 🔥';
+			return 'Lume Map 🔥';
 		} else {
-			return 'Lume Web App 🔥';
+			return 'Lume Web App🔥';
 		}
 	}
 	formatLabel(value: number) {
