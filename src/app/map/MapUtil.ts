@@ -1,45 +1,60 @@
 import * as neo4j from 'neo4j-driver';
 import { Feature, LineString, Point, Position } from 'geojson';
 import { LngLat } from 'maplibre-gl';
-import { OperatorFunction } from 'rxjs';
+import { OperatorFunction, PartialObserver } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+const toAgedPoint = (pt: any): AgedPoint =>
+	new AgedPoint(
+		new LngLat(pt.properties.lng, pt.properties.lat),
+		new Date(pt.properties.litTime.toInt())
+	);
+
+/**
+ * @param source
+ * @returns an Operator that maps a neo4j record to a geojson LineString
+ */
 export const mapToGeoJsonLine: OperatorFunction<
 	neo4j.Record,
 	Feature<LineString>
 > = (source) =>
 	source.pipe(
 		map((record) => [record.get('a'), record.get('b')]),
-		map((pts) =>
-			pts.map(
-				(pt) =>
-					new AgedPoint(
-						new LngLat(pt.properties.lng, pt.properties.lat),
-						new Date(pt.properties.litTime.toInt())
-					)
-			)
-		),
+		map((pts) => pts.map(toAgedPoint)),
 		map(([a, b]) => new AgedLine(a, b)),
 		map((l) => l.toGeoJsonFeature())
 	);
 
+/**
+ * @param source the source to be mapped
+ * @returns an Operator that maps a neo4j record to a geojson Point
+ */
 export const mapToGeoJsonPoint: OperatorFunction<
 	neo4j.Record,
 	Feature<Point>
 > = (source) =>
 	source.pipe(
 		map((record) => record.get('a')),
-		map(
-			(pt) =>
-				new AgedPoint(
-					new LngLat(pt.properties.lng, pt.properties.lat),
-					new Date(pt.properties.litTime.toInt())
-				)
-		),
-		map((l) => l.toGeoJsonFeature())
+		map(toAgedPoint),
+		map((p) => p.toGeoJsonFeature())
 	);
 
-export class AgedPoint {
+/**
+ * @param collection the collection where Features are stored
+ * @returns an Observer that logs complete & error events along with collection
+ */
+export const collectObserver = (
+	collection: Feature[]
+): PartialObserver<Feature> => ({
+	next: (l) => collection.push(l),
+	complete: () => {
+		console.log('completed');
+		console.log(collection.length, ' fetched');
+	},
+	error: (error) => console.warn(error),
+});
+
+class AgedPoint {
 	constructor(public loc: LngLat, public age: Date) {}
 	toGeoJsonFeature(): Feature<Point> {
 		return {
@@ -55,7 +70,7 @@ export class AgedPoint {
 	}
 }
 
-export class AgedLine {
+class AgedLine {
 	constructor(public from: AgedPoint, public to: AgedPoint) {}
 	toPosArray(): Position[] {
 		return [
@@ -76,11 +91,3 @@ export class AgedLine {
 		};
 	}
 }
-
-// const renderRange = {
-// 	start: Date.parse('2021-01-01'),
-// 	end: Date.parse('2021-01-07'),
-// };
-
-// const getPercentageAge = (x: Date) =>
-// 	(x.getTime() - renderRange.start) / (renderRange.end - renderRange.start);

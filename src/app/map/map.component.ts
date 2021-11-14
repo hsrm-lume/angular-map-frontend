@@ -1,9 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Feature, LineString, Point } from 'geojson';
 import { LinePaint } from 'maplibre-gl';
-import { tap } from 'rxjs/operators';
 import Neo4jService from '../services/neo4j-service';
-import { mapToGeoJsonLine, mapToGeoJsonPoint } from './MapUtil';
+import {
+	collectObserver,
+	mapToGeoJsonLine,
+	mapToGeoJsonPoint,
+} from './MapUtil';
 
 @Component({
 	selector: 'app-map',
@@ -41,14 +44,7 @@ export class MapComponent implements OnInit {
 				}
 			)
 			.pipe(mapToGeoJsonLine)
-			.subscribe({
-				next: (l) => this.lines.push(l),
-				complete: () => {
-					console.log('completed');
-					console.log(this.lines.length, 'Lines fetched');
-				},
-				error: (error) => console.log(error),
-			});
+			.subscribe(collectObserver(this.lines));
 		// POINTS
 		this.neo4j
 			.query(
@@ -60,20 +56,8 @@ export class MapComponent implements OnInit {
 					d2: this.filter.to.getTime(),
 				}
 			)
-			.pipe(
-				// tap((x) => console.log(x.get('a'))),
-				tap((x) => console.log(x)),
-				mapToGeoJsonPoint,
-				tap((x) => console.log(x))
-			)
-			.subscribe({
-				next: (p) => this.points.push(p),
-				complete: () => {
-					console.log('completed');
-					console.log(this.points.length, 'Points fetched');
-				},
-				error: (error) => console.log(error),
-			});
+			.pipe(mapToGeoJsonPoint)
+			.subscribe(collectObserver(this.points));
 	}
 
 	// filters & styles for map drawing
