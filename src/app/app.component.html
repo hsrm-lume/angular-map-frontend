@@ -7,6 +7,15 @@
 			mode="side"
 			position="end"
 		>
+			<button
+				type="button"
+				mat-raised-button
+				(click)="drawer.toggle()"
+				disabled="{{ !isVertical }}"
+				id="returnButton"
+			>
+				&#8594;
+			</button>
 			<app-stats></app-stats>
 		</mat-drawer>
 		<app-map [theme]="theme" [mode]="mapMode" [filter]="filter"></app-map>

@@ -1,7 +1,12 @@
 <mat-card class="{{ isVertical ? 'vert' : 'hor' }}">
-	<mat-card-title>Torch Stats</mat-card-title>
+	<mat-card-title>
+		<p>Torch Stats</p>
+	</mat-card-title>
 	<mat-card-content>
-		<p>{{ fireExchanges }}</p>
-		<p>{{ firingTime }}</p>
+		<p id="stat">{{ fireExchanges }}</p>
+		<p>lume exchanges</p>
+		<br />
+		<p id="stat">{{ firingTime }} days</p>
+		<p>lume lifetime</p>
 	</mat-card-content>
 </mat-card>

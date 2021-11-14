@@ -9,7 +9,6 @@ export class StatsComponent implements OnInit {
 	constructor() {}
 	innerWidth = 0;
 	innerHeight = 0;
-
 	@HostListener('window:resize', ['$event'])
 	onResize(_: any) {
 		this.innerWidth = window.innerWidth;
@@ -28,9 +27,9 @@ export class StatsComponent implements OnInit {
 	exchanges() {
 		return Math.floor(Math.random() * 101);
 	}
-	firingTime =
-		'The fire has been burning for ' + this.burningTime() + ' days';
-	fireExchanges =
-		'The fire has been passed on ' + this.exchanges() + ' times';
-	ngOnInit(): void {}
+	firingTime = this.burningTime() ;
+	fireExchanges = this.exchanges();
+	ngOnInit(): void {
+		this.onResize(null);
+	}
 }

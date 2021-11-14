@@ -44,10 +44,15 @@
 		.mat-slider-thumb-container {
 			.mat-slider-thumb-label {
 				padding: 10px !important;
-				left: -58px;
-				bottom: -24px;
+				left: -82px;
+				bottom: -33px;
+				height: 3rem !important;
+				width: 3rem !important;
 				background-color: rgb(53, 54, 54) !important;
 				text-align: center !important;
+				.mat-slider-thumb-label-text {
+					font-size: 1rem !important;
+				}
 			}
 		}
 	}

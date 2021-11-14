@@ -6,7 +6,7 @@ import {
 	OnInit,
 	Output,
 } from '@angular/core';
-import { DateRange } from '../map/neo4j-connector';
+//import { DateRange } from '../map/neo4j-connector';
 
 const day = 60 * 60 * 24;
 const week = day * 7;
