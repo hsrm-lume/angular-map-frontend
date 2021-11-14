@@ -5,3 +5,7 @@ interface DateRange {
 	from: Date;
 	to: Date;
 }
+
+type Dict = {
+	[key: string]: any;
+};

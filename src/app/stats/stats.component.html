@@ -1,12 +1,14 @@
-<mat-card class="{{ isVertical ? 'vert' : 'hor' }}">
-	<mat-card-title>
-		<p>Torch Stats</p>
-	</mat-card-title>
-	<mat-card-content>
-		<p id="stat">{{ fireExchanges }}</p>
-		<p>lume exchanges</p>
-		<br />
-		<p id="stat">{{ firingTime }} days</p>
-		<p>lume lifetime</p>
-	</mat-card-content>
-</mat-card>
+<h2>Statistics</h2>
+<ng-container *ngFor="let sg of statGroups">
+	<div *ngIf="sg.title" class="separator">
+		<hr />
+		<h3>{{ sg.title }}</h3>
+		<hr />
+	</div>
+	<mat-card *ngFor="let s of sg.members">
+		<mat-card-content>{{ s.label }}:</mat-card-content>
+		<mat-card-title>
+			{{ s.value }}<span *ngIf="s.unit" class="unit">{{ s.unit }}</span>
+		</mat-card-title>
+	</mat-card>
+</ng-container>

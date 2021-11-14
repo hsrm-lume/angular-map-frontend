@@ -1,24 +1,25 @@
-.hor {
-	width: auto;
-	height: 93%;
-	background-color: rgb(53, 54, 54);
-	color: white;
+:host > * {
+	margin: 1em;
+}
+h1,
+h2,
+h3 {
 	text-align: center;
 }
-.vert {
-	width: 100%;
-	height: 98%;
-	background-color: rgb(53, 54, 54);
-	color: white;
-	text-align: center;
-	.mat-card-title {
-		font-size: 3em;
-		line-height: 1.4;
+.separator {
+	display: flex;
+	align-items: center;
+	opacity: 0.2;
+	> *:not(hr) {
+		margin: 0 1em;
 	}
-	.mat-card-content {
-		font-size: 2em;
+	hr {
+		border: solid 1px;
+		height: 0px;
+		width: 100%;
 	}
 }
-#stat {
-	font-weight: bold;
+.unit {
+	font-weight: 300;
+	font-size: 14px;
 }

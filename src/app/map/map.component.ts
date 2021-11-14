@@ -1,17 +1,22 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import Neo4jConnector from './neo4j-connector';
-import { Feature } from 'geojson';
+import { Component, Input, OnInit } from '@angular/core';
+import { Feature, LineString, Point } from 'geojson';
 import { LinePaint } from 'maplibre-gl';
+import Neo4jService from '../services/neo4j-service';
+import {
+	collectObserver,
+	mapToGeoJsonLine,
+	mapToGeoJsonPoint,
+} from './MapUtil';
 
 @Component({
 	selector: 'app-map',
 	templateUrl: './map.component.html',
 	styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit, OnDestroy {
-	n4j: Neo4jConnector = new Neo4jConnector();
-
-	features: Feature[] = [];
+export class MapComponent implements OnInit {
+	constructor(public neo4j: Neo4jService) {}
+	lines: Feature<LineString>[] = [];
+	points: Feature<Point>[] = [];
 
 	@Input()
 	mode: MapMode = 'heatmap';
@@ -25,20 +30,37 @@ export class MapComponent implements OnInit, OnDestroy {
 		to: new Date('2999-12-31'),
 	}; // full open filter on init
 
+	// Loads map data on init
 	ngOnInit(): void {
-		this.n4j.geoJSON(/*this.filter*/).subscribe({
-			next: (data) => this.features.push(data),
-			complete: () => {
-				console.log('completed');
-				console.log(this.features.length, 'Lines fetched');
-			},
-			error: (error) => console.log(error),
-		});
-	}
-	ngOnDestroy(): void {
-		this.n4j.destroy();
+		// LINES
+		this.neo4j
+			.query(
+				`MATCH (a:User)-[:LIGHTS]->(b:User)
+				WHERE $d1 <= a.litTime <= $d2
+				RETURN a,b`,
+				{
+					d1: this.filter.from.getTime(),
+					d2: this.filter.to.getTime(),
+				}
+			)
+			.pipe(mapToGeoJsonLine)
+			.subscribe(collectObserver(this.lines));
+		// POINTS
+		this.neo4j
+			.query(
+				`MATCH (a:User)
+				WHERE $d1 <= a.litTime <= $d2
+				RETURN a`,
+				{
+					d1: this.filter.from.getTime(),
+					d2: this.filter.to.getTime(),
+				}
+			)
+			.pipe(mapToGeoJsonPoint)
+			.subscribe(collectObserver(this.points));
 	}
 
+	// filters & styles for map drawing
 	get filters(): any[] {
 		return ['<', ['number', ['get', 'time']], this.filter.to.getTime()];
 	}
