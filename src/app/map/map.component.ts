@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import Neo4jConnector, { DateRange } from './neo4j-connector';
+import Neo4jConnector from './neo4j-connector';
 import { Feature } from 'geojson';
 import { LinePaint } from 'maplibre-gl';
 
@@ -14,10 +14,10 @@ export class MapComponent implements OnInit, OnDestroy {
 	features: Feature[] = [];
 
 	@Input()
-	kind: 'heatmap' | 'cluster' | 'line' | 'point' = 'heatmap';
+	mode: MapMode = 'heatmap';
 
 	@Input()
-	mode: 'light' | 'dark' = 'light';
+	theme: Theme = 'light';
 
 	@Input()
 	filter: DateRange = {
@@ -77,7 +77,7 @@ export class MapComponent implements OnInit, OnDestroy {
 	}
 
 	getStyleUrl(): string {
-		if (this.mode == 'light')
+		if (this.theme == 'light')
 			return 'https://maps.geoapify.com/v1/styles/positron/style.json?apiKey=db8eaf2341994e8d90a08f6ac3ff2adf';
 		else
 			return 'https://maps.geoapify.com/v1/styles/dark-matter-dark-grey/style.json?apiKey=db8eaf2341994e8d90a08f6ac3ff2adf';

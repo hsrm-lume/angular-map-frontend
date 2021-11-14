@@ -10,6 +10,8 @@ export class AppComponent {
 	title = 'angular-frontend';
 	innerWidth = 0;
 	innerHeight = 0;
+	mapMode: MapMode = 'heatmap';
+	theme: Theme = 'light';
 
 	@HostListener('window:resize', ['$event'])
 	onResize(_: any) {
