@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 const toAgedPoint = (pt: any): AgedPoint =>
 	new AgedPoint(
 		new LngLat(pt.properties.lng, pt.properties.lat),
-		new Date(pt.properties.litTime.toInt())
+		new Date(pt.properties.litTime.toNumber())
 	);
 
 /**

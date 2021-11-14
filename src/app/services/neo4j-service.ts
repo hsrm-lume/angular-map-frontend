@@ -17,7 +17,7 @@ export default class Neo4jService implements OnDestroy {
 		this.driver.close();
 	}
 
-	query(q: string, params?: Dict) {
+	query(q: string, params: Dict = {}) {
 		const rxSession = this.driver.rxSession();
 		return rxSession
 			.run(q, params)

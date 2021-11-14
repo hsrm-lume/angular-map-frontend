@@ -1,15 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-interface Stat {
-	kind: 'stat';
-	label: string;
-	value: number | string;
-	unit?: string;
-}
-interface Separator {
-	kind: 'separator';
-	label: string;
-}
+import Neo4jService from '../services/neo4j-service';
+import { StatGroup, Stat, StatFactory } from './StatsUtil';
 
 @Component({
 	selector: 'app-stats',
@@ -17,36 +8,47 @@ interface Separator {
 	styleUrls: ['./stats.component.scss'],
 })
 export class StatsComponent implements OnInit {
-	constructor() {}
+	constructor(public neo4j: Neo4jService) {}
 
-	stats: (Stat | Separator)[] = [
-		{
-			kind: 'stat',
-			label: 'Total active flames',
-			value: 2946,
-		},
-		{
-			kind: 'stat',
-			label: 'Total distance fire has traveled',
-			value: 73841,
-			unit: 'km',
-		},
-		{
-			kind: 'separator',
-			label: 'personal',
-		},
-		{
-			kind: 'stat',
-			label: 'Your fire got passed on',
-			value: 182,
-			unit: ' times',
-		},
-		{
-			kind: 'stat',
-			label: 'Your directly passed your flame',
-			value: 23,
-			unit: ' times',
-		},
+	sf = new StatFactory(this.neo4j);
+
+	statGroups: StatGroup[] = [
+		new StatGroup([
+			this.sf.new('Total active flames', {
+				query: `MATCH (n) RETURN COUNT(n)`,
+			}),
+			this.sf.new(
+				'Total distance fire has traveled',
+				{
+					query: `MATCH (r)-[:LIGHTS]->(u)
+					WITH point({longitude: r.lng, latitude: r.lat}) AS p1, point({longitude: u.lng, latitude: u.lat}) AS p2
+					RETURN round(SUM(distance(p1, p2)))`,
+				},
+				'km'
+			),
+		]),
+		new StatGroup('personal', [
+			this.sf.new(
+				'Your fire got passed on',
+				{
+					query: `MATCH (n)-[*1..]->(m) WHERE n.uuid = $uuid RETURN COUNT(m)`,
+					params: {
+						uuid: '4bfa2ec7-7290-4b2b-b946-048796f006c4',
+					},
+				},
+				' times'
+			),
+			this.sf.new(
+				'You directly passed your flame',
+				{
+					query: `MATCH (n)-[*1]->(m) WHERE n.uuid = "<uuid>" RETURN COUNT(m)`,
+					params: {
+						uuid: '4bfa2ec7-7290-4b2b-b946-048796f006c4',
+					},
+				},
+				' times'
+			),
+		]),
 	];
 
 	ngOnInit(): void {}
