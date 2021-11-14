@@ -1,17 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
 	selector: 'app-toolbar',
 	templateUrl: './toolbar.component.html',
 	styleUrls: ['./toolbar.component.scss'],
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent {
 	constructor() {}
-	circleMode(): void {
-		console.log('Test');
+
+	@Input()
+	theme: Theme = 'light';
+
+	@Output()
+	themeChange = new EventEmitter();
+
+	t(t: any): void {
+		this.themeChange.emit(t ? 'dark' : 'light');
 	}
-	lineMode(): void {
-		console.log('Test');
+
+	@Input()
+	mapMode: MapMode = 'heatmap';
+
+	@Output()
+	mapModeChange = new EventEmitter();
+
+	m(m: any): void {
+		this.mapModeChange.emit(m.value);
 	}
-	ngOnInit(): void {}
 }

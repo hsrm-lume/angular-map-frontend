@@ -1,12 +1,17 @@
-<mat-toolbar id="toolbar">
-	<h1 id="title">Lume Web App 🔥</h1>
+<mat-toolbar color="primary">
+	<h1 id="title">LUME - MapView</h1>
 	<span class="spacer"></span>
-	<div id="buttons">
-		<button mat-raised-button style="margin: 5px" (click)="circleMode()">
-			Circles-Map
-		</button>
-		<button mat-raised-button style="margin: 5px" (click)="lineMode()">
-			Lines-Map
-		</button>
+	<mat-button-toggle-group [value]="mapMode" (change)="m($event)">
+		<mat-button-toggle value="point">Points</mat-button-toggle>
+		<mat-button-toggle value="line">Lines</mat-button-toggle>
+		<mat-button-toggle value="heatmap">Heatmap</mat-button-toggle>
+	</mat-button-toggle-group>
+	<div id="toggle">
+		<mat-icon>light_mode</mat-icon>
+		<mat-slide-toggle
+			[ngModel]="theme == 'dark'"
+			(ngModelChange)="t($event)"
+		></mat-slide-toggle>
+		<mat-icon>dark_mode</mat-icon>
 	</div>
 </mat-toolbar>

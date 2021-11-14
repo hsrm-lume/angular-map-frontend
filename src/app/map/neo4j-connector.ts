@@ -5,11 +5,6 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { AgedLine, AgedPoint } from './AgedLine';
 
-export interface DateRange {
-	from: Date;
-	to: Date;
-}
-
 export default class Neo4jConnector {
 	driver: neo4j.Driver;
 	constructor() {

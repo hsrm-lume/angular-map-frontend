@@ -2,6 +2,7 @@
 	id="map"
 	[style]="getStyleUrl()"
 	[zoom]="[11]"
+	[attributionControl]="false"
 	[center]="[8.45, 50.08]"
 >
 	<mgl-geojson-source id="tree">
@@ -13,7 +14,7 @@
 		></mgl-feature>
 	</mgl-geojson-source>
 	<mgl-layer
-		*ngIf="kind == 'line'"
+		*ngIf="mode == 'line'"
 		id="linetree"
 		type="line"
 		source="tree"
@@ -22,7 +23,7 @@
 	>
 	</mgl-layer>
 	<mgl-layer
-		*ngIf="kind == 'heatmap'"
+		*ngIf="mode == 'heatmap'"
 		id="heatmap"
 		type="heatmap"
 		source="tree"
@@ -30,7 +31,7 @@
 	>
 	</mgl-layer>
 	<mgl-layer
-		*ngIf="kind == 'point'"
+		*ngIf="mode == 'point'"
 		id="pts"
 		type="circle"
 		source="tree"
