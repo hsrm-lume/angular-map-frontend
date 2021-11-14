@@ -1,17 +1,19 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import Neo4jConnector from './neo4j-connector';
-import { Feature } from 'geojson';
+import { Component, Input, OnInit } from '@angular/core';
+import { Feature, LineString, Point } from 'geojson';
 import { LinePaint } from 'maplibre-gl';
+import { tap } from 'rxjs/operators';
+import Neo4jService from '../services/neo4j-service';
+import { mapToGeoJsonLine, mapToGeoJsonPoint } from './MapUtil';
 
 @Component({
 	selector: 'app-map',
 	templateUrl: './map.component.html',
 	styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit, OnDestroy {
-	n4j: Neo4jConnector = new Neo4jConnector();
-
-	features: Feature[] = [];
+export class MapComponent implements OnInit {
+	constructor(public neo4j: Neo4jService) {}
+	lines: Feature<LineString>[] = [];
+	points: Feature<Point>[] = [];
 
 	@Input()
 	mode: MapMode = 'heatmap';
@@ -25,20 +27,56 @@ export class MapComponent implements OnInit, OnDestroy {
 		to: new Date('2999-12-31'),
 	}; // full open filter on init
 
+	// Loads map data on init
 	ngOnInit(): void {
-		this.n4j.geoJSON(/*this.filter*/).subscribe({
-			next: (data) => this.features.push(data),
-			complete: () => {
-				console.log('completed');
-				console.log(this.features.length, 'Lines fetched');
-			},
-			error: (error) => console.log(error),
-		});
-	}
-	ngOnDestroy(): void {
-		this.n4j.destroy();
+		// LINES
+		this.neo4j
+			.query(
+				`MATCH (a:User)-[:LIGHTS]->(b:User)
+				WHERE $d1 <= a.litTime <= $d2
+				RETURN a,b`,
+				{
+					d1: this.filter.from.getTime(),
+					d2: this.filter.to.getTime(),
+				}
+			)
+			.pipe(mapToGeoJsonLine)
+			.subscribe({
+				next: (l) => this.lines.push(l),
+				complete: () => {
+					console.log('completed');
+					console.log(this.lines.length, 'Lines fetched');
+				},
+				error: (error) => console.log(error),
+			});
+		// POINTS
+		this.neo4j
+			.query(
+				`MATCH (a:User)
+				WHERE $d1 <= a.litTime <= $d2
+				RETURN a`,
+				{
+					d1: this.filter.from.getTime(),
+					d2: this.filter.to.getTime(),
+				}
+			)
+			.pipe(
+				// tap((x) => console.log(x.get('a'))),
+				tap((x) => console.log(x)),
+				mapToGeoJsonPoint,
+				tap((x) => console.log(x))
+			)
+			.subscribe({
+				next: (p) => this.points.push(p),
+				complete: () => {
+					console.log('completed');
+					console.log(this.points.length, 'Points fetched');
+				},
+				error: (error) => console.log(error),
+			});
 	}
 
+	// filters & styles for map drawing
 	get filters(): any[] {
 		return ['<', ['number', ['get', 'time']], this.filter.to.getTime()];
 	}

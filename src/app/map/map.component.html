@@ -5,19 +5,27 @@
 	[attributionControl]="false"
 	[center]="[8.45, 50.08]"
 >
-	<mgl-geojson-source id="tree">
+	<mgl-geojson-source id="lines">
 		<mgl-feature
-			*ngFor="let f of features; index as i"
+			*ngFor="let l of lines; index as i"
 			[id]="i"
-			[properties]="f.properties"
-			[geometry]="f.geometry"
+			[properties]="l.properties"
+			[geometry]="l.geometry"
+		></mgl-feature>
+	</mgl-geojson-source>
+	<mgl-geojson-source id="points">
+		<mgl-feature
+			*ngFor="let p of points; index as i"
+			[id]="i"
+			[properties]="p.properties"
+			[geometry]="p.geometry"
 		></mgl-feature>
 	</mgl-geojson-source>
 	<mgl-layer
 		*ngIf="mode == 'line'"
 		id="linetree"
 		type="line"
-		source="tree"
+		source="lines"
 		[filter]="filters"
 		[paint]="linesPaint"
 	>
@@ -26,7 +34,7 @@
 		*ngIf="mode == 'heatmap'"
 		id="heatmap"
 		type="heatmap"
-		source="tree"
+		source="points"
 		[filter]="filters"
 	>
 	</mgl-layer>
@@ -34,7 +42,7 @@
 		*ngIf="mode == 'point'"
 		id="pts"
 		type="circle"
-		source="tree"
+		source="points"
 		[filter]="filters"
 	>
 	</mgl-layer>
