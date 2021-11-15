@@ -1,14 +1,32 @@
 <div id="grid" [class.dark]="theme == 'dark'">
-	<app-toolbar [(theme)]="theme" [(mapMode)]="mapMode"></app-toolbar>
+	<app-toolbar
+		[(theme)]="theme"
+		[portraitMode]="portraitMode"
+		[(mapMode)]="mapMode"
+	></app-toolbar>
 	<mat-drawer-container>
-		<mat-drawer #drawer mode="side" position="end">
+		<mat-drawer
+			[class.portrait]="portraitMode"
+			#drawer
+			mode="side"
+			position="end"
+		>
+			<button
+				*ngIf="portraitMode"
+				type="button"
+				mat-raised-button
+				(click)="drawer.toggle()"
+				id="returnButton"
+			>
+				<mat-icon>arrow_back</mat-icon>
+			</button>
 			<app-stats></app-stats>
 		</mat-drawer>
 		<app-map [theme]="theme" [mode]="mapMode" [filter]="filter"></app-map>
 		<button
+			id="statsButton"
 			type="button"
 			class="floatAbove"
-			id="statsButton"
 			mat-raised-button
 			(click)="drawer.toggle()"
 		>
@@ -16,7 +34,9 @@
 		</button>
 		<app-slider
 			class="floatAbove"
+			[portraitMode]="portraitMode"
 			id="timeSlider"
+			[class.portrait]="portraitMode"
 			[(date)]="selectedTstamp"
 		></app-slider>
 	</mat-drawer-container>

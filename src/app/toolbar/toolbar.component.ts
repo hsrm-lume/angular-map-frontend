@@ -6,7 +6,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 	styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent {
-	constructor() {}
+	@Input()
+	portraitMode = false;
+
+	title(): string {
+		if (this.portraitMode) {
+			return 'Lume Map 🔥';
+		} else {
+			return 'Lume Web App🔥';
+		}
+	}
 
 	@Input()
 	theme: Theme = 'light';

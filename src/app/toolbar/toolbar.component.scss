@@ -3,7 +3,6 @@
 }
 mat-button-toggle-group {
 	font-size: 1rem;
-	margin-right: 2em;
 }
 ::ng-deep
 	.mat-button-toggle-appearance-standard
@@ -17,4 +16,17 @@ mat-button-toggle-group {
 	align-items: center;
 	justify-content: space-between;
 	width: 5em;
+	margin-left: 2em;
+}
+#portraitModeSwitches {
+	display: none;
+}
+@media (max-width: 599px) {
+	#landscapeModeSwitches {
+		display: none;
+	}
+	#portraitModeSwitches {
+		display: flex;
+		justify-content: center;
+	}
 }

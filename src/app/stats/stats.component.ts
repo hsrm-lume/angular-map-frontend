@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import Neo4jService from '../services/neo4j-service';
-import { StatGroup, Stat, StatFactory } from './StatsUtil';
+import { StatGroup, StatFactory } from './StatsUtil';
 
 @Component({
 	selector: 'app-stats',
 	templateUrl: './stats.component.html',
 	styleUrls: ['./stats.component.scss'],
 })
-export class StatsComponent implements OnInit {
+export class StatsComponent {
 	constructor(public neo4j: Neo4jService) {}
 
 	sf = new StatFactory(this.neo4j);
@@ -50,6 +50,4 @@ export class StatsComponent implements OnInit {
 			),
 		]),
 	];
-
-	ngOnInit(): void {}
 }
