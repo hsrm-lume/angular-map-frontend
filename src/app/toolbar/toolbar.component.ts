@@ -12,7 +12,7 @@ import {
 	templateUrl: './toolbar.component.html',
 	styleUrls: ['./toolbar.component.scss'],
 })
-export class ToolbarComponent {
+export class ToolbarComponent implements OnInit {
 	constructor() {}
 	innerWidth = 0;
 	innerHeight = 0;
@@ -33,10 +33,6 @@ export class ToolbarComponent {
 	}
 	formatLabel(value: number) {
 		return new Date(value).toLocaleDateString().replace(/\.(?=\w+$)/, '. ');
-	}
-
-	circleMode(): void {
-		console.log('Test');
 	}
 	@Input()
 	theme: Theme = 'light';

@@ -1,12 +1,11 @@
-import { HostListener, Component } from '@angular/core';
-//import { DateRange } from './map/neo4j-connector';
+import { HostListener, Component, OnInit } from '@angular/core';
 
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 	title = 'angular-frontend';
 	innerWidth = 0;
 	innerHeight = 0;
