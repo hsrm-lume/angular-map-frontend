@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="{{ isVertical ? 'vert' : 'hor' }}">
+<mat-toolbar color="primary" class="{{ displayVertical ? 'vert' : 'hor' }}">
 	<h1 id="title">{{ title() }}</h1>
 	<span class="spacer"></span>
 	<mat-button-toggle-group [value]="mapMode" (change)="m($event)">

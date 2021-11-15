@@ -1,23 +1,14 @@
-import {
-	HostListener,
-	Component,
-	EventEmitter,
-	Input,
-	OnInit,
-	Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
 	selector: 'app-slider',
 	templateUrl: './slider.component.html',
 	styleUrls: ['./slider.component.scss'],
 })
-export class SliderComponent implements OnInit {
-	// TODO Banana in a box
-	dateFrom = new Date('2021-01-01');
-	dateTo = new Date('2021-12-31');
-	innerWidth = 0;
-	innerHeight = 0;
+export class SliderComponent {
+	@Input()
+	displayVertical = false;
+
 	@Input()
 	range: DateRange = {
 		from: new Date('2021-01-01'),
@@ -40,14 +31,6 @@ export class SliderComponent implements OnInit {
 		this.dateChange.emit(event.value);
 	}
 
-	@HostListener('window:resize', ['$event'])
-	onResize(_: any) {
-		this.innerWidth = window.innerWidth;
-		this.innerHeight = window.innerHeight;
-	}
-	get isVertical(): boolean {
-		return this.innerWidth < 1100;
-	}
 	formatLabel(value: number) {
 		return new Date(value).toLocaleDateString().replace(/\.(?=\w+$)/, '. ');
 	}
@@ -57,9 +40,5 @@ export class SliderComponent implements OnInit {
 	}
 	endString(): string {
 		return this.range.to.toLocaleDateString();
-	}
-
-	ngOnInit(): void {
-		this.onResize(null);
 	}
 }

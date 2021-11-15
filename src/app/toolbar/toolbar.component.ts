@@ -1,36 +1,22 @@
-import {
-	HostListener,
-	Component,
-	OnInit,
-	EventEmitter,
-	Input,
-	Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
 	selector: 'app-toolbar',
 	templateUrl: './toolbar.component.html',
 	styleUrls: ['./toolbar.component.scss'],
 })
-export class ToolbarComponent implements OnInit {
-	constructor() {}
-	innerWidth = 0;
-	innerHeight = 0;
-	@HostListener('window:resize', ['$event'])
-	onResize(_: any) {
-		this.innerWidth = window.innerWidth;
-		this.innerHeight = window.innerHeight;
-	}
-	get isVertical(): boolean {
-		return this.innerWidth < 1100;
-	}
+export class ToolbarComponent {
+	@Input()
+	displayVertical = false;
+
 	title(): string {
-		if (this.isVertical) {
+		if (this.displayVertical) {
 			return 'Lume Map 🔥';
 		} else {
 			return 'Lume Web App🔥';
 		}
 	}
+
 	@Input()
 	theme: Theme = 'light';
 
@@ -49,8 +35,5 @@ export class ToolbarComponent implements OnInit {
 
 	m(m: any): void {
 		this.mapModeChange.emit(m.value);
-	}
-	ngOnInit(): void {
-		this.onResize(null);
 	}
 }

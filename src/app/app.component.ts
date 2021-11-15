@@ -6,7 +6,6 @@ import { HostListener, Component, OnInit } from '@angular/core';
 	styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-	title = 'angular-frontend';
 	innerWidth = 0;
 	innerHeight = 0;
 	mapMode: MapMode = 'heatmap';
@@ -16,10 +15,9 @@ export class AppComponent implements OnInit {
 	onResize(_: any) {
 		this.innerWidth = window.innerWidth;
 		this.innerHeight = window.innerHeight;
+		this.displayVertical = this.innerWidth < 1100;
 	}
-	get isVertical(): boolean {
-		return this.innerWidth < 1100;
-	}
+	displayVertical = false;
 	selectedTstamp = new Date().getTime();
 	get filter(): DateRange {
 		return {
