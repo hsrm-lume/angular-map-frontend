@@ -31,9 +31,6 @@ export class ToolbarComponent implements OnInit {
 			return 'Lume Web App🔥';
 		}
 	}
-	formatLabel(value: number) {
-		return new Date(value).toLocaleDateString().replace(/\.(?=\w+$)/, '. ');
-	}
 	@Input()
 	theme: Theme = 'light';
 
