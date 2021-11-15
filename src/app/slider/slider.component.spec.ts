@@ -5,7 +5,7 @@ import { SliderComponent } from './slider.component';
 describe('SliderComponent', () => {
 	let component: SliderComponent;
 	let fixture: ComponentFixture<SliderComponent>;
-	
+
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [SliderComponent],
