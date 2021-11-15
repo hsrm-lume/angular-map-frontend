@@ -1,31 +1,8 @@
-.hor {
-	display: flex;
-	height: 3em;
-	mat-button-toggle-group {
-		font-size: 1rem;
-		margin-right: 2em;
-	}
-}
-#title {
-	color: white;
-	font-size: 40px;
-}
 .spacer {
 	flex: 1 auto;
 }
-.vert {
-	display: flex;
-	height: 8em;
-	#title {
-		font-size: 3em;
-	}
-	mat-button-toggle-group {
-		font-size: 1.8rem;
-		margin-right: 1em;
-	}
-	#toggle {
-		margin-right: 1em;
-	}
+mat-button-toggle-group {
+	font-size: 1rem;
 }
 ::ng-deep
 	.mat-button-toggle-appearance-standard
@@ -39,4 +16,17 @@
 	align-items: center;
 	justify-content: space-between;
 	width: 5em;
+	margin-left: 2em;
+}
+#portraitModeSwitches {
+	display: none;
+}
+@media (max-width: 599px) {
+	#landscapeModeSwitches {
+		display: none;
+	}
+	#portraitModeSwitches {
+		display: flex;
+		justify-content: center;
+	}
 }

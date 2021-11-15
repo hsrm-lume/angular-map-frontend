@@ -6,18 +6,15 @@ import { HostListener, Component, OnInit } from '@angular/core';
 	styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-	innerWidth = 0;
-	innerHeight = 0;
 	mapMode: MapMode = 'heatmap';
 	theme: Theme = 'light';
 
 	@HostListener('window:resize', ['$event'])
 	onResize(_: any) {
-		this.innerWidth = window.innerWidth;
-		this.innerHeight = window.innerHeight;
-		this.displayVertical = this.innerWidth < 1100;
+		this.portraitMode =
+			window.innerWidth < 1100 && window.innerWidth < window.innerHeight;
 	}
-	displayVertical = false;
+	portraitMode = false;
 	selectedTstamp = new Date().getTime();
 	get filter(): DateRange {
 		return {

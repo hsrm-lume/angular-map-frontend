@@ -7,10 +7,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class ToolbarComponent {
 	@Input()
-	displayVertical = false;
+	portraitMode = false;
 
 	title(): string {
-		if (this.displayVertical) {
+		if (this.portraitMode) {
 			return 'Lume Map 🔥';
 		} else {
 			return 'Lume Web App🔥';

@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class SliderComponent {
 	@Input()
-	displayVertical = false;
+	portraitMode = false;
 
 	@Input()
 	range: DateRange = {

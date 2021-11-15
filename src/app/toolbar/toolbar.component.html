@@ -1,17 +1,30 @@
-<mat-toolbar color="primary" class="{{ displayVertical ? 'vert' : 'hor' }}">
-	<h1 id="title">{{ title() }}</h1>
-	<span class="spacer"></span>
-	<mat-button-toggle-group [value]="mapMode" (change)="m($event)">
-		<mat-button-toggle value="point">Points</mat-button-toggle>
-		<mat-button-toggle value="line">Lines</mat-button-toggle>
-		<mat-button-toggle value="heatmap">Heatmap</mat-button-toggle>
-	</mat-button-toggle-group>
-	<div id="toggle">
-		<mat-icon>light_mode</mat-icon>
-		<mat-slide-toggle
-			[ngModel]="theme == 'dark'"
-			(ngModelChange)="t($event)"
-		></mat-slide-toggle>
-		<mat-icon>dark_mode</mat-icon>
-	</div>
+<mat-toolbar color="primary" [class.portrait]="portraitMode">
+	<mat-toolbar-row>
+		<h1 id="title">{{ title() }}</h1>
+		<span class="spacer"></span>
+		<mat-button-toggle-group
+			id="landscapeModeSwitches"
+			[value]="mapMode"
+			(change)="m($event)"
+		>
+			<mat-button-toggle value="point">Points</mat-button-toggle>
+			<mat-button-toggle value="line">Lines</mat-button-toggle>
+			<mat-button-toggle value="heatmap">Heatmap</mat-button-toggle>
+		</mat-button-toggle-group>
+		<div id="toggle">
+			<mat-icon>light_mode</mat-icon>
+			<mat-slide-toggle
+				[ngModel]="theme == 'dark'"
+				(ngModelChange)="t($event)"
+			></mat-slide-toggle>
+			<mat-icon>dark_mode</mat-icon>
+		</div>
+	</mat-toolbar-row>
+	<mat-toolbar-row id="portraitModeSwitches">
+		<mat-button-toggle-group [value]="mapMode" (change)="m($event)">
+			<mat-button-toggle value="point">Points</mat-button-toggle>
+			<mat-button-toggle value="line">Lines</mat-button-toggle>
+			<mat-button-toggle value="heatmap">Heatmap</mat-button-toggle>
+		</mat-button-toggle-group>
+	</mat-toolbar-row>
 </mat-toolbar>

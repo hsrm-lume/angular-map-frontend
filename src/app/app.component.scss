@@ -4,27 +4,7 @@
 	grid-template-rows: min-content auto;
 	height: 100%;
 }
-.horStats {
-	height: 100%;
-	background-color: rgb(53, 54, 54);
-}
-.vertStats {
-	width: 100%;
-	height: 100%;
-	background-color: rgb(53, 54, 54);
-}
-#returnButton {
-	position: absolute;
-	z-index: 5;
-	top: 0.5em;
-	left: 0.5em;
-	font-size: 3em;
-	size: 5em;
-	text-align: center;
-}
-.horRet {
-	visibility: hidden;
-}
+
 mat-drawer-container {
 	position: relative;
 }
@@ -32,23 +12,24 @@ mat-drawer-container {
 	position: absolute;
 	z-index: 100000;
 }
-.horBut {
+#statsButton {
 	top: 1em;
 	right: 1em;
 }
-.vertBut {
-	top: 2%;
-	right: 2%;
-	font-size: 2.1em;
-	padding: 0.8em;
-}
-.hor {
+
+#timeSlider {
 	bottom: 1em;
 	right: 1em;
 	width: calc(100% - 2em);
+	&.portrait {
+		width: auto;
+		height: calc(100% - 6em);
+	}
 }
-.vert {
-	bottom: 2%;
-	right: 2%;
-	height: 90%;
+
+#returnButton {
+	margin: 1em 0 0 1em;
+}
+mat-drawer.portrait {
+	width: 100%;
 }

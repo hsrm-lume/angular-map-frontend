@@ -1,4 +1,4 @@
-<mat-card class="{{ displayVertical ? 'vert' : 'hor' }}">
+<mat-card [class.portrait]="portraitMode">
 	<div class="dates">
 		{{ startString() }}
 	</div>
@@ -13,7 +13,7 @@
 		value="{{ date }}"
 		(input)="change($event)"
 		aria-label="units"
-		vertical="{{ displayVertical }}"
+		[vertical]="portraitMode"
 	></mat-slider>
 	<div class="dates">
 		{{ endString() }}
