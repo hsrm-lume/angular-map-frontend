@@ -1,12 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
 	selector: 'app-slider',
 	templateUrl: './slider.component.html',
 	styleUrls: ['./slider.component.scss'],
 })
-export class SliderComponent implements OnInit {
-	// TODO Banana in a box
+export class SliderComponent {
+	@Input()
+	portraitMode = false;
+
 	@Input()
 	range: DateRange = {
 		from: new Date('2021-01-01'),
@@ -39,6 +41,4 @@ export class SliderComponent implements OnInit {
 	endString(): string {
 		return this.range.to.toLocaleDateString();
 	}
-
-	ngOnInit(): void {}
 }

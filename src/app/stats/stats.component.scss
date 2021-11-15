@@ -1,11 +1,25 @@
-.statcard {
-	width: 300px;
-	height: 92%;
-	background-color: rgb(53, 54, 54);
-	color: white;
-	text-align: center;
-	font-size: 30px;
+:host > * {
+	margin: 1em;
 }
-.mat-card-content {
-	font-size: 20px;
+h1,
+h2,
+h3 {
+	text-align: center;
+}
+.separator {
+	display: flex;
+	align-items: center;
+	opacity: 0.2;
+	> *:not(hr) {
+		margin: 0 1em;
+	}
+	hr {
+		border: solid 1px;
+		height: 0px;
+		width: 100%;
+	}
+}
+.unit {
+	font-weight: 300;
+	font-size: 14px;
 }

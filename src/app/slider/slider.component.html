@@ -1,5 +1,8 @@
-<mat-card>
-	{{ startString() }}
+<mat-card [class.portrait]="portraitMode">
+	<div class="dates">
+		{{ startString() }}
+	</div>
+
 	<mat-slider
 		thumbLabel
 		[displayWith]="formatLabel"
@@ -10,6 +13,9 @@
 		value="{{ date }}"
 		(input)="change($event)"
 		aria-label="units"
+		[vertical]="portraitMode"
 	></mat-slider>
-	{{ endString() }}
+	<div class="dates">
+		{{ endString() }}
+	</div>
 </mat-card>
