@@ -1,7 +1,6 @@
 import { LinePaint, SymbolLayout, Map, Popup } from 'maplibre-gl';
 import { Component, Input, OnInit } from '@angular/core';
 import { Feature, LineString, Point } from 'geojson';
-import { LinePaint, SymbolLayout, Map, Popup } from 'maplibre-gl';
 import Neo4jService from '../services/neo4j-service';
 import {
 	collectObserver,
