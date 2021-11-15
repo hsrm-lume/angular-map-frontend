@@ -278,3 +278,17 @@ body {
 	margin: 0;
 	font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+.mapboxgl-popup-content,
+.maplibregl-popup-content {
+	padding: 7px 10px !important;
+}
+.dark {
+	.mapboxgl-popup-content,
+	.maplibregl-popup-content {
+		background: #363636;
+	}
+	.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+	.maplibregl-popup-anchor-top .maplibregl-popup-tip {
+		border-bottom-color: #363636;
+	}
+}
