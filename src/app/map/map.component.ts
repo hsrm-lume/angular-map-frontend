@@ -1,6 +1,6 @@
+import { LinePaint, SymbolLayout, Map, Popup } from 'maplibre-gl';
 import { Component, Input, OnInit } from '@angular/core';
 import { Feature, LineString, Point } from 'geojson';
-import { LinePaint } from 'maplibre-gl';
 import Neo4jService from '../services/neo4j-service';
 import {
 	collectObserver,
@@ -17,6 +17,8 @@ export class MapComponent implements OnInit {
 	constructor(public neo4j: Neo4jService) {}
 	lines: Feature<LineString>[] = [];
 	points: Feature<Point>[] = [];
+
+	map?: Map;
 
 	@Input()
 	mode: MapMode = 'heatmap';
@@ -96,6 +98,30 @@ export class MapComponent implements OnInit {
 			],
 			'line-color': '#ffaa00',
 		};
+	}
+
+	pointLayout: SymbolLayout = {
+		'icon-image': 'fire',
+		'icon-anchor': 'bottom',
+		'icon-allow-overlap': false,
+		'icon-padding': 0,
+	};
+
+	onPointClick(e: any) {
+		if (!this.map) return;
+		const features = this.map
+			.queryRenderedFeatures(e.point)
+			.filter((x) => x.layer.id == 'pts');
+		if (features.length < 1) return;
+		const f: Feature = features[0];
+		new Popup({ anchor: 'top', closeButton: false })
+			.setLngLat((f.geometry as any).coordinates)
+			.setHTML(
+				'<span>' +
+					new Date(f.properties?.time || 0).toLocaleDateString() +
+					'</span>'
+			)
+			.addTo(this.map);
 	}
 
 	getStyleUrl(): string {

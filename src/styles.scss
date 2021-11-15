@@ -281,6 +281,21 @@ body {
 mat-drawer {
 	background-color: #eee !important;
 }
-.dark mat-drawer {
-	background-color: #242424 !important;
+
+.mapboxgl-popup-content,
+.maplibregl-popup-content {
+	padding: 7px 10px !important;
+}
+.dark {
+  mat-drawer {
+	  background-color: #242424 !important;
+  }
+	.mapboxgl-popup-content,
+	.maplibregl-popup-content {
+		background: #363636;
+	}
+	.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+	.maplibregl-popup-anchor-top .maplibregl-popup-tip {
+		border-bottom-color: #363636;
+	}
 }

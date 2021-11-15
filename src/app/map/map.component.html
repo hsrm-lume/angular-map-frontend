@@ -4,6 +4,7 @@
 	[zoom]="[11]"
 	[attributionControl]="false"
 	[center]="[8.45, 50.08]"
+	(mapLoad)="map = $event"
 >
 	<mgl-geojson-source id="lines">
 		<mgl-feature
@@ -21,6 +22,7 @@
 			[geometry]="p.geometry"
 		></mgl-feature>
 	</mgl-geojson-source>
+	<mgl-image id="fire" url="assets/torch_ico.png"> </mgl-image>
 	<mgl-layer
 		*ngIf="mode == 'line'"
 		id="linetree"
@@ -41,9 +43,11 @@
 	<mgl-layer
 		*ngIf="mode == 'point'"
 		id="pts"
-		type="circle"
+		type="symbol"
+		[layout]="pointLayout"
 		source="points"
 		[filter]="filters"
+		(layerClick)="onPointClick($event)"
 	>
 	</mgl-layer>
 </mgl-map>
