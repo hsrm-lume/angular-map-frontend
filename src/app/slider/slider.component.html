@@ -1,21 +1,29 @@
 <mat-card [class.portrait]="portraitMode">
 	<div class="dates">
-		{{ startString() }}
+		{{ labelString("start") }}
 	</div>
 
 	<mat-slider
 		thumbLabel
 		[displayWith]="formatLabel"
-		tickInterval="{{ 7 * 24 }}"
+		[tickInterval]="tickInterval"
 		[step]="stepRange"
-		min="{{ range.from.getTime() }}"
-		max="{{ range.to.getTime() }}"
+		[min]="range.from"
+		[max]="range.to"
 		value="{{ date }}"
 		(input)="change($event)"
 		aria-label="units"
 		[vertical]="portraitMode"
 	></mat-slider>
 	<div class="dates">
-		{{ endString() }}
+		{{ labelString("end") }}
+	</div>
+	<div class="zooms">
+		<button mat-stroked-button class="zoom" (click)="zoom('in')">
+			<mat-icon>zoom_in</mat-icon>
+		</button>
+		<button mat-stroked-button class="zoom" (click)="zoom('out')">
+			<mat-icon>zoom_out</mat-icon>
+		</button>
 	</div>
 </mat-card>
