@@ -5,6 +5,10 @@ interface DateRange {
 	from: Date;
 	to: Date;
 }
+interface NumberRange {
+	from: number;
+	to: number;
+}
 
 type Dict = {
 	[key: string]: any;

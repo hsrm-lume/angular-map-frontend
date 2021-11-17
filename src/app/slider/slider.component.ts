@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+// workarround for static formatLabel function
+let displayWithTime = false;
+
 @Component({
 	selector: 'app-slider',
 	templateUrl: './slider.component.html',
@@ -9,36 +12,88 @@ export class SliderComponent {
 	@Input()
 	portraitMode = false;
 
-	@Input()
-	range: DateRange = {
-		from: new Date('2021-01-01'),
-		to: new Date('2021-12-31'),
-	};
-
 	@Output()
 	dateChange = new EventEmitter();
 
 	@Input()
-	date?: number;
+	date: number = new Date().getTime();
 
-	get stepRange(): number {
-		// const d = this.range.to.getTime() - this.range.from.getTime();
-		return 60 * 60 * 1000 * 24;
-	}
+	range: NumberRange = {
+		from: new Date('2021-01-01').getTime(),
+		to: new Date(this.date).getTime(),
+	};
 
 	// redirect slider change to parent
 	change(event: any) {
+		this.date = event.value;
 		this.dateChange.emit(event.value);
 	}
 
-	formatLabel(value: number) {
-		return new Date(value).toLocaleDateString().replace(/\.(?=\w+$)/, '. ');
+	private displayWithTime(): boolean {
+		displayWithTime =
+			this.range.to - this.range.from < 60 * 60 * 1000 * 24 * 7;
+		return displayWithTime;
 	}
 
-	startString(): string {
-		return this.range.from.toLocaleDateString();
+	formatLabel(value: number) {
+		// `this` cant be accessed in here
+		if (displayWithTime)
+			return new Date(value)
+				.toLocaleString()
+				.replace(/\d{2,4}(,| )+/, ' ') // remove year
+				.replace(/:\d\d/, ''); // remove seconds
+		return new Date(value).toLocaleDateString().replace(/\.(?=\w+$)/, '. '); // insert break after .
+	}
+
+	private stringOf(n: number): string {
+		const d = new Date(n);
+		if (
+			!this.displayWithTime() &&
+			d.toDateString() == new Date().toDateString()
+		)
+			return 'today';
+		if (this.displayWithTime())
+			return d.toLocaleString().replace(/:\d\d$/, '');
+		return d.toLocaleDateString();
+	}
+
+	labelString(pos: 'start' | 'end'): string {
+		if (this.portraitMode) {
+			// swap labels in portrait mode
+			if (pos == 'start') pos = 'end';
+			else if (pos == 'end') pos = 'start';
+		}
+		const s = this.stringOf(
+			pos == 'start' ? this.range.from : this.range.to
+		);
+		if (this.displayWithTime() && (this.portraitMode || pos == 'start'))
+			return s.replace(/\d{2,4}(,| )+/, ' ');
+		return s;
 	}
 	endString(): string {
-		return this.range.to.toLocaleDateString();
+		const s = this.stringOf(
+			this.portraitMode ? this.range.to : this.range.from
+		);
+		if (this.portraitMode) return this.stringOf(this.range.from);
+		return this.stringOf(this.range.to);
+	}
+	zoom(direction: 'in' | 'out') {
+		const d = this.range.to - this.range.from;
+		if (direction == 'out') {
+			this.range.from -= d / 2;
+			this.range.to += d / 2;
+		} else {
+			const p = ((this.date - this.range.from) / d) * 1.3 - 0.15;
+			this.range.from += (d * p) / 4;
+			this.range.to -= (d * (1 - p)) / 4;
+		}
+	}
+	get stepRange(): number {
+		const d = this.range.to - this.range.from;
+		return d / 356;
+	}
+	get tickInterval(): number {
+		const d = this.range.to - this.range.from;
+		return 1000000000000 / d;
 	}
 }

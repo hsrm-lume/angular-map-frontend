@@ -2,7 +2,7 @@ mat-card {
 	padding-top: 0;
 	padding-bottom: 0;
 	display: grid;
-	grid-template-columns: min-content auto min-content;
+	grid-template-columns: min-content auto min-content min-content min-content;
 	grid-gap: 1em;
 	line-height: 100%;
 	align-items: center;
@@ -19,8 +19,22 @@ mat-card {
 		background-color: rgb(53, 54, 54) !important;
 		text-align: center !important;
 	}
+	.dates {
+		white-space: nowrap;
+	}
+	.zooms {
+		display: flex;
+		flex-direction: row;
+		margin-right: -1.9em;
+		button {
+			margin: 0 0.2em;
+			min-width: unset;
+			width: fit-content;
+			padding: 0 7px;
+		}
+	}
 	&.portrait {
-		grid-template-rows: min-content auto min-content;
+		grid-template-rows: min-content auto min-content min-content min-content;
 		grid-template-columns: auto;
 		justify-content: center;
 		padding: 16px 0;
@@ -42,6 +56,14 @@ mat-card {
 			transform: rotateZ(180deg);
 			width: 1em;
 			margin: 0 auto;
+		}
+		.zooms {
+			flex-direction: column;
+			margin-right: 0;
+			margin-bottom: -2.1em;
+			button {
+				margin: 0 auto 0.3em;
+			}
 		}
 	}
 }
