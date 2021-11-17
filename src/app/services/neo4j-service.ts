@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import * as neo4j from 'neo4j-driver';
 import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
 	providedIn: 'root',
@@ -9,8 +10,11 @@ export default class Neo4jService implements OnDestroy {
 	driver: neo4j.Driver;
 	constructor() {
 		this.driver = neo4j.driver(
-			'neo4j://localhost',
-			neo4j.auth.basic('neo4j', 's3cr3t4')
+			environment.neo4j.url,
+			neo4j.auth.basic(
+				environment.neo4j.username,
+				environment.neo4j.password
+			)
 		);
 	}
 	ngOnDestroy(): void {

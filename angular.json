@@ -23,14 +23,19 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
-						"outputPath": "dist/angular-frontend",
+						"outputPath": "dist",
 						"index": "src/index.html",
 						"main": "src/main.ts",
 						"polyfills": "src/polyfills.ts",
 						"tsConfig": "tsconfig.app.json",
-						"allowedCommonJsDependencies": ["neo4j-driver"],
+						"allowedCommonJsDependencies": [
+							"neo4j-driver"
+						],
 						"inlineStyleLanguage": "scss",
-						"assets": ["src/favicon.ico", "src/assets"],
+						"assets": [
+							"src/favicon.ico",
+							"src/assets"
+						],
 						"styles": [
 							"src/styles.scss",
 							"./node_modules/maplibre-gl/dist/maplibre-gl.css"
@@ -96,8 +101,13 @@
 						"tsConfig": "tsconfig.spec.json",
 						"karmaConfig": "karma.conf.js",
 						"inlineStyleLanguage": "scss",
-						"assets": ["src/favicon.ico", "src/assets"],
-						"styles": ["src/styles.scss"],
+						"assets": [
+							"src/favicon.ico",
+							"src/assets"
+						],
+						"styles": [
+							"src/styles.scss"
+						],
 						"scripts": []
 					}
 				}
