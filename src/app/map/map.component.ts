@@ -1,4 +1,4 @@
-import { LinePaint, SymbolLayout, Map, Popup } from 'maplibre-gl';
+import { LinePaint, SymbolLayout, Map, Popup, HeatmapPaint } from 'maplibre-gl';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Feature, LineString, Point } from 'geojson';
 import Neo4jService from '../services/neo4j-service';
@@ -101,6 +101,19 @@ export class MapComponent implements OnInit {
 				1,
 			],
 			'line-color': '#ffaa00',
+		};
+	}
+	get heatmapPaint(): HeatmapPaint {
+		return {
+			'heatmap-radius': [
+				'interpolate',
+				['linear'],
+				['zoom'],
+				0,
+				2,
+				9,
+				20,
+			],
 		};
 	}
 
