@@ -1,5 +1,5 @@
 import { LinePaint, SymbolLayout, Map, Popup } from 'maplibre-gl';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Feature, LineString, Point } from 'geojson';
 import Neo4jService from '../services/neo4j-service';
 import {
@@ -31,6 +31,10 @@ export class MapComponent implements OnInit {
 		from: new Date('2000-01-01'),
 		to: new Date('2999-12-31'),
 	}; // full open filter on init
+
+	// the UUID of clicked point
+	@Output()
+	inspectUuid = new EventEmitter<string>();
 
 	// Loads map data on init
 	ngOnInit(): void {
@@ -107,6 +111,7 @@ export class MapComponent implements OnInit {
 		'icon-padding': 0,
 	};
 
+	prevInspectUuid = '';
 	onPointClick(e: any) {
 		if (!this.map) return;
 		const features = this.map
@@ -115,6 +120,10 @@ export class MapComponent implements OnInit {
 		if (features.length < 1) return;
 		const f: Feature = features[0];
 		new Popup({ anchor: 'top', closeButton: false })
+			.on('close', () => {
+				if (this.prevInspectUuid == f.properties?.uuid)
+					this.inspectUuid.emit('');
+			})
 			.setLngLat((f.geometry as any).coordinates)
 			.setHTML(
 				'<span>' +
@@ -122,6 +131,8 @@ export class MapComponent implements OnInit {
 					'</span>'
 			)
 			.addTo(this.map);
+		this.inspectUuid.emit(f.properties?.uuid);
+		this.prevInspectUuid = f.properties?.uuid;
 	}
 
 	getStyleUrl(): string {

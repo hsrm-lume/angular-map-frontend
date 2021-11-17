@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 
 const toAgedPoint = (pt: any): AgedPoint =>
 	new AgedPoint(
+		pt.properties.uuid,
 		new LngLat(pt.properties.lng, pt.properties.lat),
 		new Date(pt.properties.litTime.toNumber())
 	);
@@ -55,7 +56,7 @@ export const collectObserver = (
 });
 
 class AgedPoint {
-	constructor(public loc: LngLat, public age: Date) {}
+	constructor(public uuid: string, public loc: LngLat, public age: Date) {}
 	toGeoJsonFeature(): Feature<Point> {
 		return {
 			type: 'Feature',
@@ -64,6 +65,7 @@ class AgedPoint {
 				coordinates: [this.loc.lng, this.loc.lat],
 			},
 			properties: {
+				uuid: this.uuid,
 				time: this.age.getTime(),
 			},
 		};

@@ -20,9 +20,14 @@
 			>
 				<mat-icon>arrow_back</mat-icon>
 			</button>
-			<app-stats></app-stats>
+			<app-stats #stats></app-stats>
 		</mat-drawer>
-		<app-map [theme]="theme" [mode]="mapMode" [filter]="filter"></app-map>
+		<app-map
+			(inspectUuid)="stats.loadInspectGroup($event)"
+			[theme]="theme"
+			[mode]="mapMode"
+			[filter]="filter"
+		></app-map>
 		<button
 			id="statsButton"
 			type="button"
