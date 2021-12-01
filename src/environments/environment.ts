@@ -5,9 +5,10 @@
 export const environment = {
 	neo4j: {
 		url: (location: any) => 'neo4j://localhost',
-		username: 'readonly',
-		password: 'well-known',
+		username: 'neo4j',
+		password: 's3cr3t4',
 	},
+	startDate: new Date('2021-01-01').getTime(),
 	production: false,
 };
 

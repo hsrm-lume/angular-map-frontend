@@ -13,14 +13,14 @@ export class SliderComponent {
 	portraitMode = false;
 
 	@Output()
-	dateChange = new EventEmitter();
+	dateChange = new EventEmitter<number>();
 
 	@Input()
 	date: number = new Date().getTime();
 
 	range: NumberRange = {
-		from: new Date('2021-01-01').getTime(),
-		to: new Date(this.date).getTime(),
+		from: environment.startDate,
+		to: this.date,
 	};
 
 	// redirect slider change to parent

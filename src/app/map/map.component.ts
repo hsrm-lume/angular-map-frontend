@@ -27,10 +27,7 @@ export class MapComponent implements OnInit {
 	theme: Theme = 'light';
 
 	@Input()
-	filter: DateRange = {
-		from: new Date('2000-01-01'),
-		to: new Date('2999-12-31'),
-	}; // full open filter on init
+	filter!: NumberRange;
 
 	// the UUID of clicked point
 	@Output()
@@ -45,8 +42,8 @@ export class MapComponent implements OnInit {
 				WHERE $d1 <= a.litTime <= $d2
 				RETURN a,b`,
 				{
-					d1: this.filter.from.getTime(),
-					d2: this.filter.to.getTime(),
+					d1: this.filter.from,
+					d2: this.filter.to,
 				}
 			)
 			.pipe(mapToGeoJsonLine)
@@ -58,8 +55,8 @@ export class MapComponent implements OnInit {
 				WHERE $d1 <= a.litTime <= $d2
 				RETURN a`,
 				{
-					d1: this.filter.from.getTime(),
-					d2: this.filter.to.getTime(),
+					d1: this.filter.from,
+					d2: this.filter.to,
 				}
 			)
 			.pipe(mapToGeoJsonPoint)
@@ -68,7 +65,7 @@ export class MapComponent implements OnInit {
 
 	// filters & styles for map drawing
 	get filters(): any[] {
-		return ['<', ['number', ['get', 'time']], this.filter.to.getTime()];
+		return ['<', ['number', ['get', 'time']], this.filter.to];
 	}
 	get linesPaint(): LinePaint {
 		return {
@@ -95,9 +92,9 @@ export class MapComponent implements OnInit {
 				'interpolate',
 				['cubic-bezier', 0.7, 0, 1, 0.3],
 				['get', 'time'],
-				this.filter.to.getTime() - 1000 * 60 * 60 * 24 * 7 * 4 * 2, // show from 2 months ago
+				this.filter.to - 1000 * 60 * 60 * 24 * 7 * 4 * 2, // show from 2 months ago
 				0,
-				this.filter.to.getTime(),
+				this.filter.to,
 				1,
 			],
 			'line-color': '#ffaa00',
