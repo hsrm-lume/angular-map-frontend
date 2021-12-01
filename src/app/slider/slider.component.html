@@ -12,6 +12,7 @@
 		[max]="range.to"
 		value="{{ date }}"
 		(input)="change($event)"
+		(change)="release($event)"
 		aria-label="units"
 		[vertical]="portraitMode"
 	></mat-slider>

@@ -6,6 +6,11 @@ h1,
 h2,
 h3 {
 	text-align: center;
+	span {
+		opacity: .3;
+		font-size: .7em;
+		font-weight: 500;
+	}
 }
 .separator {
 	display: flex;
@@ -24,4 +29,11 @@ h3 {
 .unit {
 	font-weight: 300;
 	font-size: 14px;
+}
+mat-card-title {
+	transition: ease .2s;
+}
+.indeterminate {
+	opacity: .5;
+	filter: blur(3px);
 }

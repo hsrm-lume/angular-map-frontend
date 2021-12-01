@@ -20,8 +20,12 @@ export class AppComponent implements OnInit {
 	filter: NumberRange = {
 		from: environment.startDate,
 		to: new Date().getTime(),
-		};
+	};
+	sliderIndeterminate = false;
+	indeterminateChange(e: boolean) {
+		this.sliderIndeterminate = e;
 	}
+
 	ngOnInit(): void {
 		this.onResize(null);
 	}

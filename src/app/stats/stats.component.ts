@@ -1,5 +1,13 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	Input,
+	OnChanges,
+	OnInit,
+	SimpleChanges,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import Neo4jService from '../services/neo4j-service';
 import { StatGroup, StatFactory } from './StatsUtil';
 
@@ -8,7 +16,7 @@ import { StatGroup, StatFactory } from './StatsUtil';
 	templateUrl: './stats.component.html',
 	styleUrls: ['./stats.component.scss'],
 })
-export class StatsComponent implements OnInit {
+export class StatsComponent implements OnInit, OnChanges {
 	constructor(
 		public neo4j: Neo4jService,
 		private route: ActivatedRoute,
@@ -18,35 +26,87 @@ export class StatsComponent implements OnInit {
 
 	ngOnInit() {
 		this.route.queryParams.subscribe((params) => {
-			if (params.uuid) this.loadPersonalGroup(params.uuid);
+			if (params.uuid) this.setPersonal(params.uuid);
 		});
+		this.ngOnChanges();
 	}
 
+	@Input()
+	indeterminate = false;
+
+	_filterRange: NumberRange = {
+		from: environment.startDate,
+		to: new Date().getTime(),
+	};
+	@Input()
+	filterRange!: NumberRange;
+
+	ngOnChanges(): void {
+		// copy inp value to internal variable
+		if (!this.indeterminate) {
+			// spread for deep copy
+			this._filterRange = { ...this.filterRange };
+			this.loadGroups();
+		}
+	}
+
+	get filterToString() {
+		return new Date(this._filterRange.to).toLocaleDateString();
+	}
+
+	loadGroups(): void {
+		this.loadMainGroup();
+		this.loadPersonalGroup();
+		this.loadInspectGroup();
+	}
+
+	// PERSONAL
 	personalGroup = new StatGroup('personal', []);
-	private loadPersonalGroup(uuid: string) {
+	personalUuid: string = '';
+	setPersonal(uuid: string) {
+		this.personalUuid = uuid;
+	}
+	private loadPersonalGroup() {
+		if (this.personalUuid == '') {
+			this.personalGroup.members = [];
+			this.changeDetector.detectChanges();
+			return;
+		}
 		this.personalGroup.members = [
 			this.sf.new(
 				'Your fire got passed on',
 				{
-					query: `MATCH (n)-[*1..]->(m) WHERE n.uuid = $uuid RETURN COUNT(m)`,
-					params: { uuid: uuid },
+					query: `MATCH (n)-[*1..]->(m) WHERE n.uuid = $uuid AND m.litTime <= $age RETURN COUNT(m)`,
+					params: {
+						uuid: this.personalUuid,
+						age: this._filterRange.to,
+					},
 				},
 				' times'
 			),
 			this.sf.new(
 				'You directly passed your flame',
 				{
-					query: `MATCH (n)-[*1]->(m) WHERE n.uuid = $uuid RETURN COUNT(m)`,
-					params: { uuid: uuid },
+					query: `MATCH (n)-[*1]->(m) WHERE n.uuid = $uuid AND m.litTime <= $age RETURN COUNT(m)`,
+					params: {
+						uuid: this.personalUuid,
+						age: this._filterRange.to,
+					},
 				},
 				' times'
 			),
 		];
 	}
 
+	// INSPECT
 	inspectGroup = new StatGroup('clicked point', []);
-	loadInspectGroup(uuid: string) {
-		if (uuid == '') {
+	inspectUuid: string = '';
+	setInspect(uuid: string) {
+		this.inspectUuid = uuid;
+		this.loadInspectGroup();
+	}
+	loadInspectGroup() {
+		if (this.inspectUuid == '') {
 			this.inspectGroup.members = [];
 			this.changeDetector.detectChanges();
 			return;
@@ -55,9 +115,10 @@ export class StatsComponent implements OnInit {
 			this.sf.new(
 				'The clicked fire got passed on',
 				{
-					query: `MATCH (n)-[*1..]->(m) WHERE n.uuid = $uuid RETURN COUNT(m)`,
+					query: `MATCH (n)-[*1..]->(m) WHERE n.uuid = $uuid AND m.litTime <= $age RETURN COUNT(m)`,
 					params: {
-						uuid: uuid,
+						uuid: this.inspectUuid,
+						age: this._filterRange.to,
 					},
 				},
 				' times'
@@ -65,29 +126,43 @@ export class StatsComponent implements OnInit {
 			this.sf.new(
 				'The clicked fire got directly passed on',
 				{
-					query: `MATCH (n)-[*1]->(m) WHERE n.uuid = $uuid RETURN COUNT(m)`,
-					params: { uuid: uuid },
+					query: `MATCH (n)-[*1]->(m) WHERE n.uuid = $uuid AND m.litTime <= $age RETURN COUNT(m)`,
+					params: {
+						uuid: this.inspectUuid,
+						age: this._filterRange.to,
+					},
 				},
 				' times'
 			),
 		];
 	}
 
-	statGroups: StatGroup[] = [
-		new StatGroup([
+	// MAIN
+	mainGroup = new StatGroup([]);
+	loadMainGroup() {
+		this.mainGroup.members = [
 			this.sf.new('Total active flames', {
-				query: `MATCH (n) RETURN COUNT(n)`,
+				query: `MATCH (n) WHERE n.litTime <= $age RETURN COUNT(n)`,
+				params: {
+					age: this._filterRange.to,
+				},
 			}),
 			this.sf.new(
 				'Total distance fire has traveled',
 				{
 					query: `MATCH (r)-[:LIGHTS]->(u)
+					WHERE u.litTime <= $age
 					WITH point({longitude: r.lng, latitude: r.lat}) AS p1, point({longitude: u.lng, latitude: u.lat}) AS p2
-					RETURN round(SUM(distance(p1, p2)))`,
+					RETURN round(SUM(distance(p1, p2))/1000)`,
+					params: { age: this._filterRange.to },
 				},
 				'km'
 			),
-		]),
+		];
+	}
+
+	statGroups: StatGroup[] = [
+		this.mainGroup,
 		this.personalGroup,
 		this.inspectGroup,
 	];
