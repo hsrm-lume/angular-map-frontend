@@ -45,4 +45,15 @@
 			[(date)]="selectedTstamp"
 		></app-slider>
 	</mat-drawer-container>
+	<div @list id="messages" [class.portrait]="portraitMode">
+		<mat-card @items *ngFor="let m of messageService.ms" [class]="m.type">
+			<div>
+				<mat-card-title>{{ m.title }}</mat-card-title>
+				<mat-card-subtitle [innerHTML]="m.text"></mat-card-subtitle>
+			</div>
+			<button mat-icon-button (click)="messageService.remove(m)">
+				<mat-icon>close</mat-icon>
+			</button>
+		</mat-card>
+	</div>
 </div>
