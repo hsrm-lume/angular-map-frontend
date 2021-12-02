@@ -57,7 +57,6 @@ export class Stat {
 			.pipe(map((record) => record.get('result')))
 			.subscribe({
 				next: (r) => (this.value = r),
-				complete: () => console.log('completed stat fetch ' + label),
 				error: (error) => console.warn(error),
 			});
 	}
