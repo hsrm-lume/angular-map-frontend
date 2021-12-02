@@ -33,3 +33,30 @@ mat-drawer-container {
 mat-drawer.portrait {
 	width: 100%;
 }
+
+#messages {
+	position: absolute;
+    z-index: 100;
+    top: calc(64px + 1em);
+    left: 1em;
+	width: calc(100% - 6.5em);
+    max-width: 350px;
+	mat-card {
+		margin-bottom: 1em;
+		display: flex;
+		justify-content: space-between;
+		div {
+			margin-right: 3em;
+		}
+		mat-card-subtitle {
+			margin-bottom: 0;
+		}
+		&.error { border: #f44336 2.5px solid; }
+		&.success { border: #09b603 2.5px solid; }
+		&.warning { border: #ffd903 2.5px solid; }
+	}
+}
+#messages.portrait {
+	bottom: 0;
+	top: unset;
+}
