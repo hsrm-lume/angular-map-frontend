@@ -20,10 +20,14 @@
 			>
 				<mat-icon>arrow_back</mat-icon>
 			</button>
-			<app-stats #stats></app-stats>
+			<app-stats
+				#stats
+				[indeterminate]="sliderIndeterminate"
+				[filterRange]="filter"
+			></app-stats>
 		</mat-drawer>
 		<app-map
-			(inspectUuid)="stats.loadInspectGroup($event)"
+			(inspectUuid)="stats.setInspect($event)"
 			[theme]="theme"
 			[mode]="mapMode"
 			[filter]="filter"
@@ -42,7 +46,8 @@
 			[portraitMode]="portraitMode"
 			id="timeSlider"
 			[class.portrait]="portraitMode"
-			[(date)]="selectedTstamp"
+			[(date)]="filter.to"
+			(indeterminateChange)="indeterminateChange($event)"
 		></app-slider>
 	</mat-drawer-container>
 </div>

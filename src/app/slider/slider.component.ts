@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 // workarround for static formatLabel function
 let displayWithTime = false;
@@ -13,20 +14,27 @@ export class SliderComponent {
 	portraitMode = false;
 
 	@Output()
-	dateChange = new EventEmitter();
+	dateChange = new EventEmitter<number>();
+
+	@Output()
+	indeterminateChange = new EventEmitter<boolean>();
 
 	@Input()
 	date: number = new Date().getTime();
 
 	range: NumberRange = {
-		from: new Date('2021-01-01').getTime(),
-		to: new Date(this.date).getTime(),
+		from: environment.startDate,
+		to: this.date,
 	};
 
 	// redirect slider change to parent
 	change(event: any) {
+		this.indeterminateChange.emit(true);
 		this.date = event.value;
 		this.dateChange.emit(event.value);
+	}
+	release(event: any) {
+		this.indeterminateChange.emit(false);
 	}
 
 	private displayWithTime(): boolean {
