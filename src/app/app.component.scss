@@ -34,6 +34,10 @@ mat-drawer.portrait {
 	width: 100%;
 }
 
+::ng-deep mat-drawer-content {
+	overflow-x: hidden !important; // disable overflow caused by 100vw map
+}
+
 #messages {
 	position: absolute;
     z-index: 100;

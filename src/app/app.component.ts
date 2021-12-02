@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
 	theme: Theme = 'light';
 
 	@HostListener('window:resize', ['$event'])
-	onResize(_: any) {
+	onResize() {
 		this.portraitMode =
 			window.innerWidth < 1100 && window.innerWidth < window.innerHeight;
 	}
@@ -71,6 +71,6 @@ export class AppComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.onResize(null);
+		this.onResize();
 	}
 }
