@@ -1,4 +1,35 @@
+::ng-deep {
+	.mat-slider-wrapper .mat-slider-thumb-container .mat-slider-thumb-label {
+		padding: 10px !important;
+		right: -24px !important;
+		top: -58px !important;
+		background-color: #353636 !important;
+		text-align: center !important;
+	}
+	.mat-slider-track-fill,
+	.mat-slider-track-background {
+		background-color: transparent !important;
+	}
+	.mat-slider-track-wrapper {
+		background: linear-gradient(
+			45deg,
+			var(--primary-color),
+			var(--accent-color)
+		);
+		height: 5px !important;
+		top: -2px !important;
+		border-radius: 10px !important;
+	}
+	.mat-slider-thumb {
+		background-color: #353636 !important;
+	}
+	.dark .mat-slider-thumb {
+		background-color: #ffffff !important;
+	}
+}
+
 mat-card {
+	border-radius: 1000px !important;
 	padding-top: 0;
 	padding-bottom: 0;
 	display: grid;
@@ -9,16 +40,6 @@ mat-card {
 	mat-slider {
 		width: 100%;
 	}
-	::ng-deep
-		.mat-slider-wrapper
-		.mat-slider-thumb-container
-		.mat-slider-thumb-label {
-		padding: 10px !important;
-		right: -24px !important;
-		top: -58px !important;
-		background-color: rgb(53, 54, 54) !important;
-		text-align: center !important;
-	}
 	.dates {
 		white-space: nowrap;
 	}
@@ -27,10 +48,11 @@ mat-card {
 		flex-direction: row;
 		margin-right: -1.9em;
 		button {
-			margin: 0 0.2em;
-			min-width: unset;
-			width: fit-content;
-			padding: 0 7px;
+			border: 2px solid #99999933;
+			margin: 0.5em 0.5em 0.5em 0;
+			line-height: unset !important;
+			width: 34px;
+			height: 34px;
 		}
 	}
 	&.portrait {
@@ -43,13 +65,20 @@ mat-card {
 			width: 48px;
 			height: 100%;
 		}
-		::ng-deep
+		::ng-deep {
 			.mat-slider-wrapper
-			.mat-slider-thumb-container
-			.mat-slider-thumb-label {
-			top: unset !important;
-			left: -60px !important;
-			bottom: -24px !important;
+				.mat-slider-thumb-container
+				.mat-slider-thumb-label {
+				top: unset !important;
+				left: -60px !important;
+				bottom: -24px !important;
+			}
+			.mat-slider-track-wrapper {
+				width: 5px !important;
+				left: -1.5px !important;
+				height: 100% !important;
+				top: 0px !important;
+			}
 		}
 		.dates {
 			writing-mode: vertical-rl;
@@ -62,7 +91,7 @@ mat-card {
 			margin-right: 0;
 			margin-bottom: -2.1em;
 			button {
-				margin: 0 auto 0.3em;
+				margin: 0 0.5em 0.5em 0.5em;
 			}
 		}
 	}

@@ -5,6 +5,7 @@
 */
 
 @use "@angular/material" as mat;
+
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 
@@ -151,18 +152,18 @@ $mat-dark-theme-background: (
 // Theme Config
 
 body {
-	--primary-color: #9b0707;
-	--primary-lighter-color: #e1b5b5;
-	--primary-darker-color: #7f0404;
+	--primary-color: #ff3a3a;
+	--primary-lighter-color: #ffc4c4;
+	--primary-darker-color: #ff2525;
 	--text-primary-color: #{$light-primary-text};
 	--text-primary-lighter-color: #{$dark-primary-text};
 	--text-primary-darker-color: #{$light-primary-text};
 }
 $mat-primary: (
-	main: #9b0707,
-	lighter: #e1b5b5,
-	darker: #7f0404,
-	200: #9b0707,
+	main: #ff3a3a,
+	lighter: #ffc4c4,
+	darker: #ff2525,
+	200: #ff3a3a,
 	// For slide toggle,
 	contrast:
 		(
@@ -174,18 +175,18 @@ $mat-primary: (
 $theme-primary: mat.define-palette($mat-primary, main, lighter, darker);
 
 body {
-	--accent-color: #36837c;
-	--accent-lighter-color: #c3dad8;
-	--accent-darker-color: #22665f;
+	--accent-color: #6f3faf;
+	--accent-lighter-color: #d4c5e7;
+	--accent-darker-color: #522996;
 	--text-accent-color: #{$light-primary-text};
 	--text-accent-lighter-color: #{$dark-primary-text};
 	--text-accent-darker-color: #{$light-primary-text};
 }
 $mat-accent: (
-	main: #36837c,
-	lighter: #c3dad8,
-	darker: #22665f,
-	200: #36837c,
+	main: #6f3faf,
+	lighter: #d4c5e7,
+	darker: #522996,
+	200: #6f3faf,
 	// For slide toggle,
 	contrast:
 		(
@@ -281,15 +282,25 @@ body {
 mat-drawer {
 	background-color: #eee !important;
 }
+button, mat-button-toggle-group {
+	border-radius: 1000px !important;
+}
+mat-card {
+	border-radius: 16px !important;
+}
+img.icon {
+	width: 24px;
+	height: 24px;
+}
 
 .mapboxgl-popup-content,
 .maplibregl-popup-content {
 	padding: 7px 10px !important;
 }
 .dark {
-  mat-drawer {
-	  background-color: #242424 !important;
-  }
+	mat-drawer {
+		background-color: #242424 !important;
+	}
 	.mapboxgl-popup-content,
 	.maplibregl-popup-content {
 		background: #363636;

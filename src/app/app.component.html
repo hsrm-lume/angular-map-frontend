@@ -18,7 +18,7 @@
 				(click)="drawer.toggle()"
 				id="returnButton"
 			>
-				<mat-icon>arrow_back</mat-icon>
+				<img src="/assets/arrow_large_l.svg" class="icon" />
 			</button>
 			<app-stats
 				#stats
@@ -36,10 +36,10 @@
 			id="statsButton"
 			type="button"
 			class="floatAbove"
-			mat-raised-button
+			mat-mini-fab
 			(click)="drawer.toggle()"
 		>
-			Stats
+			<img src="/assets/stats.svg" class="icon" />
 		</button>
 		<app-slider
 			class="floatAbove"

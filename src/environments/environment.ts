@@ -4,7 +4,7 @@
 
 export const environment = {
 	neo4j: {
-		url: (location: any) => 'neo4j://localhost',
+		url: (_location: any) => 'neo4j://localhost:7687',
 		username: 'neo4j',
 		password: 's3cr3t4',
 	},

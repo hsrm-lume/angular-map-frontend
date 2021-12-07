@@ -20,11 +20,11 @@
 		{{ labelString("end") }}
 	</div>
 	<div class="zooms">
-		<button mat-stroked-button class="zoom" (click)="zoom('in')">
-			<mat-icon>zoom_in</mat-icon>
+		<button mat-icon-button class="zoom" (click)="zoom('in')">
+			<img src="/assets/add.svg" class="icon" />
 		</button>
-		<button mat-stroked-button class="zoom" (click)="zoom('out')">
-			<mat-icon>zoom_out</mat-icon>
+		<button mat-icon-button class="zoom" (click)="zoom('out')">
+			<img src="/assets/subtract.svg" class="icon" />
 		</button>
 	</div>
 </mat-card>

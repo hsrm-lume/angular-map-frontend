@@ -11,9 +11,9 @@ export class ToolbarComponent {
 
 	title(): string {
 		if (this.portraitMode) {
-			return 'Lume Map 🔥';
+			return 'Lume Map';
 		} else {
-			return 'Lume Web App🔥';
+			return 'Lume Web App';
 		}
 	}
 
