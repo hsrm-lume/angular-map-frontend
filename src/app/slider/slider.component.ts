@@ -95,10 +95,7 @@ export class SliderComponent {
 			this.range.from += (d * p) / 4;
 			this.range.to -= (d * (1 - p)) / 4;
 		}
-		this.range.from = Math.max(
-			this.range.from,
-			new Date('2021-01-01').getTime()
-		);
+		this.range.from = Math.max(this.range.from, environment.startDate);
 		this.range.to = Math.min(this.range.to, new Date().getTime());
 	}
 	get stepRange(): number {
