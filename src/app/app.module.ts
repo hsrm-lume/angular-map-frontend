@@ -18,6 +18,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ModeControlsComponent } from './mode-controls/mode-controls.component';
 
 @NgModule({
 	declarations: [
@@ -26,6 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 		SliderComponent,
 		ToolbarComponent,
 		StatsComponent,
+  ModeControlsComponent,
 	],
 	imports: [
 		FormsModule,

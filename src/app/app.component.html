@@ -1,9 +1,5 @@
 <div id="grid" [class.dark]="theme == 'dark'">
-	<app-toolbar
-		[(theme)]="theme"
-		[portraitMode]="portraitMode"
-		[(mapMode)]="mapMode"
-	></app-toolbar>
+	<app-toolbar></app-toolbar>
 	<mat-drawer-container>
 		<mat-drawer
 			[class.portrait]="portraitMode"
@@ -41,6 +37,13 @@
 		>
 			<img src="/assets/stats.svg" class="icon" />
 		</button>
+		<app-mode-controls
+			class="floatAbove"
+			id="controls"
+			[(theme)]="theme"
+			[portraitMode]="portraitMode"
+			[(mapMode)]="mapMode"
+		></app-mode-controls>
 		<app-slider
 			class="floatAbove"
 			[portraitMode]="portraitMode"

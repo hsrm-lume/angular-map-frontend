@@ -1,0 +1,28 @@
+mat-card {
+	display: flex;
+	align-items: center;
+	padding: 0 1em 0 0 !important;
+	border-radius: 1000px !important;
+}
+mat-button-toggle-group {
+	font-size: 1rem;
+	height: 2.8em;
+	line-height: 2.8em;
+}
+::ng-deep
+	.mat-button-toggle-appearance-standard
+	.mat-button-toggle-label-content {
+	line-height: 2.5em;
+}
+#toggle {
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 7.5em;
+	margin-left: 1em;
+}
+#portraitModeSwitches {
+	display: none;
+}
