@@ -27,7 +27,7 @@ export class MapComponent implements OnInit {
 	theme: Theme = 'light';
 
 	@Input()
-	filter!: NumberRange;
+	filter: NumberRange = {} as NumberRange;
 
 	// the UUID of clicked point
 	@Output()
