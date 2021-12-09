@@ -97,7 +97,7 @@ export class MapComponent implements OnInit {
 				this.filter.to,
 				1,
 			],
-			'line-color': '#ffaa00',
+			'line-color': '#FD3A3B',
 		};
 	}
 	get heatmapPaint(): HeatmapPaint {
