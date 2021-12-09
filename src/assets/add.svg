@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 170.1 170.1" style="enable-background:new 0 0 170.1 170.1;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:url(#SVGID_1_);}
+</style>
+<g>
+	
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="53.5575" y1="153.1223" x2="92.0502" y2="9.4658" gradientTransform="matrix(0.7071 0.7071 -0.7071 0.7071 91.0559 -23.9141)">
+		<stop  offset="0.203" style="stop-color:#FF3A3A"/>
+		<stop  offset="0.8614" style="stop-color:#8E3E96"/>
+	</linearGradient>
+	<path class="st0" d="M102.1,102.1h49.2c9.4,0,17-7.8,17-17l0,0c0-9.4-7.8-17-17-17h-49.2V18.8c0-9.4-7.8-17-17-17l0,0
+		c-9.4,0-17,7.8-17,17V68H18.8c-9.4,0-17,7.8-17,17s7.6,17,17,17H68v49.2c0,9.4,7.8,17,17,17c9.4,0,17-7.8,17-17V102.1z"/>
+</g>
+</svg>

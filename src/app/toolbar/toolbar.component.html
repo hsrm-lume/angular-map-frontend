@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" [class.portrait]="portraitMode">
+<mat-toolbar [class.portrait]="portraitMode">
 	<mat-toolbar-row>
 		<h1 id="title">{{ title() }}</h1>
 		<span class="spacer"></span>
@@ -12,12 +12,12 @@
 			<mat-button-toggle value="heatmap">Heatmap</mat-button-toggle>
 		</mat-button-toggle-group>
 		<div id="toggle">
-			<mat-icon>light_mode</mat-icon>
+			<img class="icon" src="/assets/sun.svg" />
 			<mat-slide-toggle
 				[ngModel]="theme == 'dark'"
 				(ngModelChange)="t($event)"
 			></mat-slide-toggle>
-			<mat-icon>dark_mode</mat-icon>
+			<img class="icon" src="/assets/moon.svg" />
 		</div>
 	</mat-toolbar-row>
 	<mat-toolbar-row id="portraitModeSwitches">
