@@ -15,6 +15,7 @@ import {
 })
 export class MapComponent implements OnInit {
 	constructor(public neo4j: Neo4jService) {}
+	path: Feature<LineString>[] = [];
 	lines: Feature<LineString>[] = [];
 	points: Feature<Point>[] = [];
 
@@ -146,6 +147,8 @@ export class MapComponent implements OnInit {
 			.on('close', () => {
 				if (this.prevInspectUuid == f.properties?.uuid)
 					this.inspectUuid.emit('');
+				// clear all without changing reference:
+				this.path.splice(0, this.path.length);
 			})
 			.setLngLat((f.geometry as any).coordinates)
 			.setHTML(
@@ -156,6 +159,15 @@ export class MapComponent implements OnInit {
 			.addTo(this.map);
 		this.inspectUuid.emit(f.properties?.uuid);
 		this.prevInspectUuid = f.properties?.uuid;
+		this.neo4j
+			.query(
+				`MATCH (a:User)-[:LIGHTS]->(b:User) 
+				WHERE a.uuid = $uuid
+				RETURN a,b`, // TODO: zeigt aktuell nur die direkten childs
+				{ uuid: f.properties?.uuid }
+			)
+			.pipe(mapToGeoJsonLine)
+			.subscribe(collectObserver(this.path));
 	}
 
 	getStyleUrl(): string {

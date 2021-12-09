@@ -6,6 +6,14 @@
 	[center]="[8.45, 50.08]"
 	(mapLoad)="map = $event"
 >
+	<mgl-geojson-source id="path">
+		<mgl-feature
+			*ngFor="let l of path; index as i"
+			[id]="i"
+			[properties]="l.properties"
+			[geometry]="l.geometry"
+		></mgl-feature>
+	</mgl-geojson-source>
 	<mgl-geojson-source id="lines">
 		<mgl-feature
 			*ngFor="let l of lines; index as i"
@@ -23,15 +31,7 @@
 		></mgl-feature>
 	</mgl-geojson-source>
 	<mgl-image id="fire" url="assets/location_pin.png"> </mgl-image>
-	<mgl-layer
-		*ngIf="mode == 'line'"
-		id="linetree"
-		type="line"
-		source="lines"
-		[filter]="filters"
-		[paint]="linesPaint"
-	>
-	</mgl-layer>
+	<mgl-layer id="linetree" type="line" source="path"> </mgl-layer>
 	<mgl-layer
 		*ngIf="mode == 'heatmap'"
 		id="heatmap"
