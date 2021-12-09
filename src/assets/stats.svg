@@ -8,21 +8,26 @@
 	.st2{fill:url(#SVGID_3_);}
 </style>
 <g>
-	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="29.6457" y1="120.5562" x2="69.433" y2="97.585">
+	
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-4.8506" y1="27.5489" x2="59.686" y2="64.8092" gradientTransform="matrix(1 0 0 -1 0 170.0788)">
 		<stop  offset="0.2" style="stop-color:#FF3A3A"/>
 		<stop  offset="0.8" style="stop-color:#D73B5B"/>
 	</linearGradient>
-	<path class="st0" d="M58.1,85H40.9c-3.9,0-7,3.2-7,7v34c0,3.9,3.2,7,7,7h17.2c3.9,0,7-3.2,7-7v-34C65.2,88.2,62,85,58.1,85z"/>
-	<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="54.2399" y1="102.5328" x2="114.8389" y2="67.546">
+	<path class="st0" d="M41.3,85H13.4C7.1,85,2.1,90.2,2.1,96.3v55.2c0,6.3,5.2,11.4,11.4,11.4h27.9c6.3,0,11.4-5.2,11.4-11.4V96.3
+		C52.9,90.2,47.7,85,41.3,85z"/>
+	
+		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="35.0455" y1="56.6563" x2="133.4109" y2="113.4476" gradientTransform="matrix(1 0 0 -1 0 170.0788)">
 		<stop  offset="0.2" style="stop-color:#F33A44"/>
 		<stop  offset="0.8" style="stop-color:#8C3E97"/>
 	</linearGradient>
-	<path class="st1" d="M93.1,37H75.9c-3.9,0-7,3.2-7,7v82.1c0,3.9,3.2,7,7,7h17.2c3.9,0,7-3.2,7-7V44C100.2,40.1,97,37,93.1,37z"/>
-	<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="95.2245" y1="111.1665" x2="145.8542" y2="81.9354">
+	<path class="st1" d="M98.1,7.1H70.2c-6.3,0-11.4,5.2-11.4,11.4v133.2c0,6.3,5.2,11.4,11.4,11.4h27.9c6.3,0,11.4-5.2,11.4-11.4V18.4
+		C109.7,12.1,104.5,7.1,98.1,7.1z"/>
+	
+		<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="101.5436" y1="42.6604" x2="183.7168" y2="90.1032" gradientTransform="matrix(1 0 0 -1 0 170.0788)">
 		<stop  offset="0.2" style="stop-color:#FF3A3A"/>
 		<stop  offset="0.8" style="stop-color:#6F3FAF"/>
 	</linearGradient>
-	<path class="st2" d="M129.1,60h-17.2c-3.9,0-7,3.2-7,7v59.1c0,3.9,3.2,7,7,7h17.2c3.9,0,7-3.2,7-7V67C136.2,63.2,133,60,129.1,60z"
-		/>
+	<path class="st2" d="M156.6,44.4h-27.9c-6.3,0-11.4,5.2-11.4,11.4v95.9c0,6.3,5.2,11.4,11.4,11.4h27.9c6.3,0,11.4-5.2,11.4-11.4
+		V55.8C168.1,49.6,162.9,44.4,156.6,44.4z"/>
 </g>
 </svg>

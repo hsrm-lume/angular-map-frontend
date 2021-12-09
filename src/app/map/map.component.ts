@@ -111,6 +111,19 @@ export class MapComponent implements OnInit {
 				9,
 				20,
 			],
+			'heatmap-color': [
+				'interpolate',
+				['linear'],
+				['heatmap-density'],
+				0,
+				'rgba(113, 63, 173, 0)',
+				0.33,
+				'rgba(160, 62, 136, 0.8)',
+				0.66,
+				'rgba(216, 59, 90, 1)',
+				1,
+				'rgba(253, 58, 59, 1)',
+			],
 		};
 	}
 
