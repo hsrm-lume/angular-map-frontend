@@ -20,7 +20,9 @@ import { environment } from 'src/environments/environment';
 		trigger('list', [
 			transition(':enter', [
 				// child animation selector + stagger
-				query('@items', stagger(250, animateChild())),
+				query('@items', stagger(250, animateChild()), {
+					optional: true,
+				}),
 			]),
 		]),
 		trigger('items', [
