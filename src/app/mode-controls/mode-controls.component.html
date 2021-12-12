@@ -1,0 +1,18 @@
+<mat-card>
+	<mat-button-toggle-group
+		id="landscapeModeSwitches"
+		[value]="mapMode"
+		(change)="m($event)"
+	>
+		<mat-button-toggle value="point">Points</mat-button-toggle>
+		<mat-button-toggle value="heatmap">Heatmap</mat-button-toggle>
+	</mat-button-toggle-group>
+	<div id="toggle">
+		<img class="icon" src="/assets/sun.svg" />
+		<mat-slide-toggle
+			[ngModel]="theme == 'dark'"
+			(ngModelChange)="t($event)"
+		></mat-slide-toggle>
+		<img class="icon" src="/assets/moon.svg" />
+	</div>
+</mat-card>

@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-toolbar',
@@ -6,34 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 	styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent {
-	@Input()
-	portraitMode = false;
-
-	title(): string {
-		if (this.portraitMode) {
-			return 'Lume Map';
-		} else {
-			return 'Lume Web App';
-		}
-	}
-
-	@Input()
-	theme: Theme = 'light';
-
-	@Output()
-	themeChange = new EventEmitter();
-
-	t(t: any): void {
-		this.themeChange.emit(t ? 'dark' : 'light');
-	}
-
-	@Input()
-	mapMode: MapMode = 'heatmap';
-
-	@Output()
-	mapModeChange = new EventEmitter();
-
-	m(m: any): void {
-		this.mapModeChange.emit(m.value);
+	download() {
+		window.location.href = environment.appDownloadUrl;
 	}
 }

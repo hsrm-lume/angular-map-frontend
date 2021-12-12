@@ -39,6 +39,7 @@ export default class Neo4jService implements OnDestroy {
 						text: 'Bitte später erneut versuchen.',
 						title: 'Datenbankfehler',
 					});
+					console.warn(e);
 					return of(null);
 				}),
 				finalize(() => rxSession.close()),
