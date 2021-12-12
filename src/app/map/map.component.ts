@@ -161,9 +161,11 @@ export class MapComponent implements OnInit {
 		this.prevInspectUuid = f.properties?.uuid;
 		this.neo4j
 			.query(
-				`MATCH (a:User)-[:LIGHTS]->(b:User) 
-				WHERE a.uuid = $uuid
-				RETURN a,b`, // TODO: zeigt aktuell nur die direkten childs
+				`MATCH (a:User)-[:LIGHTS]->(b:User)
+				WITH a,b
+				MATCH (c:User)-[:LIGHTS*1..]->(a)
+				WHERE c.uuid = $uuid OR a.uuid = $uuid
+				RETURN a,b`, //Wenn A, oder ein Parent von A die angeklickte UUID hat.
 				{ uuid: f.properties?.uuid }
 			)
 			.pipe(mapToGeoJsonLine)
