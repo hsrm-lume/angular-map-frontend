@@ -7,6 +7,7 @@ import {
 	mapToGeoJsonLine,
 	mapToGeoJsonPoint,
 } from './MapUtil';
+import { Linter } from 'eslint';
 
 @Component({
 	selector: 'app-map',
@@ -16,6 +17,7 @@ import {
 export class MapComponent implements OnInit {
 	constructor(public neo4j: Neo4jService) {}
 	path: Feature<LineString>[] = [];
+	parentpath: Feature<LineString>[] = [];
 	lines: Feature<LineString>[] = [];
 	points: Feature<Point>[] = [];
 
@@ -101,6 +103,18 @@ export class MapComponent implements OnInit {
 			'line-color': '#FD3A3B',
 		};
 	}
+	get parentPaint(): LinePaint {
+		return {
+			'line-width': ['interpolate', ['linear'], ['zoom'], 0, 1, 16, 2],
+			'line-color': '#713fad',
+		};
+	}
+	get childPaint(): LinePaint {
+		return {
+			'line-width': ['interpolate', ['linear'], ['zoom'], 0, 1, 16, 2],
+			'line-color': '#fd3a3b',
+		};
+	}
 	get heatmapPaint(): HeatmapPaint {
 		return {
 			'heatmap-radius': [
@@ -149,6 +163,7 @@ export class MapComponent implements OnInit {
 					this.inspectUuid.emit('');
 				// clear all without changing reference:
 				this.path.splice(0, this.path.length);
+				this.parentpath.splice(0, this.parentpath.length);
 			})
 			.setLngLat((f.geometry as any).coordinates)
 			.setHTML(
@@ -163,13 +178,24 @@ export class MapComponent implements OnInit {
 			.query(
 				`MATCH (a:User)-[:LIGHTS]->(b:User)
 				WITH a,b
-				MATCH (c:User)-[:LIGHTS*1..]->(a)
+				MATCH (c:User)-[:LIGHTS*0..]->(a)
 				WHERE c.uuid = $uuid OR a.uuid = $uuid
 				RETURN a,b`, //Wenn A, oder ein Parent von A die angeklickte UUID hat.
 				{ uuid: f.properties?.uuid }
 			)
 			.pipe(mapToGeoJsonLine)
 			.subscribe(collectObserver(this.path));
+		this.neo4j
+			.query(
+				`MATCH (b:User)-[:LIGHTS]->(a:User)
+				WITH a,b
+				MATCH (a)-[:LIGHTS*0..]->(c:User)
+				WHERE c.uuid = $uuid OR a.uuid = $uuid
+				RETURN a,b`, //Wenn A, oder ein Child von A die angeklickte UUID hat.
+				{ uuid: f.properties?.uuid }
+			)
+			.pipe(mapToGeoJsonLine)
+			.subscribe(collectObserver(this.parentpath));
 	}
 
 	getStyleUrl(): string {
