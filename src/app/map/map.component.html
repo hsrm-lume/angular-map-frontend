@@ -1,54 +1,34 @@
-<mgl-map
-	id="map"
-	[style]="getStyleUrl()"
-	[zoom]="[11]"
-	[attributionControl]="false"
-	[center]="[8.45, 50.08]"
-	(mapLoad)="map = $event"
->
-	<mgl-geojson-source id="path">
-		<mgl-feature
-			*ngFor="let l of path; index as i"
-			[id]="i"
-			[properties]="l.properties"
-			[geometry]="l.geometry"
-		></mgl-feature>
+<mgl-map id="map" [style]="getStyleUrl()" [zoom]="[12]" [attributionControl]="false" [center]="[8.235, 50.08]"
+	(mapLoad)="map = $event">
+	<!-- Path to childs -->
+	<mgl-geojson-source id="childpath">
+		<mgl-feature *ngFor="let l of childpath; index as i" [id]="i" [properties]="l.properties"
+			[geometry]="l.geometry">
+		</mgl-feature>
 	</mgl-geojson-source>
-	<mgl-geojson-source id="lines">
-		<mgl-feature
-			*ngFor="let l of lines; index as i"
-			[id]="i"
-			[properties]="l.properties"
-			[geometry]="l.geometry"
-		></mgl-feature>
+	<mgl-layer id="linetree" type="line" source="childpath" [paint]="childPaint">
+	</mgl-layer>
+	<!-- Path via parents -->
+	<mgl-geojson-source id="parentpath">
+		<mgl-feature *ngFor="let l of parentpath; index as i" [id]="i" [properties]="l.properties"
+			[geometry]="l.geometry">
+		</mgl-feature>
 	</mgl-geojson-source>
+	<mgl-layer id="parentline" type="line" source="parentpath" [paint]="parentPaint">
+	</mgl-layer>
+	<!-- Points source -->
 	<mgl-geojson-source id="points">
-		<mgl-feature
-			*ngFor="let p of points; index as i"
-			[id]="i"
-			[properties]="p.properties"
-			[geometry]="p.geometry"
-		></mgl-feature>
+		<mgl-feature *ngFor="let p of points; index as i" [id]="i" [properties]="p.properties" [geometry]="p.geometry">
+		</mgl-feature>
 	</mgl-geojson-source>
+	<!-- Heatmap -->
+	<mgl-layer *ngIf="mode == 'heatmap'" id="heatmap" type="heatmap" source="points" [filter]="filters"
+		[paint]="heatmapPaint">
+	</mgl-layer>
+	<!-- Pins -->
+	<mgl-layer *ngIf="mode == 'point'" id="pts" type="symbol" [layout]="pointLayout" source="points" [filter]="filters"
+		(layerClick)="onPointClick($event)">
+	</mgl-layer>
+	<!-- Pin Icon -->
 	<mgl-image id="fire" url="assets/location_pin.png"> </mgl-image>
-	<mgl-layer id="linetree" type="line" source="path"> </mgl-layer>
-	<mgl-layer
-		*ngIf="mode == 'heatmap'"
-		id="heatmap"
-		type="heatmap"
-		source="points"
-		[filter]="filters"
-		[paint]="heatmapPaint"
-	>
-	</mgl-layer>
-	<mgl-layer
-		*ngIf="mode == 'point'"
-		id="pts"
-		type="symbol"
-		[layout]="pointLayout"
-		source="points"
-		[filter]="filters"
-		(layerClick)="onPointClick($event)"
-	>
-	</mgl-layer>
 </mgl-map>

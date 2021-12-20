@@ -1,5 +1,5 @@
 import { LinePaint, SymbolLayout, Map, Popup, HeatmapPaint } from 'maplibre-gl';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Feature, LineString, Point } from 'geojson';
 import Neo4jService from '../services/neo4j-service';
 import {
@@ -14,9 +14,9 @@ import {
 	styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-	constructor(public neo4j: Neo4jService) {}
-	path: Feature<LineString>[] = [];
-	lines: Feature<LineString>[] = [];
+	constructor(public neo4j: Neo4jService, private changeDetectorRef: ChangeDetectorRef) { }
+	parentpath: Feature<LineString>[] = [];
+	childpath: Feature<LineString>[] = [];
 	points: Feature<Point>[] = [];
 
 	map?: Map;
@@ -36,19 +36,6 @@ export class MapComponent implements OnInit {
 
 	// Loads map data on init
 	ngOnInit(): void {
-		// LINES
-		this.neo4j
-			.query(
-				`MATCH (a:User)-[:LIGHTS]->(b:User)
-				WHERE $d1 <= a.litTime <= $d2
-				RETURN a,b`,
-				{
-					d1: this.filter.from,
-					d2: this.filter.to,
-				}
-			)
-			.pipe(mapToGeoJsonLine)
-			.subscribe(collectObserver(this.lines));
 		// POINTS
 		this.neo4j
 			.query(
@@ -68,38 +55,28 @@ export class MapComponent implements OnInit {
 	get filters(): any[] {
 		return ['<', ['number', ['get', 'time']], this.filter.to];
 	}
-	get linesPaint(): LinePaint {
+	linesPaint(color: string): LinePaint {
 		return {
 			'line-width': ['interpolate', ['linear'], ['zoom'], 0, 1, 16, 2],
-			// 'line-opacity': [
-			// 	'interpolate',
-			// 	['linear'],
-			// 	['zoom'],
-			// 	0,
-			// 	1,
-			// 	16,
-			// 	0.5,
-			// ],
-			// 'line-color': [
-			// 	'interpolate',
-			// 	['linear'],
-			// 	['get', 'time'],
-			// 	this.filter.from.getTime(),
-			// 	'#00ff00',
-			// 	this.filter.to.getTime(),
-			// 	'#ff0000',
-			// ],
+			'line-color': color,
 			'line-opacity': [
 				'interpolate',
 				['cubic-bezier', 0.7, 0, 1, 0.3],
 				['get', 'time'],
 				this.filter.to - 1000 * 60 * 60 * 24 * 7 * 4 * 2, // show from 2 months ago
-				0,
-				this.filter.to,
+				0.1,
+				this.filter.to, // current time is max
 				1,
+				this.filter.to + 1, // dont show future
+				0
 			],
-			'line-color': '#FD3A3B',
-		};
+		}
+	}
+	get parentPaint(): LinePaint {
+		return this.linesPaint('#713fad');
+	}
+	get childPaint(): LinePaint {
+		return this.linesPaint('#fd3a3b');
 	}
 	get heatmapPaint(): HeatmapPaint {
 		return {
@@ -127,7 +104,6 @@ export class MapComponent implements OnInit {
 			],
 		};
 	}
-
 	pointLayout: SymbolLayout = {
 		'icon-image': 'fire',
 		'icon-anchor': 'bottom',
@@ -148,26 +124,41 @@ export class MapComponent implements OnInit {
 				if (this.prevInspectUuid == f.properties?.uuid)
 					this.inspectUuid.emit('');
 				// clear all without changing reference:
-				this.path.splice(0, this.path.length);
+				this.childpath.splice(0, this.childpath.length);
+				this.parentpath.splice(0, this.parentpath.length);
+				this.changeDetectorRef.detectChanges(); // mark component as changed
 			})
 			.setLngLat((f.geometry as any).coordinates)
 			.setHTML(
 				'<span>' +
-					new Date(f.properties?.time || 0).toLocaleDateString() +
-					'</span>'
+				new Date(f.properties?.time || 0).toLocaleDateString() +
+				'</span>'
 			)
 			.addTo(this.map);
 		this.inspectUuid.emit(f.properties?.uuid);
 		this.prevInspectUuid = f.properties?.uuid;
 		this.neo4j
 			.query(
-				`MATCH (a:User)-[:LIGHTS]->(b:User) 
-				WHERE a.uuid = $uuid
-				RETURN a,b`, // TODO: zeigt aktuell nur die direkten childs
+				`MATCH (a:User)-[:LIGHTS]->(b:User)
+				WITH a,b
+				MATCH (c:User)-[:LIGHTS*0..]->(a)
+				WHERE c.uuid = $uuid OR a.uuid = $uuid
+				RETURN a,b`, //Wenn A, oder ein Parent von A die angeklickte UUID hat.
 				{ uuid: f.properties?.uuid }
 			)
 			.pipe(mapToGeoJsonLine)
-			.subscribe(collectObserver(this.path));
+			.subscribe(collectObserver(this.childpath));
+		this.neo4j
+			.query(
+				`MATCH (a:User)-[:LIGHTS]->(b:User)
+				WITH b,a
+				MATCH (b)-[:LIGHTS*0..]->(c:User)
+				WHERE c.uuid = $uuid OR b.uuid = $uuid
+				RETURN a,b`, //Wenn A, oder ein Child von A die angeklickte UUID hat.
+				{ uuid: f.properties?.uuid }
+			)
+			.pipe(mapToGeoJsonLine)
+			.subscribe(collectObserver(this.parentpath));
 	}
 
 	getStyleUrl(): string {
