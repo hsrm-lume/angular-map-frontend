@@ -1,5 +1,12 @@
 import { LinePaint, SymbolLayout, Map, Popup, HeatmapPaint } from 'maplibre-gl';
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+} from '@angular/core';
 import { Feature, LineString, Point } from 'geojson';
 import Neo4jService from '../services/neo4j-service';
 import {
@@ -7,6 +14,8 @@ import {
 	mapToGeoJsonLine,
 	mapToGeoJsonPoint,
 } from './MapUtil';
+import { LayerComponent } from 'ngx-maplibre-gl';
+import { map } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-map',
@@ -14,7 +23,10 @@ import {
 	styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-	constructor(public neo4j: Neo4jService, private changeDetectorRef: ChangeDetectorRef) { }
+	constructor(
+		public neo4j: Neo4jService,
+		private changeDetectorRef: ChangeDetectorRef
+	) {}
 	parentpath: Feature<LineString>[] = [];
 	childpath: Feature<LineString>[] = [];
 	points: Feature<Point>[] = [];
@@ -68,9 +80,9 @@ export class MapComponent implements OnInit {
 				this.filter.to, // current time is max
 				1,
 				this.filter.to + 1, // dont show future
-				0
+				0,
 			],
-		}
+		};
 	}
 	get parentPaint(): LinePaint {
 		return this.linesPaint('#713fad');
@@ -121,6 +133,18 @@ export class MapComponent implements OnInit {
 		const f: Feature = features[0];
 		new Popup({ anchor: 'top', closeButton: false })
 			.on('close', () => {
+				this.neo4j
+					.query(
+						`MATCH (a:User)
+						WHERE $d1 <= a.litTime <= $d2
+						RETURN a`,
+						{
+							d1: this.filter.from,
+							d2: this.filter.to,
+						}
+					)
+					.pipe(mapToGeoJsonPoint)
+					.subscribe(collectObserver(this.points));
 				if (this.prevInspectUuid == f.properties?.uuid)
 					this.inspectUuid.emit('');
 				// clear all without changing reference:
@@ -131,8 +155,8 @@ export class MapComponent implements OnInit {
 			.setLngLat((f.geometry as any).coordinates)
 			.setHTML(
 				'<span>' +
-				new Date(f.properties?.time || 0).toLocaleDateString() +
-				'</span>'
+					new Date(f.properties?.time || 0).toLocaleDateString() +
+					'</span>'
 			)
 			.addTo(this.map);
 		this.inspectUuid.emit(f.properties?.uuid);
@@ -159,8 +183,45 @@ export class MapComponent implements OnInit {
 			)
 			.pipe(mapToGeoJsonLine)
 			.subscribe(collectObserver(this.parentpath));
+		this.points.forEach(function (item, index, object) {
+			if (item != e.point) {
+				console.log(item.properties?.uuid);
+				object.splice(index);
+			}
+		}); //delete all points
+		this.neo4j
+			.query(
+				`MATCH (a:User)
+				WHERE $d1 <= a.litTime <= $d2
+				WITH a
+				MATCH (c:User)-[:LIGHTS*0..]->(a)
+				WHERE c.uuid = $uuid OR a.uuid = $uuid
+				RETURN a`,
+				{
+					d1: this.filter.from,
+					d2: this.filter.to,
+					uuid: f.properties?.uuid,
+				}
+			)
+			.pipe(mapToGeoJsonPoint)
+			.subscribe(collectObserver(this.points));
+		this.neo4j
+			.query(
+				`MATCH (a:User)
+				WHERE $d1 <= a.litTime <= $d2
+				WITH a
+				MATCH (a:User)-[:LIGHTS*0..]->(c)
+				WHERE c.uuid = $uuid OR a.uuid = $uuid
+				RETURN a`,
+				{
+					d1: this.filter.from,
+					d2: this.filter.to,
+					uuid: f.properties?.uuid,
+				}
+			)
+			.pipe(mapToGeoJsonPoint)
+			.subscribe(collectObserver(this.points));
 	}
-
 	getStyleUrl(): string {
 		if (this.theme == 'light')
 			return 'https://maps.geoapify.com/v1/styles/positron/style.json?apiKey=db8eaf2341994e8d90a08f6ac3ff2adf';
