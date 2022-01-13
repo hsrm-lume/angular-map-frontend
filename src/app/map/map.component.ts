@@ -162,9 +162,6 @@ export class MapComponent implements OnInit {
 	}
 
 	getStyleUrl(): string {
-		if (this.theme == 'light')
-			return 'https://maps.geoapify.com/v1/styles/positron/style.json?apiKey=db8eaf2341994e8d90a08f6ac3ff2adf';
-		else
-			return 'https://maps.geoapify.com/v1/styles/dark-matter-dark-grey/style.json?apiKey=db8eaf2341994e8d90a08f6ac3ff2adf';
+		return `/assets/mapstyles/${this.theme}.json`;
 	}
 }
