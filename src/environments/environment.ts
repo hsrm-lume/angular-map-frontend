@@ -9,6 +9,7 @@ export const environment = {
 		password: 's3cr3t4',
 	},
 	startDate: new Date('2021-01-01').getTime(),
+	tileServerUrl: 'http://localhost:8080',
 	appDownloadUrl:
 		'https://github.com/hsrm-lume/react-native-cli-lume/releases/latest/download/app-release.apk',
 	production: false,
