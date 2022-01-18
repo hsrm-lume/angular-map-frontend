@@ -1,10 +1,11 @@
 <mgl-map
 	id="map"
 	[style]="getStyleUrl()"
-	[zoom]="[12]"
 	[attributionControl]="false"
+	[zoom]="[2]"
 	[center]="[8.235, 50.08]"
 	(mapLoad)="map = $event"
+	(mapLoad)="onMapLoad()"
 >
 	<!-- Path to childs -->
 	<mgl-geojson-source id="childpath">

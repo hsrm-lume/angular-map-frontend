@@ -16,6 +16,7 @@ import {
 } from './MapUtil';
 import { LayerComponent } from 'ngx-maplibre-gl';
 import { map } from 'rxjs/operators';
+import { Linter } from 'eslint';
 
 @Component({
 	selector: 'app-map',
@@ -30,7 +31,7 @@ export class MapComponent implements OnInit {
 	parentpath: Feature<LineString>[] = [];
 	childpath: Feature<LineString>[] = [];
 	points: Feature<Point>[] = [];
-
+	zoom: Number = 0;
 	map?: Map;
 
 	@Input()
@@ -45,10 +46,10 @@ export class MapComponent implements OnInit {
 	// the UUID of clicked point
 	@Output()
 	inspectUuid = new EventEmitter<string>();
-
 	// Loads map data on init
 	ngOnInit(): void {
-		// POINTS
+		this.map?.easeTo({ zoom: 12 });
+
 		this.neo4j
 			.query(
 				`MATCH (a:User)
@@ -122,8 +123,18 @@ export class MapComponent implements OnInit {
 		'icon-allow-overlap': false,
 		'icon-padding': 0,
 	};
-
 	prevInspectUuid = '';
+	async onMapLoad() {
+		if (this.zoom == 0) {
+			await new Promise((f) => setTimeout(f, 5000));
+			this.map?.easeTo({
+				center: [8.235, 50.08],
+				zoom: 12,
+				duration: 10000,
+			});
+		}
+		this.zoom = 1;
+	}
 	onPointClick(e: any) {
 		if (!this.map) return;
 		const features = this.map
@@ -183,12 +194,16 @@ export class MapComponent implements OnInit {
 			)
 			.pipe(mapToGeoJsonLine)
 			.subscribe(collectObserver(this.parentpath));
+
 		this.points.forEach(function (item, index, object) {
-			if (item != e.point) {
-				console.log(item.properties?.uuid);
+			if (item.properties?.uuid != f.properties?.uuid) {
+				console.log(item.properties);
+				console.log(f.properties);
 				object.splice(index);
 			}
 		}); //delete all points
+
+		//Only loading fires on the path
 		this.neo4j
 			.query(
 				`MATCH (a:User)
