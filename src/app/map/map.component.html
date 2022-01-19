@@ -5,7 +5,7 @@
 	[zoom]="[2]"
 	[center]="[8.235, 50.08]"
 	(mapLoad)="map = $event"
-	(mapLoad)="onMapLoad()"
+	(mapLoad)="zoomIn()"
 >
 	<!-- Path to childs -->
 	<mgl-geojson-source id="childpath">

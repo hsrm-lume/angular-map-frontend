@@ -45,8 +45,7 @@ export class MapComponent implements OnInit {
 	inspectUuid = new EventEmitter<string>();
 	// Loads map data on init
 	ngOnInit(): void {
-		this.map?.easeTo({ zoom: 12 });
-		this.neo4j
+		const o = this.neo4j
 			.query(
 				`MATCH (a:User)
 				WHERE $d1 <= a.litTime <= $d2
@@ -56,8 +55,11 @@ export class MapComponent implements OnInit {
 					d2: this.filter.to,
 				}
 			)
-			.pipe(mapToGeoJsonPoint)
-			.subscribe(collectObserver(this.points));
+			.pipe(mapToGeoJsonPoint);
+			o.subscribe(collectObserver(this.points));
+			o.subscribe(({
+				complete: this.zoomIn
+			}));
 	}
 
 	// filters & styles for map drawing
@@ -121,12 +123,16 @@ export class MapComponent implements OnInit {
 	};
 	prevInspectUuid = '';
 	//zoom animation
-	async onMapLoad() {
-		await new Promise((f) => setTimeout(f, 3000));
+	eventCount = 0;
+	zoomIn() {
+		this.eventCount++;
+		// await eventCount of two: Tiles-Load & Neo4j-Load
+		if(this.eventCount < 2) return;
+		// do slow zooming
 		this.map?.easeTo({
 			center: [8.235, 50.08],
 			zoom: 12,
-			duration: 10000,
+			duration: 7000,
 		});
 	}
 	onPointClick(e: any) {
@@ -234,6 +240,7 @@ export class MapComponent implements OnInit {
 			.subscribe(collectObserver(this.points));
 	}
 	getStyleUrl(): string {
+		return `https://maps.geoapify.com/v1/styles/dark-matter-dark-grey/style.json?apiKey=db8eaf2341994e8d90a08f6ac3ff2adf`
 		return `${environment.tileServerUrl}/styles/${this.theme}/style.json`;
 	}
 }
