@@ -1,5 +1,12 @@
 import { LinePaint, SymbolLayout, Map, Popup, HeatmapPaint } from 'maplibre-gl';
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+} from '@angular/core';
 import { Feature, LineString, Point } from 'geojson';
 import Neo4jService from '../services/neo4j-service';
 import {
@@ -15,11 +22,13 @@ import { environment } from 'src/environments/environment';
 	styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-	constructor(public neo4j: Neo4jService, private changeDetectorRef: ChangeDetectorRef) { }
+	constructor(
+		public neo4j: Neo4jService,
+		private changeDetectorRef: ChangeDetectorRef
+	) {}
 	parentpath: Feature<LineString>[] = [];
 	childpath: Feature<LineString>[] = [];
 	points: Feature<Point>[] = [];
-
 	map?: Map;
 
 	@Input()
@@ -34,11 +43,9 @@ export class MapComponent implements OnInit {
 	// the UUID of clicked point
 	@Output()
 	inspectUuid = new EventEmitter<string>();
-
 	// Loads map data on init
 	ngOnInit(): void {
-		// POINTS
-		this.neo4j
+		const o = this.neo4j
 			.query(
 				`MATCH (a:User)
 				WHERE $d1 <= a.litTime <= $d2
@@ -48,8 +55,11 @@ export class MapComponent implements OnInit {
 					d2: this.filter.to,
 				}
 			)
-			.pipe(mapToGeoJsonPoint)
-			.subscribe(collectObserver(this.points));
+			.pipe(mapToGeoJsonPoint);
+			o.subscribe(collectObserver(this.points));
+			o.subscribe(({
+				complete: this.zoomIn
+			}));
 	}
 
 	// filters & styles for map drawing
@@ -69,9 +79,9 @@ export class MapComponent implements OnInit {
 				this.filter.to, // current time is max
 				1,
 				this.filter.to + 1, // dont show future
-				0
+				0,
 			],
-		}
+		};
 	}
 	get parentPaint(): LinePaint {
 		return this.linesPaint('#713fad');
@@ -111,8 +121,20 @@ export class MapComponent implements OnInit {
 		'icon-allow-overlap': false,
 		'icon-padding': 0,
 	};
-
 	prevInspectUuid = '';
+	//zoom animation
+	eventCount = 0;
+	zoomIn() {
+		this.eventCount++;
+		// await eventCount of two: Tiles-Load & Neo4j-Load
+		if(this.eventCount < 2) return;
+		// do slow zooming
+		this.map?.easeTo({
+			center: [8.235, 50.08],
+			zoom: 12,
+			duration: 7000,
+		});
+	}
 	onPointClick(e: any) {
 		if (!this.map) return;
 		const features = this.map
@@ -122,6 +144,18 @@ export class MapComponent implements OnInit {
 		const f: Feature = features[0];
 		new Popup({ anchor: 'top', closeButton: false })
 			.on('close', () => {
+				this.neo4j
+					.query(
+						`MATCH (a:User)
+						WHERE $d1 <= a.litTime <= $d2
+						RETURN a`,
+						{
+							d1: this.filter.from,
+							d2: this.filter.to,
+						}
+					)
+					.pipe(mapToGeoJsonPoint)
+					.subscribe(collectObserver(this.points));
 				if (this.prevInspectUuid == f.properties?.uuid)
 					this.inspectUuid.emit('');
 				// clear all without changing reference:
@@ -132,37 +166,81 @@ export class MapComponent implements OnInit {
 			.setLngLat((f.geometry as any).coordinates)
 			.setHTML(
 				'<span>' +
-				new Date(f.properties?.time || 0).toLocaleDateString() +
-				'</span>'
+					new Date(f.properties?.time || 0).toLocaleDateString() +
+					'</span>'
 			)
 			.addTo(this.map);
 		this.inspectUuid.emit(f.properties?.uuid);
 		this.prevInspectUuid = f.properties?.uuid;
 		this.neo4j
 			.query(
+				//child-query
 				`MATCH (a:User)-[:LIGHTS]->(b:User)
 				WITH a,b
 				MATCH (c:User)-[:LIGHTS*0..]->(a)
 				WHERE c.uuid = $uuid OR a.uuid = $uuid
-				RETURN a,b`, //Wenn A, oder ein Parent von A die angeklickte UUID hat.
+				RETURN a,b`, //If A, or a parent from A has the UUID
 				{ uuid: f.properties?.uuid }
 			)
 			.pipe(mapToGeoJsonLine)
 			.subscribe(collectObserver(this.childpath));
 		this.neo4j
 			.query(
+				//child query
 				`MATCH (a:User)-[:LIGHTS]->(b:User)
 				WITH b,a
 				MATCH (b)-[:LIGHTS*0..]->(c:User)
 				WHERE c.uuid = $uuid OR b.uuid = $uuid
-				RETURN a,b`, //Wenn A, oder ein Child von A die angeklickte UUID hat.
+				RETURN a,b`, //If A, or a child from A has the UUID
 				{ uuid: f.properties?.uuid }
 			)
 			.pipe(mapToGeoJsonLine)
 			.subscribe(collectObserver(this.parentpath));
-	}
 
+		this.points.forEach(function (item, index, object) {
+			if (item.properties?.uuid != f.properties?.uuid) {
+				console.log(item.properties);
+				console.log(f.properties);
+				object.splice(index);
+			}
+		}); //delete all points
+
+		//Only loading fire on path
+		this.neo4j
+			.query(
+				`MATCH (a:User)
+				WHERE $d1 <= a.litTime <= $d2
+				WITH a
+				MATCH (c:User)-[:LIGHTS*0..]->(a)
+				WHERE c.uuid = $uuid OR a.uuid = $uuid
+				RETURN a`, //childs
+				{
+					d1: this.filter.from,
+					d2: this.filter.to,
+					uuid: f.properties?.uuid,
+				}
+			)
+			.pipe(mapToGeoJsonPoint)
+			.subscribe(collectObserver(this.points));
+		this.neo4j
+			.query(
+				`MATCH (a:User)
+				WHERE $d1 <= a.litTime <= $d2
+				WITH a
+				MATCH (a:User)-[:LIGHTS*0..]->(c)
+				WHERE c.uuid = $uuid OR a.uuid = $uuid
+				RETURN a`, //parents
+				{
+					d1: this.filter.from,
+					d2: this.filter.to,
+					uuid: f.properties?.uuid,
+				}
+			)
+			.pipe(mapToGeoJsonPoint)
+			.subscribe(collectObserver(this.points));
+	}
 	getStyleUrl(): string {
+		return `https://maps.geoapify.com/v1/styles/dark-matter-dark-grey/style.json?apiKey=db8eaf2341994e8d90a08f6ac3ff2adf`
 		return `${environment.tileServerUrl}/styles/${this.theme}/style.json`;
 	}
 }
