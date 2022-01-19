@@ -46,14 +46,14 @@ export const mapToGeoJsonPoint: OperatorFunction<
  */
 export const collectObserver = (
 	collection: Feature[]
-): PartialObserver<Feature> => ({
-	next: (l) => collection.push(l),
-	complete: () => {
-		console.log('completed');
-		console.log(collection.length, ' fetched');
-	},
-	error: (error) => console.warn(error),
-});
+): PartialObserver<Feature> => {
+	collection.splice(0, collection.length);
+	return {
+		next: (l) => collection.push(l),
+		complete: () => console.log('completed map fetch', collection.length),
+		error: (error) => console.warn(error),
+	};
+};
 
 class AgedPoint {
 	constructor(public uuid: string, public loc: LngLat, public age: Date) {}

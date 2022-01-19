@@ -7,9 +7,14 @@ h2,
 h3 {
 	text-align: center;
 	span {
-		opacity: .3;
-		font-size: .7em;
+		opacity: 0.3;
+		font-size: 0.7em;
 		font-weight: 500;
+		&.bottom {
+			width: 80%;
+			display: block;
+			margin: 0 auto;
+		}
 	}
 }
 .separator {
@@ -31,9 +36,9 @@ h3 {
 	font-size: 14px;
 }
 mat-card-title {
-	transition: ease .2s;
+	transition: ease 0.2s;
 }
 .indeterminate {
-	opacity: .5;
+	opacity: 0.5;
 	filter: blur(3px);
 }
