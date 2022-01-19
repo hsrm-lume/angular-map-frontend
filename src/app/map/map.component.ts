@@ -14,9 +14,7 @@ import {
 	mapToGeoJsonLine,
 	mapToGeoJsonPoint,
 } from './MapUtil';
-import { LayerComponent } from 'ngx-maplibre-gl';
-import { map } from 'rxjs/operators';
-import { Linter } from 'eslint';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-map',
@@ -124,7 +122,7 @@ export class MapComponent implements OnInit {
 	prevInspectUuid = '';
 	//zoom animation
 	async onMapLoad() {
-		await new Promise((f) => setTimeout(f, 5000));
+		await new Promise((f) => setTimeout(f, 3000));
 		this.map?.easeTo({
 			center: [8.235, 50.08],
 			zoom: 12,
@@ -170,6 +168,7 @@ export class MapComponent implements OnInit {
 		this.prevInspectUuid = f.properties?.uuid;
 		this.neo4j
 			.query(
+				//child-query
 				`MATCH (a:User)-[:LIGHTS]->(b:User)
 				WITH a,b
 				MATCH (c:User)-[:LIGHTS*0..]->(a)
@@ -181,6 +180,7 @@ export class MapComponent implements OnInit {
 			.subscribe(collectObserver(this.childpath));
 		this.neo4j
 			.query(
+				//child query
 				`MATCH (a:User)-[:LIGHTS]->(b:User)
 				WITH b,a
 				MATCH (b)-[:LIGHTS*0..]->(c:User)
@@ -199,7 +199,7 @@ export class MapComponent implements OnInit {
 			}
 		}); //delete all points
 
-		//Only loading fires on the path
+		//Only loading fire on path
 		this.neo4j
 			.query(
 				`MATCH (a:User)
@@ -234,9 +234,6 @@ export class MapComponent implements OnInit {
 			.subscribe(collectObserver(this.points));
 	}
 	getStyleUrl(): string {
-		if (this.theme == 'light')
-			return 'https://maps.geoapify.com/v1/styles/positron/style.json?apiKey=db8eaf2341994e8d90a08f6ac3ff2adf';
-		else
-			return 'https://maps.geoapify.com/v1/styles/dark-matter-dark-grey/style.json?apiKey=db8eaf2341994e8d90a08f6ac3ff2adf';
+		return `${environment.tileServerUrl}/styles/${this.theme}/style.json`;
 	}
 }

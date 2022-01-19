@@ -10,27 +10,132 @@
 // have to load a single css file for Angular Material in your app.
 
 // Fonts
+@font-face {
+	font-family: "nexusa";
+	font-style: italic;
+	font-weight: 700;
+	src: url(assets/fonts/nexusa/Nexusa-Next-Bold-Italic.woff) format("woff");
+}
+@font-face {
+	font-family: "nexusa";
+	font-style: normal;
+	font-weight: 700;
+	src: url(assets/fonts/nexusa/Nexusa-Next-Bold.woff) format("woff");
+}
+@font-face {
+	font-family: "nexusa";
+	font-style: italic;
+	font-weight: 400;
+	src: url(assets/fonts/nexusa/Nexusa-Next-Italic.woff) format("woff");
+}
+@font-face {
+	font-family: "nexusa";
+	font-style: italic;
+	font-weight: 300;
+	src: url(assets/fonts/nexusa/Nexusa-Next-Light-Italic.woff) format("woff");
+}
+@font-face {
+	font-family: "nexusa";
+	font-style: normal;
+	font-weight: 300;
+	src: url(assets/fonts/nexusa/Nexusa-Next-Light.woff) format("woff");
+}
+@font-face {
+	font-family: "nexusa";
+	font-style: italic;
+	font-weight: 500;
+	src: url(assets/fonts/nexusa/Nexusa-Next-Medium-Italic.woff) format("woff");
+}
+@font-face {
+	font-family: "nexusa";
+	font-style: normal;
+	font-weight: 500;
+	src: url(assets/fonts/nexusa/Nexusa-Next-Medium.woff) format("woff");
+}
+@font-face {
+	font-family: "nexusa";
+	font-style: italic;
+	font-weight: 100;
+	src: url(assets/fonts/nexusa/Nexusa-Next-Thin-Italic.woff) format("woff");
+}
+@font-face {
+	font-family: "nexusa";
+	font-style: normal;
+	font-weight: 100;
+	src: url(assets/fonts/nexusa/Nexusa-Next-Thin.woff) format("woff");
+}
+@font-face {
+	font-family: "nexusa";
+	font-style: normal;
+	font-weight: 400;
+	src: url(assets/fonts/nexusa/Nexusa-Next.woff) format("woff");
+}
+
+@font-face {
+	font-family: "domus";
+	font-style: normal;
+	font-weight: 400;
+	src: url(assets/fonts/domus/Domus_Tilting.woff) format("woff");
+}
+@font-face {
+	font-family: "domus";
+	font-style: normal;
+	font-weight: 700;
+	src: url(assets/fonts/domus/Domus_Tilting_Bold.woff) format("woff");
+}
+@font-face {
+	font-family: "domus";
+	font-style: normal;
+	font-weight: 800;
+	src: url(assets/fonts/domus/Domus_Tilting_Extrabold.woff) format("woff");
+}
+@font-face {
+	font-family: "domus";
+	font-style: normal;
+	font-weight: 200;
+	src: url(assets/fonts/domus/Domus_Tilting_Extralight.woff) format("woff");
+}
+@font-face {
+	font-family: "domus";
+	font-style: normal;
+	font-weight: 300;
+	src: url(assets/fonts/domus/Domus_Tilting_Light.woff) format("woff");
+}
+@font-face {
+	font-family: "domus";
+	font-style: normal;
+	font-weight: 500;
+	src: url(assets/fonts/domus/Domus_Tilting_Medium.woff) format("woff");
+}
+@font-face {
+	font-family: "domus";
+	font-style: normal;
+	font-weight: 600;
+	src: url(assets/fonts/domus/Domus_Tilting_Semibold.woff) format("woff");
+}
 @import "https://fonts.googleapis.com/css?family=Material+Icons";
-@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
 
 $fontConfig: (
 	display-4:
-		mat.define-typography-level(112px, 112px, 300, "Roboto", -0.0134em),
-	display-3: mat.define-typography-level(56px, 56px, 400, "Roboto", -0.0089em),
-	display-2: mat.define-typography-level(45px, 48px, 400, "Roboto", 0em),
-	display-1: mat.define-typography-level(34px, 40px, 400, "Roboto", 0.0074em),
-	headline: mat.define-typography-level(24px, 32px, 400, "Roboto", 0em),
-	title: mat.define-typography-level(20px, 32px, 500, "Roboto", 0.0075em),
+		mat.define-typography-level(112px, 112px, 300, "nexusa", -0.0134em),
+	display-3: mat.define-typography-level(56px, 56px, 400, "nexusa", -0.0089em),
+	display-2: mat.define-typography-level(45px, 48px, 400, "nexusa", 0em),
+	display-1: mat.define-typography-level(34px, 40px, 400, "nexusa", 0.0074em),
+	headline: mat.define-typography-level(24px, 32px, 400, "domus", 0em),
+	title: mat.define-typography-level(20px, 32px, 500, "domus", 0.0075em),
 	subheading-2:
-		mat.define-typography-level(16px, 28px, 400, "Roboto", 0.0094em),
+		mat.define-typography-level(16px, 28px, 400, "domus", 0.0094em),
 	subheading-1:
-		mat.define-typography-level(15px, 24px, 500, "Roboto", 0.0067em),
-	body-2: mat.define-typography-level(14px, 24px, 500, "Roboto", 0.0179em),
-	body-1: mat.define-typography-level(14px, 20px, 400, "Roboto", 0.0179em),
-	button: mat.define-typography-level(14px, 14px, 500, "Roboto", 0.0893em),
-	caption: mat.define-typography-level(12px, 20px, 400, "Roboto", 0.0333em),
-	input: mat.define-typography-level(inherit, 1.125, 400, "Roboto", 1.5px),
+		mat.define-typography-level(15px, 24px, 500, "domus", 0.0067em),
+	body-2: mat.define-typography-level(14px, 24px, 500, "nexusa", 0.0179em),
+	body-1: mat.define-typography-level(14px, 20px, 400, "nexusa", 0.0179em),
+	button: mat.define-typography-level(14px, 14px, 500, "nexusa", 0.0893em),
+	caption: mat.define-typography-level(12px, 20px, 400, "nexusa", 0.0333em),
+	input: mat.define-typography-level(inherit, 1.125, 400, "nexusa", 1.5px),
 );
+
+// Compute font config
+@include mat.core($fontConfig);
 
 // Foreground Elements
 
@@ -145,9 +250,6 @@ $mat-dark-theme-background: (
 	unselected-chip: $dark-bg-lighter-20,
 	disabled-list-option: $dark-bg-lighter-10,
 );
-
-// Compute font config
-@include mat.core($fontConfig);
 
 // Theme Config
 
@@ -282,11 +384,12 @@ body {
 mat-drawer {
 	background-color: #eee !important;
 }
-button, mat-button-toggle-group {
+button,
+mat-button-toggle-group {
 	border-radius: 1000px !important;
 }
 mat-card {
-	border-radius: 16px !important;
+	border-radius: 8px !important;
 }
 img.icon {
 	width: 24px;

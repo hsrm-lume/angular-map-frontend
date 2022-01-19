@@ -4,11 +4,12 @@
 
 export const environment = {
 	neo4j: {
-		url: (_location: any) => 'neo4j://localhost:7687',
+		url: (_location: any) => 'neo4j://localhost:7687', // location is always localhost in dev-env
 		username: 'neo4j',
 		password: 's3cr3t4',
 	},
 	startDate: new Date('2021-01-01').getTime(),
+	tileServerUrl: 'http://localhost:8080',
 	appDownloadUrl:
 		'https://github.com/hsrm-lume/react-native-cli-lume/releases/latest/download/app-release.apk',
 	production: false,
