@@ -7,6 +7,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import Neo4jService from '../services/neo4j-service';
 import { StatGroup, StatFactory } from './StatsUtil';
@@ -63,8 +64,24 @@ export class StatsComponent implements OnInit, OnChanges {
 	// PERSONAL
 	personalGroup = new StatGroup('personal', []);
 	personalUuid: string = '';
+	showLightFireMessage = false;
 	setPersonal(uuid: string) {
-		this.personalUuid = uuid;
+		this.neo4j
+			.query(`MATCH (n) WHERE n.uuid = $uuid RETURN COUNT(n) as result`, {
+				uuid: uuid,
+			})
+			.pipe(map((record) => Number(record.get('result'))))
+			.subscribe({
+				complete: () => console.log('complete'),
+				next: (count) => {
+					console.log(uuid);
+					console.log(count);
+					if (count > 0) {
+						this.personalUuid = uuid;
+						this.loadPersonalGroup();
+					} else this.showLightFireMessage = true;
+				},
+			});
 	}
 	private loadPersonalGroup() {
 		if (this.personalUuid == '') {
