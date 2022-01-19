@@ -31,7 +31,6 @@ export class MapComponent implements OnInit {
 	parentpath: Feature<LineString>[] = [];
 	childpath: Feature<LineString>[] = [];
 	points: Feature<Point>[] = [];
-	zoom: Number = 0;
 	map?: Map;
 
 	@Input()
@@ -49,7 +48,6 @@ export class MapComponent implements OnInit {
 	// Loads map data on init
 	ngOnInit(): void {
 		this.map?.easeTo({ zoom: 12 });
-
 		this.neo4j
 			.query(
 				`MATCH (a:User)
@@ -124,16 +122,14 @@ export class MapComponent implements OnInit {
 		'icon-padding': 0,
 	};
 	prevInspectUuid = '';
+	//zoom animation
 	async onMapLoad() {
-		if (this.zoom == 0) {
-			await new Promise((f) => setTimeout(f, 5000));
-			this.map?.easeTo({
-				center: [8.235, 50.08],
-				zoom: 12,
-				duration: 10000,
-			});
-		}
-		this.zoom = 1;
+		await new Promise((f) => setTimeout(f, 5000));
+		this.map?.easeTo({
+			center: [8.235, 50.08],
+			zoom: 12,
+			duration: 10000,
+		});
 	}
 	onPointClick(e: any) {
 		if (!this.map) return;
@@ -178,7 +174,7 @@ export class MapComponent implements OnInit {
 				WITH a,b
 				MATCH (c:User)-[:LIGHTS*0..]->(a)
 				WHERE c.uuid = $uuid OR a.uuid = $uuid
-				RETURN a,b`, //Wenn A, oder ein Parent von A die angeklickte UUID hat.
+				RETURN a,b`, //If A, or a parent from A has the UUID
 				{ uuid: f.properties?.uuid }
 			)
 			.pipe(mapToGeoJsonLine)
@@ -189,7 +185,7 @@ export class MapComponent implements OnInit {
 				WITH b,a
 				MATCH (b)-[:LIGHTS*0..]->(c:User)
 				WHERE c.uuid = $uuid OR b.uuid = $uuid
-				RETURN a,b`, //Wenn A, oder ein Child von A die angeklickte UUID hat.
+				RETURN a,b`, //If A, or a child from A has the UUID
 				{ uuid: f.properties?.uuid }
 			)
 			.pipe(mapToGeoJsonLine)
@@ -211,7 +207,7 @@ export class MapComponent implements OnInit {
 				WITH a
 				MATCH (c:User)-[:LIGHTS*0..]->(a)
 				WHERE c.uuid = $uuid OR a.uuid = $uuid
-				RETURN a`,
+				RETURN a`, //childs
 				{
 					d1: this.filter.from,
 					d2: this.filter.to,
@@ -227,7 +223,7 @@ export class MapComponent implements OnInit {
 				WITH a
 				MATCH (a:User)-[:LIGHTS*0..]->(c)
 				WHERE c.uuid = $uuid OR a.uuid = $uuid
-				RETURN a`,
+				RETURN a`, //parents
 				{
 					d1: this.filter.from,
 					d2: this.filter.to,
