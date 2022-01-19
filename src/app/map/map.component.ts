@@ -15,6 +15,7 @@ import {
 	mapToGeoJsonPoint,
 } from './MapUtil';
 import { environment } from 'src/environments/environment';
+import { tap } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-map',
@@ -45,7 +46,7 @@ export class MapComponent implements OnInit {
 	inspectUuid = new EventEmitter<string>();
 	// Loads map data on init
 	ngOnInit(): void {
-		const o = this.neo4j
+		this.neo4j
 			.query(
 				`MATCH (a:User)
 				WHERE $d1 <= a.litTime <= $d2
@@ -55,11 +56,8 @@ export class MapComponent implements OnInit {
 					d2: this.filter.to,
 				}
 			)
-			.pipe(mapToGeoJsonPoint);
-			o.subscribe(collectObserver(this.points));
-			o.subscribe(({
-				complete: this.zoomIn
-			}));
+			.pipe(mapToGeoJsonPoint, tap(() => this.zoomIn()))
+			.subscribe(collectObserver(this.points));
 	}
 
 	// filters & styles for map drawing
@@ -240,7 +238,6 @@ export class MapComponent implements OnInit {
 			.subscribe(collectObserver(this.points));
 	}
 	getStyleUrl(): string {
-		return `https://maps.geoapify.com/v1/styles/dark-matter-dark-grey/style.json?apiKey=db8eaf2341994e8d90a08f6ac3ff2adf`
 		return `${environment.tileServerUrl}/styles/${this.theme}/style.json`;
 	}
 }
