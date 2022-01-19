@@ -7,6 +7,7 @@ import {
 	mapToGeoJsonLine,
 	mapToGeoJsonPoint,
 } from './MapUtil';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-map',
@@ -162,6 +163,6 @@ export class MapComponent implements OnInit {
 	}
 
 	getStyleUrl(): string {
-		return `/assets/mapstyles/${this.theme}.json`;
+		return `${environment.tileServerUrl}/styles/${this.theme}/style.json`;
 	}
 }
