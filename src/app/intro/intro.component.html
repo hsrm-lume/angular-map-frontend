@@ -1,0 +1,19 @@
+<div id="intro">
+	<mat-card>
+		<img src="/assets/intro/close.svg" class="close" (click)="close()" />
+		<h2>{{ currentSlide.headline }}</h2>
+		<img
+			mat-card-image
+			class="introIcon"
+			[src]="currentSlide.icon"
+			alt="Icon describing this slide"
+		/>
+		<p>
+			{{ currentSlide.text }}
+		</p>
+		<div class="buttons">
+			<button mat-button>CLOSE</button>
+			<button mat-button>NEXT</button>
+		</div>
+	</mat-card>
+</div>

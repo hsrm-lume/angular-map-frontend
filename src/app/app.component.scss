@@ -80,3 +80,16 @@ mat-drawer.portrait {
 	bottom: 0;
 	top: unset;
 }
+mat-drawer-container {
+	transition: ease 300ms;
+	&.blur {
+		filter: blur(5px) saturate(0);
+	}
+}
+app-intro {
+	z-index: 100;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}

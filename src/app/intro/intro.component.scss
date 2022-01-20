@@ -1,0 +1,40 @@
+mat-card {
+	width: max-content;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	& > * {
+		margin-bottom: 1em;
+	}
+}
+h2 {
+	text-align: center;
+	margin-top: 1em;
+	font-size: 2em;
+}
+.close {
+	position: absolute;
+	top: 0.5em;
+	right: 0.5em;
+	height: 2em;
+	cursor: pointer;
+	padding: 1em;
+}
+img.introIcon {
+	padding: 0 2em;
+	max-width: calc(100% - 4em);
+	height: 16em;
+	margin-left: auto;
+	margin-right: auto;
+}
+p {
+	padding: 0 15%;
+}
+.buttons {
+	display: flex;
+	justify-content: space-evenly;
+}
+::ng-deep .buttons button span.mat-button-wrapper {
+	display: block;
+	margin-bottom: -4px;
+}

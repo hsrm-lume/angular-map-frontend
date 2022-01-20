@@ -4,3 +4,12 @@
 .hide {
 	display: none;
 }
+::ng-deep mat-toolbar button {
+	span {
+		display: block;
+		margin-bottom: -3px;
+	}
+	mat-icon {
+		margin-bottom: 3px;
+	}
+}
