@@ -46,6 +46,9 @@ export class MapComponent implements OnInit {
 	inspectUuid = new EventEmitter<string>();
 	// Loads map data on init
 	ngOnInit(): void {
+		this.reloadData(true);
+	}
+	reloadData(initial: boolean = false): void {
 		this.neo4j
 			.query(
 				`MATCH (a:User)
@@ -56,7 +59,12 @@ export class MapComponent implements OnInit {
 					d2: this.filter.to,
 				}
 			)
-			.pipe(mapToGeoJsonPoint, tap(() => this.zoomIn()))
+			.pipe(
+				mapToGeoJsonPoint,
+				tap(() => {
+					if (initial) this.zoomIn();
+				})
+			)
 			.subscribe(collectObserver(this.points));
 	}
 
@@ -125,7 +133,7 @@ export class MapComponent implements OnInit {
 	zoomIn() {
 		this.eventCount++;
 		// await eventCount of two: Tiles-Load & Neo4j-Load
-		if(this.eventCount < 2) return;
+		if (this.eventCount < 2) return;
 		// do slow zooming
 		this.map?.easeTo({
 			center: [8.235, 50.08],

@@ -23,6 +23,7 @@
 			></app-stats>
 		</mat-drawer>
 		<app-map
+			#map
 			(inspectUuid)="stats.setInspect($event)"
 			[theme]="theme"
 			[mode]="mapMode"
@@ -40,6 +41,7 @@
 		<app-mode-controls
 			class="floatAbove"
 			id="controls"
+			(reloadClick)="map.reloadData()"
 			[(theme)]="theme"
 			[portraitMode]="portraitMode"
 			[(mapMode)]="mapMode"
