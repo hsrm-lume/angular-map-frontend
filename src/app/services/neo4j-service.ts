@@ -36,8 +36,8 @@ export default class Neo4jService implements OnDestroy {
 				catchError((e) => {
 					this.messageService.push({
 						type: 'error',
-						text: 'Bitte später erneut versuchen.',
-						title: 'Datenbankfehler',
+						text: 'Cant connect to the lume servers. Please try again soon.',
+						title: 'Connectivity Issues',
 					});
 					console.warn(e);
 					return of(null);

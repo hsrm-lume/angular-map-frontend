@@ -43,7 +43,7 @@ export class IntroComponent {
 		{
 			title: 'using your camera',
 			image: 'shareCamera.svg',
-			text: 'Or use your camera and scan a lume QR code.\nYour torch will be lit in no-time',
+			text: 'Or use your camera and scan a lume QR code.\nYour torch will be lit in no time',
 		},
 		{
 			title: 'sharing your flame',
