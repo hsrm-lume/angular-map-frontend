@@ -83,7 +83,7 @@ mat-drawer.portrait {
 mat-drawer-container {
 	transition: ease 300ms;
 	&.blur {
-		filter: blur(5px) saturate(0);
+		filter: blur(5px) saturate(0) brightness(0.9);
 	}
 }
 app-intro {
@@ -92,4 +92,11 @@ app-intro {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	width: 31em;
+	max-width: 95%;
+}
+@media (min-height: 1200px) {
+	app-intro {
+		transform: translate(-50%, -50%) scale(1.2);
+	}
 }

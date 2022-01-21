@@ -6,10 +6,21 @@
 }
 ::ng-deep mat-toolbar button {
 	span {
-		display: block;
+		display: inline-block;
 		margin-bottom: -3px;
 	}
 	mat-icon {
 		margin-bottom: 3px;
+	}
+}
+.nominify {
+	display: none;
+}
+@media (max-width: 500px) {
+	.minify {
+		display: none;
+	}
+	.nominify {
+		display: inline-block;
 	}
 }

@@ -1,19 +1,45 @@
 <div id="intro">
 	<mat-card>
 		<img src="/assets/intro/close.svg" class="close" (click)="close()" />
-		<h2>{{ currentSlide.headline }}</h2>
-		<img
-			mat-card-image
-			class="introIcon"
-			[src]="currentSlide.icon"
-			alt="Icon describing this slide"
-		/>
-		<p>
-			{{ currentSlide.text }}
-		</p>
-		<div class="buttons">
-			<button mat-button>CLOSE</button>
-			<button mat-button>NEXT</button>
+		<div class="container">
+			<mat-card-content
+				*ngFor="let intro of messages; let i = index"
+				[class.visible]="i == currentIndex"
+				[class.passed]="i < currentIndex"
+			>
+				<h2>{{ intro.title }}</h2>
+				<img
+					mat-card-image
+					class="introIcon"
+					[src]="'/assets/intro/' + intro.image"
+					alt="Icon describing this slide"
+				/>
+				<p>
+					{{ intro.text }}
+				</p>
+			</mat-card-content>
+		</div>
+		<div
+			[class]="
+				'buttons' +
+				(currentIndex == messages.length - 1 ? ' lastSlide' : '')
+			"
+		>
+			<button mat-button (click)="prev()">
+				{{ currentIndex == 0 ? "close" : "previous" }}
+			</button>
+			<button mat-stroked-button (click)="next()">
+				{{ currentIndex == messages.length - 1 ? "Explore" : "next" }}
+			</button>
+			<button
+				*ngIf="currentIndex == messages.length - 1"
+				mat-flat-button
+				color="primary"
+				class="downloadnow"
+				(click)="download()"
+			>
+				DOWNLOAD NOW
+			</button>
 		</div>
 	</mat-card>
 </div>
