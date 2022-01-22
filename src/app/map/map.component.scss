@@ -31,6 +31,13 @@ mgl-map.blur {
 		transform: scale(5);
 	}
 }
+@keyframes hide {
+	0% {
+	}
+	100% {
+		display: none;
+	}
+}
 mgl-map:not(.blur) {
 	animation: deBlur 0.7s ease-in-out forwards;
 }
@@ -41,6 +48,7 @@ mgl-map:not(.blur) {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	pointer-events: none;
 	&:after {
 		content: " ";
 		position: absolute;
@@ -50,7 +58,9 @@ mgl-map:not(.blur) {
 		z-index: -1;
 	}
 	&.done {
-		h1 {
+		animation: hide 1s ease-in forwards;
+		h1,
+		&:after {
 			animation: fadeOut 0.3s ease-in forwards;
 		}
 		img {
