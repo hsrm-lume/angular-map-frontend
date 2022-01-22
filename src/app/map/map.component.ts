@@ -56,7 +56,10 @@ export class MapComponent implements OnInit {
 					d2: this.filter.to,
 				}
 			)
-			.pipe(mapToGeoJsonPoint, tap(() => this.zoomIn()))
+			.pipe(
+				mapToGeoJsonPoint,
+				tap(() => this.zoomIn())
+			)
 			.subscribe(collectObserver(this.points));
 	}
 
@@ -121,17 +124,23 @@ export class MapComponent implements OnInit {
 	};
 	prevInspectUuid = '';
 	//zoom animation
+	ready = false;
 	eventCount = 0;
 	zoomIn() {
 		this.eventCount++;
 		// await eventCount of two: Tiles-Load & Neo4j-Load
-		if(this.eventCount < 2) return;
-		// do slow zooming
-		this.map?.easeTo({
-			center: [8.235, 50.08],
-			zoom: 12,
-			duration: 7000,
-		});
+		if (this.eventCount < 1) return;
+		setTimeout(() => {
+			this.ready = true;
+			// do slow zooming
+			setTimeout(() => {
+				this.map?.easeTo({
+					center: [8.235, 50.08],
+					zoom: 12,
+					duration: 7000,
+				});
+			}, 300);
+		}, 300);
 	}
 	onPointClick(e: any) {
 		if (!this.map) return;
