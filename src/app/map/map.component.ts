@@ -129,7 +129,7 @@ export class MapComponent implements OnInit {
 	zoomIn() {
 		this.eventCount++;
 		// await eventCount of two: Tiles-Load & Neo4j-Load
-		if (this.eventCount < 1) return;
+		if (this.eventCount < 2) return;
 		setTimeout(() => {
 			this.ready = true;
 			// do slow zooming
