@@ -1,3 +1,7 @@
+<div [class.done]="ready" class="loading">
+	<img src="/assets/spinner.svg" /><br />
+	<h1>Loading...</h1>
+</div>
 <mgl-map
 	id="map"
 	[style]="getStyleUrl()"
@@ -6,6 +10,7 @@
 	[center]="[8.235, 50.08]"
 	(mapLoad)="map = $event"
 	(mapLoad)="zoomIn()"
+	[class.blur]="!ready"
 >
 	<!-- Path to childs -->
 	<mgl-geojson-source id="childpath">
