@@ -1,0 +1,19 @@
+<svg width="200px" height="200px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+	preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none">
+	<linearGradient id="grad" x1="100%" y1="0%" x2="0%" y2="0%" gradientTransform="rotate(90 50 50)">
+		<animateTransform attributeName="gradientTransform" type="rotate" calcMode="linear"
+			values="360 0.5 0.5;0 0.5 0.5" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite">
+		</animateTransform>
+		<stop offset="0%" stop-color="#703faf">
+		</stop>
+		<stop offset="100%" stop-color="#fe3a3b">
+		</stop>
+	</linearGradient>
+	<circle cx="50" cy="50" fill="none" ng-attr-stroke="{{config.color}}" ng-attr-stroke-width="{{config.width}}"
+		ng-attr-r="{{config.radius}}" ng-attr-stroke-dasharray="{{config.dasharray}}" stroke="url(#grad)"
+		stroke-width="10" stroke-linecap="round" r="35" stroke-dasharray="164.93361431346415 56.97787143782138"
+		transform="rotate(124.805 50 50)">
+		<animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50"
+			keyTimes="0;1" dur="1.5s" begin="0s" repeatCount="indefinite"></animateTransform>
+	</circle>
+</svg>

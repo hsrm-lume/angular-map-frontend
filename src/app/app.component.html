@@ -1,6 +1,6 @@
 <div id="grid" [class.dark]="theme == 'dark'">
-	<app-toolbar></app-toolbar>
-	<mat-drawer-container>
+	<app-toolbar (toggleIntro)="toggleIntro()"></app-toolbar>
+	<mat-drawer-container [class.blur]="showIntro">
 		<mat-drawer
 			[class.portrait]="portraitMode"
 			#drawer
@@ -67,3 +67,4 @@
 		</mat-card>
 	</div>
 </div>
+<app-intro *ngIf="showIntro" (toggleIntro)="toggleIntro()"></app-intro>
