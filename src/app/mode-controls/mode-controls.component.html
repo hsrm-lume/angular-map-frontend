@@ -4,6 +4,9 @@
 		[value]="mapMode"
 		(change)="m($event)"
 	>
+		<mat-button-toggle value="_">
+			<mat-icon class="toggleIcon">refresh</mat-icon>
+		</mat-button-toggle>
 		<mat-button-toggle value="point">Points</mat-button-toggle>
 		<mat-button-toggle value="heatmap">Heatmap</mat-button-toggle>
 	</mat-button-toggle-group>

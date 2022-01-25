@@ -46,6 +46,9 @@ export class MapComponent implements OnInit {
 	inspectUuid = new EventEmitter<string>();
 	// Loads map data on init
 	ngOnInit(): void {
+		this.reloadData(true);
+	}
+	reloadData(initial: boolean = false): void {
 		this.neo4j
 			.query(
 				`MATCH (a:User)
@@ -58,7 +61,9 @@ export class MapComponent implements OnInit {
 			)
 			.pipe(
 				mapToGeoJsonPoint,
-				tap(() => this.zoomIn())
+				tap(() => {
+					if (initial) this.zoomIn();
+				})
 			)
 			.subscribe(collectObserver(this.points));
 	}
