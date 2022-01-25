@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModeControlsComponent } from './mode-controls/mode-controls.component';
+import { IntroComponent } from './intro/intro.component';
 
 @NgModule({
 	declarations: [
@@ -28,6 +29,7 @@ import { ModeControlsComponent } from './mode-controls/mode-controls.component';
 		ToolbarComponent,
 		StatsComponent,
   ModeControlsComponent,
+  IntroComponent,
 	],
 	imports: [
 		FormsModule,
