@@ -58,6 +58,7 @@ export class AppComponent implements OnInit {
 
 	@HostListener('window:resize', ['$event'])
 	onResize() {
+		// switches to mobile view if the window width is smaller than the height and a specified pixel value
 		this.portraitMode =
 			window.innerWidth < 1100 && window.innerWidth < window.innerHeight;
 	}
