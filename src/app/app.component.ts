@@ -76,4 +76,9 @@ export class AppComponent implements OnInit {
 	ngOnInit(): void {
 		this.onResize();
 	}
+
+	showIntro = false;
+	toggleIntro(): void {
+		this.showIntro = !this.showIntro;
+	}
 }

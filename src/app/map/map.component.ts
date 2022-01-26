@@ -15,6 +15,7 @@ import {
 	mapToGeoJsonPoint,
 } from './MapUtil';
 import { environment } from 'src/environments/environment';
+import { tap } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-map',
@@ -45,7 +46,9 @@ export class MapComponent implements OnInit {
 	inspectUuid = new EventEmitter<string>();
 	// Loads map data on init
 	ngOnInit(): void {
-		this.map?.easeTo({ zoom: 12 });
+		this.reloadData(true);
+	}
+	reloadData(initial: boolean = false): void {
 		this.neo4j
 			.query(
 				`MATCH (a:User)
@@ -56,7 +59,12 @@ export class MapComponent implements OnInit {
 					d2: this.filter.to,
 				}
 			)
-			.pipe(mapToGeoJsonPoint)
+			.pipe(
+				mapToGeoJsonPoint,
+				tap(() => {
+					if (initial) this.zoomIn();
+				})
+			)
 			.subscribe(collectObserver(this.points));
 	}
 
@@ -121,13 +129,23 @@ export class MapComponent implements OnInit {
 	};
 	prevInspectUuid = '';
 	//zoom animation
-	async onMapLoad() {
-		await new Promise((f) => setTimeout(f, 3000));
-		this.map?.easeTo({
-			center: [8.235, 50.08],
-			zoom: 12,
-			duration: 10000,
-		});
+	ready = false;
+	eventCount = 0;
+	zoomIn() {
+		this.eventCount++;
+		// await eventCount of two: Tiles-Load & Neo4j-Load
+		if (this.eventCount < 2) return;
+		setTimeout(() => {
+			this.ready = true;
+			// do slow zooming
+			setTimeout(() => {
+				this.map?.easeTo({
+					center: [8.235, 50.08],
+					zoom: 12,
+					duration: 7000,
+				});
+			}, 300);
+		}, 300);
 	}
 	onPointClick(e: any) {
 		if (!this.map) return;

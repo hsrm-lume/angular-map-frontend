@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
@@ -14,6 +14,9 @@ export class ToolbarComponent {
 			if (params.uuid) this.hideToolbar = true; // hide toolbar if in app view
 		});
 	}
+	@Output()
+	toggleIntro = new EventEmitter();
+
 	download() {
 		window.location.href = environment.appDownloadUrl;
 	}
