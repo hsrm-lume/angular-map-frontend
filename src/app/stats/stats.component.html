@@ -2,7 +2,7 @@
 	Statistics<br />
 	<span>{{ filterToString }}</span>
 </h2>
-
+<!-- Container that shows the right stats groups-->
 <ng-container *ngFor="let sg of statGroups">
 	<div *ngIf="sg.title && sg.members.length > 0" class="separator">
 		<hr />
@@ -16,6 +16,8 @@
 		</mat-card-title>
 	</mat-card>
 </ng-container>
+<!-- If you don't have personal fire,
+	 the following message will be displayed instead of personal stats -->
 <h2 *ngIf="showLightFireMessage">
 	<span class="bottom">
 		Light your fire to view personal statistics here.

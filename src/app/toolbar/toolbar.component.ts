@@ -19,5 +19,6 @@ export class ToolbarComponent {
 
 	download() {
 		window.location.href = environment.appDownloadUrl;
+		//Url to the latest app release on Github
 	}
 }

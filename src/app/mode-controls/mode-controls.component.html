@@ -4,12 +4,17 @@
 		[value]="mapMode"
 		(change)="m($event)"
 	>
+		<!-- button to update the webapp, 
+			 very important for the mobile view in the app because
+			 otherwise a restart would be necessary-->
 		<mat-button-toggle value="_">
 			<mat-icon class="toggleIcon">refresh</mat-icon>
 		</mat-button-toggle>
+		<!-- buttons to switch between points and heatmap mode-->
 		<mat-button-toggle value="point">Points</mat-button-toggle>
 		<mat-button-toggle value="heatmap">Heatmap</mat-button-toggle>
 	</mat-button-toggle-group>
+	<!-- toggle to switch the layout between dark and light mode-->
 	<div id="toggle">
 		<img class="icon" src="/assets/sun.svg" />
 		<mat-slide-toggle

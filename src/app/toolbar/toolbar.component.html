@@ -2,12 +2,14 @@
 	<mat-toolbar-row>
 		<h1 id="title">Lume<span class="minify"> Map</span></h1>
 		<span class="spacer"></span>
+		<!-- Intro that explains how lume works -->
 		<button mat-flat-button color="primary" (click)="toggleIntro.emit()">
 			<span class="minify">WHAT IS LUME&nbsp;</span
 			><span class="nominify">ABOUT&nbsp;</span>
 			<mat-icon>question_mark</mat-icon>
 		</button>
 		&nbsp;&nbsp;
+		<!-- button to download the apk-->
 		<button mat-flat-button color="accent" (click)="download()">
 			DOWNLOAD&nbsp;&nbsp;
 			<mat-icon>android</mat-icon>

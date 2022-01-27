@@ -49,6 +49,7 @@ export class MapComponent implements OnInit {
 		this.reloadData(true);
 	}
 	reloadData(initial: boolean = false): void {
+		// query that returns every fire
 		this.neo4j
 			.query(
 				`MATCH (a:User)
@@ -72,6 +73,7 @@ export class MapComponent implements OnInit {
 	get filters(): any[] {
 		return ['<', ['number', ['get', 'time']], this.filter.to];
 	}
+	// set variables of the lines between the fires
 	linesPaint(color: string): LinePaint {
 		return {
 			'line-width': ['interpolate', ['linear'], ['zoom'], 0, 1, 16, 2],
@@ -89,12 +91,14 @@ export class MapComponent implements OnInit {
 			],
 		};
 	}
+	// When a fire is clicked, connections to all parents and children are shown as lines
 	get parentPaint(): LinePaint {
 		return this.linesPaint('#713fad');
 	}
 	get childPaint(): LinePaint {
 		return this.linesPaint('#fd3a3b');
 	}
+	// set variables for heatmap design
 	get heatmapPaint(): HeatmapPaint {
 		return {
 			'heatmap-radius': [
@@ -155,10 +159,11 @@ export class MapComponent implements OnInit {
 		if (features.length < 1) return;
 		const f: Feature = features[0];
 		new Popup({ anchor: 'top', closeButton: false })
+			//if the fire is no longer selected
 			.on('close', () => {
 				this.neo4j
 					.query(
-						//query to load all fires
+						//query to display all fires again
 						`MATCH (a:User)
 						WHERE $d1 <= a.litTime <= $d2
 						RETURN a`,
@@ -177,6 +182,7 @@ export class MapComponent implements OnInit {
 				this.changeDetectorRef.detectChanges(); // mark component as changed
 			})
 			.setLngLat((f.geometry as any).coordinates)
+			// shows date when lit below the fire
 			.setHTML(
 				'<span>' +
 					new Date(f.properties?.time || 0).toLocaleDateString() +
@@ -187,46 +193,46 @@ export class MapComponent implements OnInit {
 		this.prevInspectUuid = f.properties?.uuid;
 		this.neo4j
 			.query(
-				//child-query
+				//query to create a line between children and selected fire
 				`MATCH (a:User)-[:LIGHTS]->(b:User)
 				WITH a,b
 				MATCH (c:User)-[:LIGHTS*0..]->(a)
 				WHERE c.uuid = $uuid OR a.uuid = $uuid
-				RETURN a,b`, //If A, or a parent from A has the UUID
+				RETURN a,b`, //if a, or a parent from a has the UUID
 				{ uuid: f.properties?.uuid }
 			)
 			.pipe(mapToGeoJsonLine)
 			.subscribe(collectObserver(this.childpath));
 		this.neo4j
 			.query(
-				//parent query
+				//query to create a line between parents and selected fire
 				`MATCH (a:User)-[:LIGHTS]->(b:User)
 				WITH b,a
 				MATCH (b)-[:LIGHTS*0..]->(c:User)
 				WHERE c.uuid = $uuid OR b.uuid = $uuid
-				RETURN a,b`, //If A, or a child from A has the UUID
+				RETURN a,b`, //If a, or a child from a has the UUID
 				{ uuid: f.properties?.uuid }
 			)
 			.pipe(mapToGeoJsonLine)
 			.subscribe(collectObserver(this.parentpath));
-
+		//delete all fire points
 		this.points.forEach(function (item, index, object) {
 			if (item.properties?.uuid != f.properties?.uuid) {
 				console.log(item.properties);
 				console.log(f.properties);
 				object.splice(index);
 			}
-		}); //delete all points
-
-		//Only loading fire on path
+		});
+		//only loads fires who are related to the clicked fire
 		this.neo4j
 			.query(
+				//child query
 				`MATCH (a:User)
 				WHERE $d1 <= a.litTime <= $d2
 				WITH a
 				MATCH (c:User)-[:LIGHTS*0..]->(a)
 				WHERE c.uuid = $uuid OR a.uuid = $uuid
-				RETURN a`, //childs
+				RETURN a`,
 				{
 					d1: this.filter.from,
 					d2: this.filter.to,
@@ -237,12 +243,13 @@ export class MapComponent implements OnInit {
 			.subscribe(collectObserver(this.points));
 		this.neo4j
 			.query(
+				//parent query
 				`MATCH (a:User)
 				WHERE $d1 <= a.litTime <= $d2
 				WITH a
 				MATCH (a:User)-[:LIGHTS*0..]->(c)
 				WHERE c.uuid = $uuid OR a.uuid = $uuid
-				RETURN a`, //parents
+				RETURN a`,
 				{
 					d1: this.filter.from,
 					d2: this.filter.to,
@@ -252,6 +259,7 @@ export class MapComponent implements OnInit {
 			.pipe(mapToGeoJsonPoint)
 			.subscribe(collectObserver(this.points));
 	}
+	//style url with the map layout
 	getStyleUrl(): string {
 		return `${environment.tileServerUrl}/styles/${this.theme}/style.json`;
 	}

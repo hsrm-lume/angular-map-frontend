@@ -1,8 +1,9 @@
 <mat-card [class.portrait]="portraitMode">
+	<!-- date limit at the beginning of the slider-->
 	<div class="dates">
 		{{ labelString("start") }}
 	</div>
-
+	<!-- slider -->
 	<mat-slider
 		thumbLabel
 		[displayWith]="formatLabel"
@@ -16,9 +17,11 @@
 		aria-label="units"
 		[vertical]="portraitMode"
 	></mat-slider>
+	<!-- date limit at the end of the slider-->
 	<div class="dates">
 		{{ labelString("end") }}
 	</div>
+	<!-- plus and minus button to change the range of the slider -->
 	<div class="zooms">
 		<button mat-icon-button class="zoom" (click)="zoom('in')">
 			<img src="/assets/add.svg" class="icon" />

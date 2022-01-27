@@ -1,13 +1,19 @@
 <div id="grid" [class.dark]="theme == 'dark'">
 	<app-toolbar (toggleIntro)="toggleIntro()"></app-toolbar>
 	<mat-drawer-container [class.blur]="showIntro">
+		<!-- drawer to slide in the stats.
+			 The size and position of the other 
+			 elements are adjusted accordingly -->
 		<mat-drawer
 			[class.portrait]="portraitMode"
 			#drawer
 			mode="side"
 			position="end"
 		>
-			<button 
+			<!-- Button to return from stats to map. 
+				 Only available in mobile view,
+			 	 where stats take up the entire width of the screen-->
+			<button
 				*ngIf="portraitMode"
 				type="button"
 				mat-raised-button
@@ -16,12 +22,15 @@
 			>
 				<img src="/assets/arrowLargeLeft.svg" class="icon" />
 			</button>
+			<!-- Stats that are displayed on the right side 
+				 by pressing a button -->
 			<app-stats
 				#stats
 				[indeterminate]="sliderIndeterminate"
 				[filterRange]="filter"
 			></app-stats>
 		</mat-drawer>
+		<!-- map component-->
 		<app-map
 			#map
 			(inspectUuid)="stats.setInspect($event)"
@@ -29,6 +38,7 @@
 			[mode]="mapMode"
 			[filter]="filter"
 		></app-map>
+		<!-- Button to show the stats-->
 		<button
 			id="statsButton"
 			type="button"
@@ -38,6 +48,7 @@
 		>
 			<img src="/assets/stats.svg" class="icon" />
 		</button>
+		<!-- Component to control whether correct display modes are used-->
 		<app-mode-controls
 			class="floatAbove"
 			id="controls"
@@ -46,6 +57,7 @@
 			[portraitMode]="portraitMode"
 			[(mapMode)]="mapMode"
 		></app-mode-controls>
+		<!-- time slider to track the spread of the fire -->
 		<app-slider
 			class="floatAbove"
 			[portraitMode]="portraitMode"
@@ -55,6 +67,7 @@
 			(indeterminateChange)="indeterminateChange($event)"
 		></app-slider>
 	</mat-drawer-container>
+	<!-- card to display the messages of the message service -->
 	<div @list id="messages" [class.portrait]="portraitMode">
 		<mat-card @items *ngFor="let m of messageService.ms" [class]="m.type">
 			<div>
@@ -67,4 +80,6 @@
 		</mat-card>
 	</div>
 </div>
+<!-- intro messages that are only displayed 
+	 if the relevant button has been pressed -->
 <app-intro *ngIf="showIntro" (toggleIntro)="toggleIntro()"></app-intro>

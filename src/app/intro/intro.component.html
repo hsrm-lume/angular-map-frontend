@@ -1,6 +1,9 @@
 <div id="intro">
+	<!-- display card with intro -->
 	<mat-card>
+		<!-- button to close intro -->
 		<img src="/assets/intro/close.svg" class="close" (click)="close()" />
+		<!-- Container for displaying the image and content of the respective intro page-->
 		<div class="container">
 			<mat-card-content
 				*ngFor="let intro of messages; let i = index"
@@ -25,12 +28,14 @@
 				(currentIndex == messages.length - 1 ? ' lastSlide' : '')
 			"
 		>
+			<!-- buttons to go back and forth -->
 			<button mat-button (click)="prev()">
 				{{ currentIndex == 0 ? "close" : "previous" }}
 			</button>
 			<button mat-stroked-button (click)="next()">
 				{{ currentIndex == messages.length - 1 ? "Explore" : "next" }}
 			</button>
+			<!-- download button on the last side of the intro-->
 			<button
 				*ngIf="currentIndex == messages.length - 1"
 				mat-flat-button
