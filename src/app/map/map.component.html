@@ -58,7 +58,7 @@
 	</mgl-geojson-source>
 	<!-- Heatmap -->
 	<mgl-layer
-		*ngIf="mode == 'heatmap'"
+		*ngIf="mode === 'heatmap'"
 		id="heatmap"
 		type="heatmap"
 		source="points"
@@ -68,7 +68,7 @@
 	</mgl-layer>
 	<!-- Pins -->
 	<mgl-layer
-		*ngIf="mode == 'point'"
+		*ngIf="mode === 'point'"
 		id="pts"
 		type="symbol"
 		[layout]="pointLayout"

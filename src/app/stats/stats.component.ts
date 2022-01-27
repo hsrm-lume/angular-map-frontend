@@ -4,7 +4,6 @@ import {
 	Input,
 	OnChanges,
 	OnInit,
-	SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
