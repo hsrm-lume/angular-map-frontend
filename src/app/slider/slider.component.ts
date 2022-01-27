@@ -79,7 +79,7 @@ export class SliderComponent {
 			return s.replace(/\d{2,4}(,| )+/, ' ');
 		return s;
 	}
-	// get the string from the end ordate
+	// get the string from the end date
 	endString(): string {
 		const s = this.stringOf(
 			this.portraitMode ? this.range.to : this.range.from
