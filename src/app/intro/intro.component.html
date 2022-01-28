@@ -4,7 +4,7 @@
 		<div class="container">
 			<mat-card-content
 				*ngFor="let intro of messages; let i = index"
-				[class.visible]="i == currentIndex"
+				[class.visible]="i === currentIndex"
 				[class.passed]="i < currentIndex"
 			>
 				<h2>{{ intro.title }}</h2>
@@ -22,24 +22,37 @@
 		<div
 			[class]="
 				'buttons' +
-				(currentIndex == messages.length - 1 ? ' lastSlide' : '')
+				(currentIndex === messages.length - 1 ? ' lastSlide' : '')
 			"
 		>
 			<button mat-button (click)="prev()">
-				{{ currentIndex == 0 ? "close" : "previous" }}
+				{{ currentIndex === 0 ? "close" : "previous" }}
 			</button>
 			<button mat-stroked-button (click)="next()">
-				{{ currentIndex == messages.length - 1 ? "Explore" : "next" }}
+				{{ currentIndex === messages.length - 1 ? "Explore" : "next" }}
 			</button>
-			<button
-				*ngIf="currentIndex == messages.length - 1"
-				mat-flat-button
-				color="primary"
-				class="downloadnow"
-				(click)="download()"
+			<div
+				*ngIf="currentIndex === messages.length - 1"
+				class="downloadWrapper"
 			>
-				DOWNLOAD NOW
-			</button>
+				Get lume now!<br />
+				<button
+					mat-flat-button
+					color="primary"
+					class="downloadnow"
+					(click)="downloadAndroid()"
+				>
+					<mat-icon>android</mat-icon></button
+				>&nbsp;
+				<button
+					mat-flat-button
+					color="accent"
+					class="downloadnow bluebg"
+					(click)="downloadIos()"
+				>
+					<img class="icon" src="/assets/apple.svg" />
+				</button>
+			</div>
 		</div>
 	</mat-card>
 </div>

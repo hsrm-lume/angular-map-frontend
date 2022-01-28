@@ -158,6 +158,7 @@ export class MapComponent implements OnInit {
 			.on('close', () => {
 				this.neo4j
 					.query(
+						//query to load all fires
 						`MATCH (a:User)
 						WHERE $d1 <= a.litTime <= $d2
 						RETURN a`,
@@ -198,7 +199,7 @@ export class MapComponent implements OnInit {
 			.subscribe(collectObserver(this.childpath));
 		this.neo4j
 			.query(
-				//child query
+				//parent query
 				`MATCH (a:User)-[:LIGHTS]->(b:User)
 				WITH b,a
 				MATCH (b)-[:LIGHTS*0..]->(c:User)

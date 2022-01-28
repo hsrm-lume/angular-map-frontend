@@ -13,7 +13,7 @@
 	<div id="toggle">
 		<img class="icon" src="/assets/sun.svg" />
 		<mat-slide-toggle
-			[ngModel]="theme == 'dark'"
+			[ngModel]="theme === 'dark'"
 			(ngModelChange)="t($event)"
 		></mat-slide-toggle>
 		<img class="icon" src="/assets/moon.svg" />

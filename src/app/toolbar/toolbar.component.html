@@ -8,9 +8,18 @@
 			<mat-icon>question_mark</mat-icon>
 		</button>
 		&nbsp;&nbsp;
-		<button mat-flat-button color="accent" (click)="download()">
-			DOWNLOAD&nbsp;&nbsp;
-			<mat-icon>android</mat-icon>
+		<button mat-flat-button color="accent" (click)="downloadAndroid()">
+			<mat-icon>download</mat-icon>&nbsp;&nbsp;
+			<mat-icon>android</mat-icon></button
+		>&nbsp;
+		<button
+			mat-flat-button
+			color="accent"
+			class="bluebg"
+			(click)="downloadIos()"
+		>
+			<mat-icon>download</mat-icon>&nbsp;&nbsp;
+			<img class="icon" src="/assets/apple.svg" />
 		</button>
 	</mat-toolbar-row>
 </mat-toolbar>

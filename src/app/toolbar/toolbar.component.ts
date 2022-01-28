@@ -17,7 +17,10 @@ export class ToolbarComponent {
 	@Output()
 	toggleIntro = new EventEmitter();
 
-	download() {
-		window.location.href = environment.appDownloadUrl;
+	downloadAndroid() {
+		window.location.href = environment.appDownloadUrlAndroid;
+	}
+	downloadIos() {
+		window.location.href = environment.appDownloadUrlIos;
 	}
 }
