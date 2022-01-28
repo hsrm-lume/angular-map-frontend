@@ -81,9 +81,6 @@ export class SliderComponent {
 	}
 	// get the string from the end date
 	endString(): string {
-		const s = this.stringOf(
-			this.portraitMode ? this.range.to : this.range.from
-		);
 		if (this.portraitMode) return this.stringOf(this.range.from);
 		return this.stringOf(this.range.to);
 	}

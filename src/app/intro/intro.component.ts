@@ -86,7 +86,7 @@ export class IntroComponent {
 		this.toggleIntro.emit();
 	}
 
-	//url to the newest app release on github
+	//download the app from github or testflight
 	downloadAndroid() {
 		window.location.href = environment.appDownloadUrlAndroid;
 	}

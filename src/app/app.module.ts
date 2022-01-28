@@ -28,8 +28,8 @@ import { IntroComponent } from './intro/intro.component';
 		SliderComponent,
 		ToolbarComponent,
 		StatsComponent,
-  ModeControlsComponent,
-  IntroComponent,
+		ModeControlsComponent,
+		IntroComponent,
 	],
 	imports: [
 		FormsModule,
