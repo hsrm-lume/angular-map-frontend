@@ -85,8 +85,12 @@ export class IntroComponent {
 		console.log('close');
 		this.toggleIntro.emit();
 	}
+
 	//url to the newest app release on github
-	download() {
-		window.location.href = environment.appDownloadUrl;
+	downloadAndroid() {
+		window.location.href = environment.appDownloadUrlAndroid;
+	}
+	downloadIos() {
+		window.location.href = environment.appDownloadUrlIos;
 	}
 }

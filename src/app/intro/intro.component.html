@@ -36,15 +36,28 @@
 				{{ currentIndex === messages.length - 1 ? "Explore" : "next" }}
 			</button>
 			<!-- download button on the last side of the intro-->
-			<button
+			<div
 				*ngIf="currentIndex === messages.length - 1"
-				mat-flat-button
-				color="primary"
-				class="downloadnow"
-				(click)="download()"
+				class="downloadWrapper"
 			>
-				DOWNLOAD NOW
-			</button>
+				Get lume now!<br />
+				<button
+					mat-flat-button
+					color="primary"
+					class="downloadnow"
+					(click)="downloadAndroid()"
+				>
+					<mat-icon>android</mat-icon></button
+				>&nbsp;
+				<button
+					mat-flat-button
+					color="accent"
+					class="downloadnow bluebg"
+					(click)="downloadIos()"
+				>
+					<img class="icon" src="/assets/apple.svg" />
+				</button>
+			</div>
 		</div>
 	</mat-card>
 </div>

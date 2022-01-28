@@ -82,30 +82,17 @@ p {
 .buttons {
 	button {
 		width: 6.5em;
+		height: fit-content;
 	}
 	&.lastSlide {
 		button {
 			width: auto;
 		}
-		button:nth-child(3):after {
-			content: "ANDROID ONLY";
-			font-family: "domus";
-			font-size: 0.7em;
-			position: absolute;
-			bottom: -7px;
-			left: 34px;
-		}
 	}
 	display: flex;
 	justify-content: space-evenly;
 }
-::ng-deep .buttons button span.mat-button-wrapper {
-	display: block;
-	margin-bottom: -4px;
-}
-::ng-deep .buttons.lastSlide button span.mat-button-wrapper {
-	margin-bottom: -2px;
-}
-::ng-deep .buttons.lastSlide button:nth-child(3) span.mat-button-wrapper {
-	margin-bottom: 7px;
+.downloadWrapper {
+	text-align: center;
+	margin-top: -1.5em;
 }
