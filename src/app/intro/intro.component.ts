@@ -81,7 +81,10 @@ export class IntroComponent {
 		console.log('close');
 		this.toggleIntro.emit();
 	}
-	download() {
-		window.location.href = environment.appDownloadUrl;
+	downloadAndroid() {
+		window.location.href = environment.appDownloadUrlAndroid;
+	}
+	downloadIos() {
+		window.location.href = environment.appDownloadUrlIos;
 	}
 }
