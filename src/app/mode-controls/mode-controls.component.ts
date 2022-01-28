@@ -28,7 +28,7 @@ export class ModeControlsComponent {
 
 	@Output()
 	mapModeChange = new EventEmitter();
-
+	//Methode to change map mode
 	m(m: MatButtonToggleChange): void {
 		if (m.value == '_') {
 			m.source.buttonToggleGroup.writeValue(this.mapMode);
@@ -36,7 +36,6 @@ export class ModeControlsComponent {
 		} else {
 			this.mapModeChange.emit(m.value);
 			this.mapMode = m.value;
-
 		}
 	}
 }

@@ -7,7 +7,7 @@ import {
 } from '@angular/animations';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
-
+// interface to define the attributes of the intro pages
 interface IntroItem {
 	title: string;
 	image: string;
@@ -22,8 +22,8 @@ interface IntroItem {
 export class IntroComponent {
 	@Output()
 	toggleIntro = new EventEmitter();
-
 	currentIndex = 0;
+	//Content and images of the individual intro pages
 	messages: IntroItem[] = [
 		{
 			title: 'Hi!',
@@ -66,21 +66,27 @@ export class IntroComponent {
 			text: 'To become part of the lume network, just download the app to recieve and spread the fire!',
 		},
 	];
+	//returns the number of the current page
 	get currentSlide() {
 		return this.messages[this.currentIndex];
 	}
+	//increases page index or closes intro
 	next() {
 		if (this.currentIndex >= this.messages.length - 1) this.close();
 		else this.currentIndex++;
 	}
+	//Decreases page index or closes intro
 	prev() {
 		if (this.currentIndex <= 0) this.close();
 		else this.currentIndex--;
 	}
+	// close the intro card
 	close() {
 		console.log('close');
 		this.toggleIntro.emit();
 	}
+
+	//download the app from github or testflight
 	downloadAndroid() {
 		window.location.href = environment.appDownloadUrlAndroid;
 	}

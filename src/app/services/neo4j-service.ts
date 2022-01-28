@@ -15,6 +15,7 @@ export default class Neo4jService implements OnDestroy {
 		@Inject(DOCUMENT) private document: { location: any },
 		private messageService: MessageService
 	) {
+		// creates connection to neo4j database
 		this.driver = neo4j.driver(
 			environment.neo4j.url(this.document.location),
 			neo4j.auth.basic(
@@ -23,16 +24,19 @@ export default class Neo4jService implements OnDestroy {
 			)
 		);
 	}
+	//close connection to the database
 	ngOnDestroy(): void {
 		this.driver.close();
 	}
-
+	// methods to execute the specified query with the specified parameters
 	query(q: string, params: Dict = {}): Observable<neo4j.Record> {
+		//neo4j session between database and webapp
 		const rxSession = this.driver.rxSession();
 		return rxSession
 			.run(q, params)
 			.records()
 			.pipe(
+				// Catch to display an error message
 				catchError((e) => {
 					this.messageService.push({
 						type: 'error',

@@ -52,7 +52,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent implements OnInit {
 	constructor(public messageService: MessageService) {}
-
+	// defining the initial value of the map mode and theme
 	mapMode: MapMode = 'heatmap';
 	theme: Theme = 'light';
 
@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
 			window.innerWidth < 1100 && window.innerWidth < window.innerHeight;
 	}
 	portraitMode = false;
-
+	// variable to set the time limits of the slider
 	filter: NumberRange = {
 		from: environment.startDate,
 		to: new Date().getTime(),
@@ -72,13 +72,15 @@ export class AppComponent implements OnInit {
 	indeterminateChange(e: boolean) {
 		this.sliderIndeterminate = e;
 	}
-
+	// calls onResize if webapp has been reloaded
 	ngOnInit(): void {
 		this.onResize();
 	}
-
+	// boolean for the html elements of the intro component
 	showIntro = false;
+	// called by close() from intro component
 	toggleIntro(): void {
 		this.showIntro = !this.showIntro;
+		//sets variable to false so that the intro is no longer displayed
 	}
 }

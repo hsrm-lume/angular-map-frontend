@@ -17,6 +17,7 @@ export class ToolbarComponent {
 	@Output()
 	toggleIntro = new EventEmitter();
 
+	//Url to the latest app release on Github
 	downloadAndroid() {
 		window.location.href = environment.appDownloadUrlAndroid;
 	}

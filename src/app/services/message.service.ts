@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+//message interface with fixed variables
 interface Message {
 	title: string;
 	text: string;

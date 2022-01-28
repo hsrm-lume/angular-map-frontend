@@ -60,7 +60,7 @@ export class StatsComponent implements OnInit, OnChanges {
 		this.loadInspectGroup();
 	}
 
-	// PERSONAL
+	// personale stats on smartphone
 	personalGroup = new StatGroup('personal', []);
 	personalUuid: string = '';
 	showLightFireMessage = false;
@@ -69,6 +69,7 @@ export class StatsComponent implements OnInit, OnChanges {
 			.query(`MATCH (n) WHERE n.uuid = $uuid RETURN COUNT(n) as result`, {
 				uuid: uuid,
 			})
+			//query to get the uuid of the personal fire
 			.pipe(map((record) => Number(record.get('result'))))
 			.subscribe({
 				complete: () => console.log('complete'),
@@ -93,6 +94,7 @@ export class StatsComponent implements OnInit, OnChanges {
 				'Your fire got passed on',
 				{
 					query: `MATCH (n)-[*1..]->(m) WHERE n.uuid = $uuid AND m.litTime <= $age RETURN COUNT(m)`,
+					// how many fires were lit by you and your children
 					params: {
 						uuid: this.personalUuid,
 						age: this._filterRange.to,
@@ -104,6 +106,7 @@ export class StatsComponent implements OnInit, OnChanges {
 				'You directly passed your flame',
 				{
 					query: `MATCH (n)-[*1]->(m) WHERE n.uuid = $uuid AND m.litTime <= $age RETURN COUNT(m)`,
+					// how many fires were lit by you
 					params: {
 						uuid: this.personalUuid,
 						age: this._filterRange.to,
@@ -113,8 +116,7 @@ export class StatsComponent implements OnInit, OnChanges {
 			),
 		];
 	}
-
-	// INSPECT
+	// Stats displayed when a fire is clicked
 	inspectGroup = new StatGroup('clicked point', []);
 	inspectUuid: string = '';
 	setInspect(uuid: string) {
@@ -153,7 +155,7 @@ export class StatsComponent implements OnInit, OnChanges {
 		];
 	}
 
-	// MAIN
+	// main stats from all fires
 	mainGroup = new StatGroup([]);
 	loadMainGroup() {
 		this.mainGroup.members = [
